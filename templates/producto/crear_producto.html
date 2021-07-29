@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear nueva publicación{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../img/dog.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% block content %}
+  <form method="post">
+    <p>
+      <label for="correo_vendedor">Correo</label>
+      <input name="correo_vendedor" id="correo_vendedor" required>
+    </p>
+    <p>
+      <label for="nombre">Nombre del producto</label>
+      <input type="text" name="nombre" id="nombre" required>
+    </p>
+    <p>
+      <label for="precio">Precio</label>
+      <input type="number " step="0.01" name="precio" id="precio" required>
+    </p>
+    <p>
+      <label for="cantidad">Cantidad</label>
+      <input type="number" step="1" name="cantidad" id="cantidad" required>
+    </p>
+    <p>
+      <label for="detalles">Detalles</label>
+      <input type="text" name="detalles" id="detalles" required>
+    </p>
+    <p>
+      <label for="descripcion">Descripción</label>
+      <input type="text" name="descripcion" id="descripcion">
+    </p>
+    <p>
+      <label for="estado">Producto nuevo</label>
+      <input type="checkbox" name="estado" id="estado">
+    </p>
+    <p>
+    <input type="submit" value="Publicar producto">
+  </p>
+  </form>
+{% endblock %}
