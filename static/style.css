@@ -1,0 +1,39 @@
+/*=======================================
+FOOTER SECTION
+==================================================*/
+.footer-box {
+  background-color:#31326f;
+  padding:20px 50px 20px 50px;
+  
+  
+}
+.small-box {
+  font-size:10px;
+}
+
+.footer-box a {
+  color:#808080;
+  text-decoration:none;
+}
+.footer-box a:hover {
+  color:#000;
+}
+.pad-botom {
+  padding-bottom:30px;
+}
+.footer-box p {
+  padding-top:15px;
+  padding-bottom:15px;
+  line-height:25px;
+}
+.social-box a{
+   color:#333436;
+  text-decoration:none;
+}
+
+.end-box {
+  padding:20px;
+   color:#fff;
+   background-color:#000;
+   font-size:14px;
+}
