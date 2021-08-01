@@ -5866,11 +5866,12 @@ INDEX PAGE
 }
 
 .offer-box {
-background-color: #6A75F0;
-border: 1px solid #096FC0;
-color: #fff;
+background-color: #9ddfd3;
+color: black;
 font-weight: 900;
 font-size:16px;
+margin-right: auto;
+margin-left: auto;
 }
   .offer-box a {
       color: #fff;
