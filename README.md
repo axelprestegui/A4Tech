@@ -32,5 +32,5 @@ Nota: Este readme se irá actualizando conforme avancemos en el proyecto.
 
 -  Abraham Lagunas: [kingFrederic355]( https://github.com/kingFrederic355 )
 -  Axel Prestegui: [axelprestegui]( https://github.com/Dicter26 ) 
--  Derek Almanza: [DerekAlmanza ]( https://github.com/DerekAlmanza ) 
+-  Derek Almanza: [DerekAlmanza ]( https://github.com/DerekAlmanza ) xdxd
 -  Tania Rubí: [taniarubi]( https://github.com/taniarubi )
