@@ -1,6 +1,6 @@
 body {
     background:white;
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
 }
 
 .login-box {
@@ -122,12 +122,12 @@ label {
     padding: 0px;
 }
 
-.formbox {
-	display: inline-block;
-	width:399px;
-  }
-
-SELECT {
-	font-family: 'Roboto', sans-serif;
-	background-color: #FFE194;
-}
+select {
+    background: #FFE194;
+    color: black;
+    border: none;
+    font-size: 12px;
+    height: 30px;
+    padding: 5px;
+    width: 110px;
+ }

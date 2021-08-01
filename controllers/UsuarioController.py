@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request, abort, jsonify
-from models.Modelos import Producto,ProductoEsquema
+from models.Modelos import Vendedor, Comprador
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
