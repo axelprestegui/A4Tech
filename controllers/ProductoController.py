@@ -151,3 +151,9 @@ def eliminar_producto():
     db.session.commit()
     
     return jsonify({'msg': 'todo ok'})
+
+def buscar_producto():
+    if request.method == 'POST':
+        pass
+    else :
+        return render_template('producto/buscar_producto.html')
