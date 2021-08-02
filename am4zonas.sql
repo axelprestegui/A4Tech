@@ -15,8 +15,8 @@ create database am4zonas;
 CREATE TABLE Comprador (
     Correo varchar(320) NOT NULL,
     Nombre varchar(55) NOT NULL,
-    ApellidoP varchar(70) NOT NULL,
-    ApellidoM varchar(70) NOT NULL,
+    Apellido_paterno varchar(70) NOT NULL,
+    Apellido_materno varchar(70) NOT NULL,
     Contrasenia char(50) NOT NULL,
     Telefono bigint NOT NULL,
     CONSTRAINT PK_CorreoComprador PRIMARY KEY (Correo)
@@ -28,8 +28,8 @@ CREATE TABLE Comprador (
 CREATE TABLE Vendedor (
     Correo varchar(320) NOT NULL,
     Nombre varchar(55) NOT NULL,
-    ApellidoP varchar(70) NOT NULL,
-    ApellidoM varchar(70) NOT NULL,
+    Apellido_paterno varchar(70) NOT NULL,
+    Apellido_materno varchar(70) NOT NULL,
     Contrasenia char(50) NOT NULL,
     Telefono bigint NOT NULL,
     CONSTRAINT PK_CorreoVendedor PRIMARY KEY (Correo)
@@ -94,7 +94,7 @@ CREATE TABLE Compra (
     Id_Producto int NOT NULL,
     FormaPago text NOT NULL,
     Cantidad int NOT NULL,
-    CostoTotal int, /*PREGUNTAR NO ESTA BIEN */
+    CostoTotal int NOT NULL, 
     Estado varchar(50) NOT NULL,
     Ciudad varchar(50) NOT NULL,
     Alcaldia varchar(55) NOT NULL,

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Comprar producto
+{% endblock %}
+
+{% block style %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='producto/compra-producto.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+
+    <h1 class="titulo">Comprar producto </h1>
+
+    <div class="agrupador-info">
+        <div class="info-compra">
+            <form action="">
+                <p class="una-fraccion">
+                    <label for="formaPago"> Forma de pago </label>
+                    <input type="text" name="formaPago" id="formaPago" required>
+                </p>
+                <p>
+                    <label for="estado"> Estado </label>
+                    <input type="text" name="estado" id="estado" required>
+                </p>
+                <p>
+                    <label for="ciudad"> Ciudad </label>
+                    <input type="text" name="ciudad" id="ciudad" required>
+                </p>
+                <p>
+                    <label for="alcaldia"> Alcaldía </label>
+                    <input type="text" name="alcaldia" id="alcaldia" required>
+                </p>
+                <p>
+                    <label for="colonia"> Colonia </label>
+                    <input type="text" name="colonia" id="colonia" required>
+                </p>
+                <p>
+                    <label for="calle"> Calle </label>
+                    <input type="text" name="calle" id="calle" required>
+                </p>
+                <p>
+                    <label for="numExterior"> Número exterior </label>
+                    <input type="text" name="numExterior" id="numExterior" required>
+                </p>
+                <p>
+                    <label for="numInterior"> Número interior </label>
+                    <input type="text" name="numInterior" id="numInterior">
+                </p>
+                <p>
+                    <label for="codigoPostal"> Código postal </label>
+                    <input type="text" name="codigoPostal" id="codigoPostal" required>
+                </p>
+                <p class="una-fraccion">
+                    <button>
+                        Atras
+                    </button>
+                </p>
+                <p class="una-fraccion">
+                    <button type="submit">
+                        Siguiente
+                    </button>
+                </p>
+            </form>
+        </div>
+        <div class="img-compra">
+            <img src="../../static/images/dog.png" style="width: 150px; height: 150px;">
+            <p id="fecha-entrega"> Fecha de entrega dd/mm/aa </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

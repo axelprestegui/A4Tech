@@ -94,3 +94,63 @@ class Producto(db.Model):
 class ProductoEsquema(ma.Schema):
     class Meta:
         fields = ('correo_vendedor', 'id_producto', 'nombre', 'precio', 'cantidad', 'detalles', 'descripcion', 'estado')
+
+"""
+Clase modelo Compra que modela nuestra tabla Compra de nuestra BD con los atributos.
+correo_comprador, correo_vendedor, id_producto, forma_pago, cantidad, costo_total direccion, 
+comentario, numero_estrellas.
+"""
+class Compra(db.Model):
+   __tablename__='compra' 
+   correo_comprador = db.Column(db.Unicode, db.ForeignKey('comprador.correo'), primary_key=True, nullable=False)
+   correo_vendedor = db.Column(db.Unicode, db.ForeignKey('vendedor.correo'), primary_key=True, nullable=False)
+   id_producto = db.Column(db.Integer, db.ForeignKey('producto.id_producto'), primary_key=True)
+   forma_pago = db.Column(db.Unicode, nullable=False)
+   cantidad = db.Column(db.Integer, nullable=False)
+   costo_total = db.Column(db.Integer, nullable=False)
+   estado = db.Column(db.Unicode, nullable= False)
+   ciudad = db.Column(db.Unicode, nullable= False)
+   alcaldia = db.Column(db.Unicode, nullable= False)
+   colonia = db.Column(db.Unicode, nullable= False)
+   calle = db.Column(db.Unicode, nullable= False)
+   numero_ext = db.Column(db.Integer, nullable= False)
+   numero_int = db.Column(db.Unicode)
+   codigo_postal = db.Column(db.Integer, nullable= False)
+   comentario = db.Column(db.Unicode)
+   numero_estrellas = db.Column(db.Integer)
+
+   def __init__(self, correo_comprador, correo_vendedor, id_producto, forma_pago, cantidad, costo_total, direccion, comentario,numero_estrellas):
+       self.correo_comprador = correo_comprador
+       self.correo_vendedor = correo_vendedor
+       self.id_producto = id_producto
+       self.forma_pago = forma_pago
+       self.cantidad = cantidad
+       self.costo_total = costo_total
+       self.estado = direccion.estado
+       self.ciudad = direccion.ciudad
+       self.alcaldia = direccion.alcaldia
+       self.colonia = direccion.colonia
+       self.calle = direccion.calle
+       self.numero_ext = direccion.numero_ext
+       self.numero_int = direccion.numero_int
+       self.codigo_postal = codigo_postal
+       self.comentario = comentario
+       self.numero_estrellas = numero_estrellas
+
+class CompraEsquema(ma.Schema):
+    class Meta: 
+        fields = ('correo_comprador', 'correo_vendedor', 'id_producto', 'forma_pago', 'cantidad', 'costo_total', 'estado', 'ciudad', 'alcaldia', 'colonia', 'calle', 'numero_ext', 'numero_int', 'codigo_postal', 'comentario', 'numero_estrellas')
+
+"""
+Clase contenedora de datos de la direccion para no pasar tantos argumentos en clase Compra.
+"""
+class Direccion():
+    def __init__(self, estado, ciudad, alcaldia, colonia, calle, numero_ext, numero_int, codigo_postal):
+        self.estado = estado
+        self.ciudad = ciudad
+        self.alcaldia = alcaldia
+        self.colonia = colonia
+        self.calle = calle
+        self.numero_ext = numero_ext
+        self.numero_int = numero_int
+        self.codigo_postal = codigo_postal
