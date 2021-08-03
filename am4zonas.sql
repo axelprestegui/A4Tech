@@ -17,7 +17,7 @@ CREATE TABLE Comprador (
     Nombre varchar(55) NOT NULL,
     Apellido_paterno varchar(70) NOT NULL,
     Apellido_materno varchar(70) NOT NULL,
-    Contrasenia char(50) NOT NULL,
+    Contrasenia char(255) NOT NULL,
     Telefono bigint NOT NULL,
     CONSTRAINT PK_CorreoComprador PRIMARY KEY (Correo)
 );
@@ -30,7 +30,7 @@ CREATE TABLE Vendedor (
     Nombre varchar(55) NOT NULL,
     Apellido_paterno varchar(70) NOT NULL,
     Apellido_materno varchar(70) NOT NULL,
-    Contrasenia char(50) NOT NULL,
+    Contrasenia char(255) NOT NULL,
     Telefono bigint NOT NULL,
     CONSTRAINT PK_CorreoVendedor PRIMARY KEY (Correo)
 );
