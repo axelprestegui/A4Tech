@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+
+{% block am4zonas %}
+<form enctype="multipart/form-data"></form>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form navbar-right">
+            &nbsp; 
+            <input type="button" value="cerrar_sesion" style="background-color: #31326F;color: white;" class="btn btn-primary" onclick="location.href='/'">
+        </form>
+
+        <form method="post" class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+                <input type="text" name="search" id="search" class="form-control" required>
+            </div>
+            &nbsp; 
+            <button type="submit" class="btn btn-primary" onclick="location.href='/producto/resultado_busqueda'">Buscar</button>
+        </form>
+    </ul>
+</div>
+<!-- /.col -->
+</div>
+{% endblock%}
