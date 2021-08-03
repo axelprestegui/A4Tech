@@ -62,23 +62,6 @@ CREATE TABLE Producto (
     CONSTRAINT verificaPrecio CHECK (0 = Precio or 0 < Precio)
 );
 
-/*  Creamos la tabla Imagen cuya llave primaria compuesta será CorreoVendedor, Id e Imagen. 
-    Notemos que 'ON DELETE CASCADE' Una llave foránea con eliminación en cascada significa que si se elimina un 
-                                    registro en la tabla principal, los registros correspondientes en la tabla 
-                                    secundaria se eliminarán automáticamente.
-                'ON UPDATE CASCADE' Una llave foránea con actualización en cascada significa que si se actualiza un 
-                                    registro en la tabla principal, los registros correspondientes en la tabla 
-                                    secundaria se actualizarán automáticamente.
-    Acepta tuplas de la forma: Falta especificar cñomo guardaremos las imágenes
-*/
-CREATE TABLE Imagen (
-    Correo_Vendedor varchar(320) NOT NULL,
-    Id_Producto int NOT NULL,
-    Imagen text NOT NULL UNIQUE,
-    CONSTRAINT PK_Imagen PRIMARY KEY (Correo_Vendedor, Id_Producto, Imagen),
-    CONSTRAINT FK_CorreoVendedorID FOREIGN KEY (Correo_Vendedor,Id_Producto) references Producto (Correo_Vendedor,Id_Producto) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 /*  Creamos la tabla Compra cuya llave primaria compuesta será Correo_Comprador, Correo_Vendedor y Id_Producto.
     Notemos que 'ON DELETE CASCADE' Una llave foránea con eliminación en cascada significa que si se elimina un 
                                     registro en la tabla principal, los registros correspondientes en la tabla 
