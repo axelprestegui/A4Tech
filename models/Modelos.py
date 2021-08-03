@@ -119,20 +119,20 @@ class Compra(db.Model):
    comentario = db.Column(db.Unicode)
    numero_estrellas = db.Column(db.Integer)
 
-   def __init__(self, correo_comprador, correo_vendedor, id_producto, forma_pago, cantidad, costo_total, direccion, comentario,numero_estrellas):
+   def __init__(self, correo_comprador, correo_vendedor, id_producto, forma_pago, cantidad, costo_total, estado, ciudad, alcaldia, colonia, calle, numero_ext, numero_int, codigo_postal, comentario,numero_estrellas):
        self.correo_comprador = correo_comprador
        self.correo_vendedor = correo_vendedor
        self.id_producto = id_producto
        self.forma_pago = forma_pago
        self.cantidad = cantidad
        self.costo_total = costo_total
-       self.estado = direccion.estado
-       self.ciudad = direccion.ciudad
-       self.alcaldia = direccion.alcaldia
-       self.colonia = direccion.colonia
-       self.calle = direccion.calle
-       self.numero_ext = direccion.numero_ext
-       self.numero_int = direccion.numero_int
+       self.estado = estado
+       self.ciudad = ciudad
+       self.alcaldia = alcaldia
+       self.colonia = colonia
+       self.calle = calle
+       self.numero_ext = numero_ext
+       self.numero_int = numero_int
        self.codigo_postal = codigo_postal
        self.comentario = comentario
        self.numero_estrellas = numero_estrellas
@@ -144,13 +144,13 @@ class CompraEsquema(ma.Schema):
 """
 Clase contenedora de datos de la direccion para no pasar tantos argumentos en clase Compra.
 """
-class Direccion():
-    def __init__(self, estado, ciudad, alcaldia, colonia, calle, numero_ext, numero_int, codigo_postal):
-        self.estado = estado
-        self.ciudad = ciudad
-        self.alcaldia = alcaldia
-        self.colonia = colonia
-        self.calle = calle
-        self.numero_ext = numero_ext
-        self.numero_int = numero_int
-        self.codigo_postal = codigo_postal
+# class Direccion():
+#     def __init__(self, estado, ciudad, alcaldia, colonia, calle, numero_ext, numero_int, codigo_postal):
+#         self.estado = estado
+#         self.ciudad = ciudad
+#         self.alcaldia = alcaldia
+#         self.colonia = colonia
+#         self.calle = calle
+#         self.numero_ext = numero_ext
+#         self.numero_int = numero_int
+#         self.codigo_postal = codigo_postal

@@ -17,10 +17,15 @@ Comprar producto
 
     <div class="agrupador-info">
         <div class="info-compra">
-            <form action="">
+            <form action="" method="POST">
                 <p class="una-fraccion">
-                    <label for="formaPago"> Forma de pago </label>
-                    <input type="text" name="formaPago" id="formaPago" required>
+                    <label for="forma_pago"> Forma de pago </label>
+                    <input type="text" style="display: none;" value="dante23@gmail.com" name="correo_comprador" id="correo_comprador" required>
+                    <input type="text" style="display: none;" value="lolita@gmail.com" name="correo_vendedor" id="correo_vendedor" required>
+                    <input type="number" style="display: none;" value="0" name="id_producto" id="id_producto" required>
+                    <input type="text" name="forma_pago" id="forma_pago" required>
+                    <input type="number" style="display: none;" value="0" name="cantidad" id="cantidad" required>
+                    <input type="number" style="display: none;" value="0" name="costo_total" id="costo_total" required>
                 </p>
                 <p>
                     <label for="estado"> Estado </label>
@@ -43,16 +48,22 @@ Comprar producto
                     <input type="text" name="calle" id="calle" required>
                 </p>
                 <p>
-                    <label for="numExterior"> Número exterior </label>
-                    <input type="text" name="numExterior" id="numExterior" required>
+                    <label for="numero_ext"> Número exterior </label>
+                    <input type="number" name="numero_ext" id="numero_ext" required>
                 </p>
                 <p>
-                    <label for="numInterior"> Número interior </label>
-                    <input type="text" name="numInterior" id="numInterior">
+                    <label for="numero_int"> Número interior </label>
+                    <input type="text" name="numero_int" id="numero_int">
                 </p>
                 <p>
-                    <label for="codigoPostal"> Código postal </label>
-                    <input type="text" name="codigoPostal" id="codigoPostal" required>
+                    <label for="codigo_postal"> Código postal </label>
+                    <input type="number" name="codigo_postal" id="codigo_postal" required>
+                </p>
+                <p class="una-fraccion">
+                    Costo de envío: $0.00
+                </p>
+                <p class="una-fraccion">
+                    Costo total: $0.00
                 </p>
                 <p class="una-fraccion">
                     <button>
@@ -67,7 +78,7 @@ Comprar producto
             </form>
         </div>
         <div class="img-compra">
-            <img src="../../static/images/dog.png" style="width: 150px; height: 150px;">
+            <img src="../../static/images/doggy.png" style="width: 150px; height: 150px;">
             <p id="fecha-entrega"> Fecha de entrega dd/mm/aa </p>
         </div>
     </div>
