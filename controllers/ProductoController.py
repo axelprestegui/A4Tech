@@ -58,7 +58,7 @@ para poder obtenerlas cuando sea necesario.
 """
 def guarda_imagenes(imagenes, correo_vendedor, id_producto):
     # creamos dirección donde deben estar guardadas las imágenes del vendedor
-    dir_vendedor_img = str(Path(__file__).parent.parent / ('instance/' + correo_vendedor))
+    dir_vendedor_img = str(Path(__file__).parent.parent / ('static/images/' + correo_vendedor))
     # checamos si dicho directorio ya existe, en otro caso, lo creamos
     if not os.path.isdir(dir_vendedor_img):
         os.mkdir(dir_vendedor_img)
@@ -77,7 +77,7 @@ Función auxiliar que elimina todas las imágenes asociadas a un producto.
 """
 def elimina_imagenes(correo_vendedor, id_producto):
     # creamos dirección donde deben estar guardadas las imágenes del vendedor
-    dir_vendedor_img = str(Path(__file__).parent.parent / ('instance/' + correo_vendedor))
+    dir_vendedor_img = str(Path(__file__).parent.parent / ('static/images/' + correo_vendedor))
     # checamos si el directorio existe, en otro caso, no existen fotos
     if os.path.isdir(os.path.join(dir_vendedor_img, str(id_producto))):
         # eliminamos el directorio donde están guardadas las fotos
