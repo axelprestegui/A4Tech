@@ -1,4 +1,6 @@
 from flask import render_template, redirect, url_for, request, abort, jsonify
+from flask.helpers import flash
+from sqlalchemy.orm import query
 from models.Modelos import Producto,ProductoEsquema
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
@@ -153,7 +155,17 @@ def eliminar_producto():
     return jsonify({'msg': 'todo ok'})
 
 def buscar_producto():
-    if request.method == 'POST':
-        pass
-    else :
+    if request.method != 'POST':
         return render_template('producto/buscar_producto.html')
+
+    try:
+        busqueda = db.session.query(Producto).filter(Producto.nombre.like('%'+request.form['search']+'%')).all()
+        print(busqueda, file=sys.stderr)
+        return render_template('producto/resultado_busqueda.html')
+    except:
+        flash('No se encontraron resultados')
+        return render_template('producto/crear_producto.html')
+
+def resultado_busqueda():
+    return render_template('producto/resultado_busqueda.html')
+    

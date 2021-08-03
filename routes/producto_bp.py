@@ -1,5 +1,7 @@
 from flask import Blueprint
-from controllers.ProductoController import crear_producto, actualizar_producto, eliminar_producto, buscar_producto#importamos nuestras funciones necesarios
+from controllers.ProductoController import crear_producto, actualizar_producto, eliminar_producto
+from controllers.ProductoController import buscar_producto
+from controllers.ProductoController import resultado_busqueda
 
 # creamos una nueva blueprint producto_bp, en este caso llamada producto y le asignamos el prefijo /producto
 producto_bp = Blueprint('producto', __name__, url_prefix='/producto')
@@ -13,3 +15,4 @@ producto_bp.route('/actualizar_producto', methods=['POST', 'GET'])(actualizar_pr
 producto_bp.route('/eliminar_producto', methods=['POST', 'GET'])(eliminar_producto)
 
 producto_bp.route('/buscar_producto', methods=['POST', 'GET'])(buscar_producto)
+producto_bp.route('/resultado_busqueda' , methods=['POST', 'GET'])(resultado_busqueda)
