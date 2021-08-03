@@ -44,3 +44,4 @@ def comprar_producto():
         db.session.add(compra)
         db.session.commit()
 
+    return jsonify({'msg':'Compra realizada!'})

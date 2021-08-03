@@ -105,6 +105,7 @@ class Compra(db.Model):
    correo_comprador = db.Column(db.Unicode, db.ForeignKey('comprador.correo'), primary_key=True, nullable=False)
    correo_vendedor = db.Column(db.Unicode, db.ForeignKey('vendedor.correo'), primary_key=True, nullable=False)
    id_producto = db.Column(db.Integer, db.ForeignKey('producto.id_producto'), primary_key=True)
+   id_compra = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
    forma_pago = db.Column(db.Unicode, nullable=False)
    cantidad = db.Column(db.Integer, nullable=False)
    costo_total = db.Column(db.Integer, nullable=False)

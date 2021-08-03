@@ -75,6 +75,7 @@ CREATE TABLE Compra (
     Correo_Comprador varchar(320) NOT NULL,
     Correo_Vendedor varchar(320) NOT NULL,
     Id_Producto int NOT NULL,
+    Id_Compra SERIAL UNIQUE,
     Forma_Pago varchar(320) NOT NULL,
     Cantidad int NOT NULL,
     Costo_Total int NOT NULL, 
@@ -88,7 +89,7 @@ CREATE TABLE Compra (
     Codigo_Postal int NOT NULL,
     Comentario text,
     Numero_Estrellas int,
-    CONSTRAINT PK_Compra PRIMARY KEY (Correo_Comprador, Correo_Vendedor, Id_Producto),
+    CONSTRAINT PK_Compra PRIMARY KEY (Correo_Comprador, Correo_Vendedor, Id_Producto, Id_Compra),
     CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Vendedor (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CorreoComprador FOREIGN KEY (Correo_Comprador) references Comprador (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_Id FOREIGN KEY (Id_Producto) references Producto (Id_Producto) ON UPDATE CASCADE
