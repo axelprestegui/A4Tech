@@ -85,7 +85,7 @@ CREATE TABLE Compra (
     Calle varchar(75) NOT NULL,
     Numero_Ext int NOT NULL,
     Numero_Int varchar(15),
-    CP int NOT NULL,
+    Codigo_Postal int NOT NULL,
     Comentario text,
     Numero_Estrellas int,
     CONSTRAINT PK_Compra PRIMARY KEY (Correo_Comprador, Correo_Vendedor, Id_Producto),
