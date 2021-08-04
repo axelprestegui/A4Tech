@@ -34,6 +34,5 @@ def iniciar_sesion():
     return redirect(url_for('producto.crear_producto'))
 
 def cerrar_sesion():
-    print("Hola, hola", file=sys.stderr)
     db.session.close()
     return redirect(url_for('index'))
