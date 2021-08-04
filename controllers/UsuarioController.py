@@ -1,6 +1,8 @@
 from flask import render_template
 from flask import flash
 from flask import request
+from flask import url_for
+from werkzeug.utils import redirect
 from models.Modelos import Vendedor
 from models.Modelos import Comprador
 from flask_sqlalchemy import SQLAlchemy
@@ -28,10 +30,10 @@ def iniciar_sesion():
         flash("Usuario o contraseña incorrectos")
         return render_template('usuario/iniciar_sesion.html', error=True)
 
-    return render_template('usuario/cerrar_sesion.html') # Esto lo cambiamos por la página principal del comprador
+    # Esto lo cambiamos por la página principal del comprador
+    return redirect(url_for('producto.crear_producto'))
 
 def cerrar_sesion():
-    if request.method == 'POST':
-        pass
-    else :
-        return render_template('usuario/cerrar_sesion.html')
+    print("Hola, hola", file=sys.stderr)
+    db.session.close()
+    return redirect(url_for('index'))
