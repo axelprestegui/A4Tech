@@ -158,13 +158,12 @@ def buscar_producto():
     if request.method != 'POST':
         return render_template('producto/buscar_producto.html')
 
-    try:
-        busqueda = db.session.query(Producto).filter(Producto.nombre.like('%'+request.form['search']+'%')).all()
-        print(busqueda, file=sys.stderr)
-        return render_template('producto/resultado_busqueda.html')
-    except:
-        flash('No se encontraron resultados')
-        return render_template('producto/crear_producto.html')
+    busqueda = db.session.query(Producto).filter(Producto.nombre.like('%'+request.form['search']+'%')).all()
+
+    if busqueda == []:
+        return render_template('producto/buscar_producto.html')
+    else:
+        return render_template('producto/resultado_busqueda.html') # aquí llamamos a la función que nos devuelve la lista de productos
 
 def resultado_busqueda():
     return render_template('producto/resultado_busqueda.html')
