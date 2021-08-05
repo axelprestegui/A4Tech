@@ -1,0 +1,146 @@
+<style type="text/css">    
+@import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
+table{
+    width: 90% !important;
+    font-size: 20px !important;
+    margin: 0 auto !important;
+    border-collapse: collapse !important;    
+}
+#imagenes{
+        width: 40% !important;
+}
+#tabla{
+    padding: 50px !important;
+}
+caption{
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+.esructura{
+    padding-top: 1% !important;
+}
+span{
+  position: relative;
+  display: inline-flex;
+  width: 180px;
+  height: 55px;
+  margin: 0 15px;
+  perspective: 1000px;
+}
+span a{
+  font-size: 19px;
+  letter-spacing: 1px;
+  transform-style: preserve-3d;
+  transform: translateZ(-25px);
+  transition: transform .25s;
+  font-family: 'Montserrat', sans-serif;
+  
+}
+span a:before,
+span a:after{
+  position: absolute;
+  content: "Comprar Ahora";
+  height: 55px;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid black;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+span a:before{
+  color: #fff;
+  background: #000;
+  transform: rotateY(0deg) translateZ(25px);
+}
+span a:after{
+  color: #000;
+  transform: rotateX(90deg) translateZ(25px);
+}
+span a:hover{
+  transform: translateZ(-25px) rotateX(-90deg);
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+
+          
+</style>
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{producto.nombre}}{% endblock %}</h1>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../img/dog.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+
+
+{% block content %}
+<section id="tabla">
+    <table>
+       <h1> <caption>{{producto.nombre}}</caption> </h1>
+      <tr>
+<!-- Seccion para mostrar las imagenes del producto-->
+
+            <td id="imagenes" >
+                <img class="center" src="https://m.media-amazon.com/images/I/712Jt2-RBwL._AC_SX425_.jpg">
+            </td>
+            
+<!-- Seccion para mostrar detalles del producto-->
+            <td>
+                <table class="tg">
+                    
+                    <tbody>
+                      <tr>
+<!--Cargamos los elementos en el siguiente orden: descripcion, detalles y precio-->
+                        <td class="esructura">
+                            <h2>Descripcion</h2>  {{producto.descripcion}} 
+                            <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="esructura">
+                            <h2>Detalles</h2>
+                             {{producto.detalles}}
+                            <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="esructura">
+                            <table class="tg">
+                                <h2>Precio</h2>
+                                <thead>
+                                  <tr>
+                                    <th class="tg-0lax">{{producto.precio}} $</th>
+                                    <th class="tg-0lax"><span><a href="comprar.html"></a></span></th>
+                                  </tr>
+                                </thead>
+                            </table>
+                        </td>
+                      </tr>
+                    </tbody>  
+                </table>
+            </td>
+    </table>
+    <br>
+    <br>
+    <br>
+    <a class="button" href="#">Regresar al inicio</a>
+    
+</section>
+
+
+{% endblock%}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Registro Usuarios{% endblock %}</h1>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../img/dog.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{% block content %}
+
+<style type="text/css">
+  body{
+    background-color: #E8F6EF;
+  } 
+  .campo {
+    width: 600px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 4px;
+}
+form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 30px;
+    font-size: 18px;
+}
+</style>
+  <article id= formulario>
+    
+  
+    <form method="post">
+
+      <label for="nombre_usuario">Nombre</label>
+      <br>
+      <input class="campo" type="text" name="nombre_usuario" id="nombre_usuario" required placeholder="Obligatorio" required>
+      <br>
+      <label for="apellidoP">Apellido Paterno</label>
+      <br>
+      <input class="campo" type="text" name="apellidoP" id="apellidoP" required placeholder="Obligatorio" required>
+      <br>
+      <label for="apellidoM">Apellido Materno</label>
+      <br>
+      <input class="campo" type="text" name="apellidoM" id="apellidoM">
+      <br>
+      <label for="correo_usuario">Correo Electronico</label>
+      <br>
+      <input class="campo" type="email" name="correo_usuario" id="correo_usuario" required placeholder="Obligatorio" required>
+      <br>
+      <label for="telefono">Telefono</label>
+      <br>
+      <input class="campo" type="tel" name="telefono" id="telefono" required placeholder="Obligatorio" required>
+      <br>
+     
+      <div class="ui checkbox">
+        <input type="checkbox" name="comprador" value="comprador">
+        <label>Comprador</label>
+      </div>
+
+      <div class="ui checkbox">
+        <input type="checkbox" name="vendedor" value="vendedor">
+        <label>Vendedor</label>
+      </div>
+
+
+      <input type="submit" value="Registarse">
+
+    </form>
+  </article>
+{% endblock %}
