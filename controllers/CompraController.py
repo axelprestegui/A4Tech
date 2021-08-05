@@ -1,15 +1,23 @@
 from flask import render_template, redirect, url_for, request, abort, jsonify
-from models.Modelos import Producto,ProductoEsquema, Compra, CompraEsquema
+from models.Modelos import Producto,ProductoEsquema, Compra, CompraEsquema, Comprador
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
 import os.path
 import sys
 import shutil
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 db = SQLAlchemy() # nuestro ORM
 
-imagenes_validas = [".jpg",".gif",".png",".jpeg"] # las formatos de imágenes que permitimos
+# para enviar correos
+port = 465  # For SSL
+correo = '4atech.am4zonas@gmail.com' # nuestro correo
+password = 'am4zonas123' # la contraseña de nuestro correo
+context = ssl.create_default_context() # creamos un ssl
+message = MIMEMultipart("alternative") # el correo a enviar
 
 """
 Método que dará acceso a '.../producto/compra_producto' la cual será una vista encargada de recabar 
@@ -24,8 +32,7 @@ def comprar_producto():
         correo_vendedor = request.form['correo_vendedor']
         id_producto = request.form['id_producto']
         forma_pago = request.form['forma_pago']
-        cantidad = request.form['cantidad']
-        costo_total = request.form['costo_total']
+        cantidad = int(request.form['cantidad'])
         estado = request.form['estado']
         ciudad = request.form['ciudad']
         alcaldia = request.form['alcaldia']
@@ -37,11 +44,51 @@ def comprar_producto():
         comentario = None
         numero_estrellas = None
 
+        # obtenemos el comprador
+        comprador = db.session.query(Comprador).filter_by(correo=correo_comprador).one()
+        # obtenemos el producto comprado
+        producto = db.session.query(Producto).filter_by(id_producto=id_producto).one()
+        # checamos que haya stock suficiente
+
+        if cantidad > producto.cantidad:
+            flash('Lo sentimos, no existen tantos productos en stock. Cantidad máxima para comprar de momento: {}'.format(producto.cantidad))
+            return render_template('producto/comprar_producto.html')
+        # actualizamos el stock actual del producto
+        producto.cantidad = producto.cantidad - cantidad
+        db.session.commit()
+        # obtenemos el costo total
+        costo_total = cantidad * producto.precio
         # Creamos la compra
         compra = Compra(correo_comprador, correo_vendedor, id_producto, forma_pago, cantidad, costo_total, estado, ciudad,
         alcaldia,colonia,calle, numero_ext, numero_int, codigo_postal, comentario, numero_estrellas)
-        # Guardamos en la BD
+        # Guardamos y actualizamos en la BD
         db.session.add(compra)
         db.session.commit()
 
+        # envíamos el correo de que se ha realizado la compra exitosamente
+        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+            server.login("4atech.am4zonas@gmail.com", password)
+            try:
+                server.login(correo,password)
+
+                nuevo_mensaje = """\
+                <html>
+                    <body>
+                        <p>¡Hola, {}!<br>
+                        Agradecemos su compra en Am4zonas del producto {}.<br>
+                        Su costo total ha sido de ${}.<br>
+                        ¡Gracias por su preferencia!<br>
+                        Atentamente, el equipo de 4AT-ech.
+                        </p>
+                    </body>
+                </html>
+                """.format(comprador.nombre,producto.nombre,costo_total)
+                message['From'] = correo
+                message['To'] = comprador.correo
+                message['Subject'] = 'Compra realizada en Am4zonas'
+                message.attach(MIMEText(nuevo_mensaje, 'html'))
+                server.sendmail(correo,comprador.correo,message.as_string())
+            except Exception as e:
+                flash('No hemos podido enviar su correo de confirmación. Sin embargo, la compra ha sido completada con éxito.')
+                # return render_template() podríamos mandarlo a la página principal o a la página del producto
     return jsonify({'msg':'Compra realizada!'})

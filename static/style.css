@@ -35,3 +35,8 @@ FOOTER SECTION
    background-color:#000;
    font-size:14px;
 }
+
+body {
+  background-size: cover;
+  background-image: url('images/wallpaper.png');
+}

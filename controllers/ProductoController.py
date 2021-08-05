@@ -144,7 +144,7 @@ def eliminar_producto():
     # obtenemos el producto
     producto = db.session.query(Producto).filter_by(id_producto=id_producto).one()
     # eliminamos sus imágenes si es que existen
-    dir_vendedor_img = str(Path(__file__).parent.parent / ('instance/' + producto.correo_vendedor))
+    dir_vendedor_img = str(Path(__file__).parent.parent / ('static/images/' + producto.correo_vendedor))
     imagenes = os.path.join(dir_vendedor_img, str(id_producto))
     if os.path.isdir(imagenes):
         shutil.rmtree(imagenes)
