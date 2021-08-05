@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request, abort, jsonify
-from models.Modelos import Producto,ProductoEsquema, Compra, CompraEsquema, Comprador
+from models.Modelos import Producto,ProductoEsquema, Compra, CompraEsquema, Usuario
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
@@ -45,7 +45,7 @@ def comprar_producto():
         numero_estrellas = None
 
         # obtenemos el comprador
-        comprador = db.session.query(Comprador).filter_by(correo=correo_comprador).one()
+        comprador = db.session.query(Usuario).filter_by(correo=correo_comprador).one()
         # obtenemos el producto comprado
         producto = db.session.query(Producto).filter_by(id_producto=id_producto).one()
         # checamos que haya stock suficiente

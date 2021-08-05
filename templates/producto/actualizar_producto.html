@@ -9,7 +9,7 @@ Actualiza tu producto
 {% endblock%}
 
 {% block doggy %}
-<a class="navbar-brand" href="#"><img src="../../img/dog.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
 {% endblock%}
 
 {% block content %}
@@ -20,8 +20,7 @@ Actualiza tu producto
         <div class="form-content">
             <form id="survey-form">
                 
-                <label for="correo_vendedor">Correo</label>
-                <input name="correo_vendedor" id="correo_vendedor" required placeholder="Obligatorio">
+                <input name="correo_vendedor" style="display: none;" id="correo_vendedor" value={{current_user.correo}}>
 
                 <label for="id_producto">Id</label>
                 <input name="id_producto" id="id_producto" required placeholder="Obligatorio">

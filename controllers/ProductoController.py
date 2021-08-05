@@ -1,13 +1,12 @@
 from flask import render_template, redirect, url_for, request, abort, jsonify
+from flask_login import login_required
 from flask.helpers import flash
 from sqlalchemy.orm import query
 from models.Modelos import Producto,ProductoEsquema
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
-import os.path
-import sys
-import shutil
+import os.path, sys, shutil
 
 db = SQLAlchemy() # nuestro ORM
 
@@ -20,6 +19,7 @@ de ya sea devolver el formulario para la creacion de una nueva publicación de p
 o de recibir la información que se haya mandado para intentar la creación de una nueva
 publicación de producto
 """
+@login_required
 def crear_producto():
     # si no recibimos una solicitud post, mostramos el formulario
     if request.method != 'POST':
@@ -136,6 +136,7 @@ def actualizar_producto():
 """
 Método que se encarga de eliminar un producto de la bd.
 """
+@login_required
 def eliminar_producto():
     if request.method != 'POST':
         return render_template('producto/eliminar_producto.html')
@@ -154,6 +155,7 @@ def eliminar_producto():
     
     return jsonify({'msg': 'todo ok'})
 
+@login_required
 def buscar_producto():
     if request.method != 'POST':
         return render_template('producto/buscar_producto.html')
@@ -166,6 +168,7 @@ def buscar_producto():
         flash('No se encontraron resultados')
         return render_template('producto/crear_producto.html')
 
+@login_required
 def resultado_busqueda():
     return render_template('producto/resultado_busqueda.html')
     
