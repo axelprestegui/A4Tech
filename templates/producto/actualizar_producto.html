@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Actualiza tu producto
+{% endblock%}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../img/dog.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+  
+    <div class="main-content">
+        <h3><strong>¡Actualiza tu producto!</strong></h3>
+        <div class="form-content">
+            <form id="survey-form">
+                
+                <label for="correo_vendedor">Correo</label>
+                <input name="correo_vendedor" id="correo_vendedor" required placeholder="Obligatorio">
+
+                <label for="id_producto">Id</label>
+                <input name="id_producto" id="id_producto" required placeholder="Obligatorio">
+                
+                <label for="nombre">Nuevo nombre del producto</label>
+                <input type="text" name="nombre" id="nombre" >
+                
+                <label for="precio">Nuevo precio</label>
+                <input type="number " step="0.01" name="precio" id="precio">
+                
+                <label for="cantidad">Actualizar cantidad</label>
+                <input type="number" step="1" name="cantidad" id="cantidad">
+                
+                <label for="detalles">Nuevos Detalles</label>
+                <input type="text" name="detalles" id="detalles">
+                
+                <label for="descripcion">Nueva Descripción</label>
+                <input type="text" name="descripcion" id="descripcion">
+                
+                <label for="estado">Producto nuevo</label>
+                <input type="checkbox" name="estado" id="estado">
+
+                <div class="container">
+                   <label> Tome en cuenta que las fotos anteriores serán eliminadas</label> 
+                    <input type="file" name="imagenes" id="imagenes" accept="image/*" class="upload-box" multiple>
+                </div>
+            
+                <div>
+                    <input type="submit" value="Actualizar producto">
+                </div>
+            </form>
+        </div>
+    </div>
+
+  </form>
+{% endblock %}

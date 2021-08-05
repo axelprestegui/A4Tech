@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+
+{% block title %}Am4zonas{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% block am4zonas %}
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form navbar-right">
+            &nbsp; 
+            <input type="button" value="Registrarse" style="background-color: #31326F;color: white;" class="btn btn-primary" onclick="location.href='/usuario/registrarse'">
+        </form>
+        <form class="navbar-form navbar-right">
+            &nbsp; 
+            <input type="button" value="Iniciar Sesión" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary" onclick="location.href='/usuario/iniciar_sesion'">
+        </form>
+    </ul>
+</div>
+<!-- /.col -->
+</div>
+{% endblock%}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="well well-lg offer-box text-center">
+
+                <h1>¡Bienvenido a Am4zonas!</h1>
+                <p>Esperamos que disfrutes tu estancia.</p>
+            </div>
+            <br />
+        </div>
+{% endblock %}
