@@ -20,7 +20,7 @@ Comprar producto
             <form action="" method="POST">
                 <p class="una-fraccion">
                     <label for="forma_pago"> Forma de pago </label>
-                    <input type="text" style="display: none;" value="derekalmanzacancer@gmail.com" name="correo_comprador" id="correo_comprador" required>
+                    <input type="text" style="display: none;" value={{current_user.correo}} name="correo_comprador" id="correo_comprador" required>
                     <input type="text" style="display: none;" value="axelprestegui@ciencias.unam.mx" name="correo_vendedor" id="correo_vendedor" required>
                     <input type="number" style="display: none;" value="2" name="id_producto" id="id_producto" required>
                     <input type="text" name="forma_pago" id="forma_pago" required>

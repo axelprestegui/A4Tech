@@ -1,12 +1,10 @@
-from flask import render_template, redirect, url_for, request, abort, jsonify
+from flask import render_template, redirect, url_for, request, abort, jsonify, flash
+from flask_login import login_required
 from models.Modelos import Producto,ProductoEsquema, Compra, CompraEsquema, Usuario
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
-import os.path
-import sys
-import shutil
-import smtplib, ssl
+import os.path, sys, shutil, smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -23,6 +21,7 @@ message = MIMEMultipart("alternative") # el correo a enviar
 Método que dará acceso a '.../producto/compra_producto' la cual será una vista encargada de recabar 
 la información necesaria para llevar a cabo la compra del producto.
 """
+@login_required
 def comprar_producto():
     # Si no recibimos un post, mostramos el formulario.
     if request.method != 'POST':
