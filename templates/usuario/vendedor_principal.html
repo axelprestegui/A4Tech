@@ -14,7 +14,7 @@ Inicio vendedor
     <ul class="nav navbar-nav navbar-right">
         <form class="navbar-form navbar-right" action="{{url_for('usuario.cerrar_sesion')}}">
             &nbsp; 
-            <input type="button" value="Cerrar Sesión" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary" onclick="location.href='/usuario/cerrar_sesion'">
+            <input type="button" value="Cerrar Sesión" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary" onclick="location.href='../index.html'">
         </form>
     </ul>
 </div>
@@ -32,5 +32,14 @@ Inicio vendedor
         </div>
     </div>
 
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+            <form class="navbar-form navbar-right" action="{{url_for('producto.productos_vendedor')}}">
+                &nbsp; 
+                <input type="button" value="Ver mis productos" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary" onclick="location.href='productos_vendedor.html'">
+                <input name="correo_vendedor" style="display: none;" id="correo_vendedor" value={{current_user.correo}}>
+            </form>
+        </ul>
+    </div>
   </form>
 {% endblock %}

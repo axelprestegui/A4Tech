@@ -88,7 +88,7 @@ def crear_contrasenia():
 def registrar_usuario():
     # si no recibimos una solicitud post, mostramos el formulario
     if request.method != 'POST':
-        return render_template('producto/registrar_usuario.html')
+        return render_template('usuario/registrar_usuario.html')
     
     # en otro caso, obtenemos la información enviada
     nombre_usuario = request.form['nombre_usuario']
