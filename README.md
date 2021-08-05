@@ -10,11 +10,13 @@ Es necesario tener instalado...
 - *Flask*:\
 ```python3 -m pip install pip --upgrade```\
 ```pip install flask```\
--*Flask-Alchemy*:\
+- *Flask-Alchemy*:\
 ```pip install Flask-SQLAlchemy```\
--*Flask-Marshmallow*:\
-```pip install flask-marshmallow```
--*psycopg2*:\
+- *Flask-Marshmallow*:\
+```pip install flask-marshmallow```\
+- *Flask-Login*:\
+```pip install flask-login```\
+- *psycopg2*:\
 ```pip install psycopg2-binary```\
 
 Así como Postgresql, pues será nuestro manejador de base de datos.

@@ -1,6 +1,8 @@
 from flask import request,json
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 db = SQLAlchemy() # nuestro ORM
@@ -12,34 +14,54 @@ correo, nombre, apellido_paterno, apellido_materno, contrasenia y telefono, así
 productos para sus productos publicados. Posiblemente hará falta y será de utilidad agregar
 alguna relación venta para cuando se haya implementado el modelo Compra.
 """
-class Vendedor(db.Model):
-    __tablename__ = 'vendedor'
+class Usuario(db.Model, UserMixin):
+    __tablename__ = 'usuario'
     correo = db.Column(db.Unicode, primary_key=True, nullable=False, unique=True)
     nombre = db.Column(db.Unicode, nullable=False)
     apellido_paterno = db.Column(db.Unicode, nullable=False)
     apellido_materno = db.Column(db.Unicode, nullable=False)
     contrasenia = db.Column(db.Unicode, nullable=False)
     telefono = db.Column(db.Integer, nullable=False)
-    productos = db.relationship('Producto', backref='vendedor')
+    tipo = db.Column(db.Boolean, nullable=False)
+    productos = db.relationship('Producto', backref='usuario')
     #ventas = db.relationship('Compra', backref='vendedor') para cuando se implemente compra
 
-    def __init__(self, correo, nombre, apellido_paterno, apellido_materno, contrasenia, telefono):
+    def __init__(self, correo, nombre, apellido_paterno, apellido_materno, contrasenia, telefono,tipo):
         self.correo = correo
         self.nombre = nombre
         self.apellido_paterno = apellido_paterno
-        self.apellido_paterno = apellido_materno
-        self.contrasenia = contrasenia
+        self.apellido_materno = apellido_materno
+        self.contrasenia = generate_password_hash(contrasenia)
         self.telefono = telefono
+        self.tipo = tipo
 
-class VendedorEsquema(ma.Schema):
+    def check_contrasenia(self, constrasenia):
+        return self.contrasenia.replace(' ','') == constrasenia.replace(' ','')
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.correo
+
+    def __repr__(self):
+        return '<User %r>' % (self.nickname)
+
+class UsuarioEsquema(ma.Schema):
     class Meta:
-        fields = ('correo', 'nombre', 'apellido_paterno', 'apellido_materno', 'contrasenia', 'telefono')
+        fields = ('correo', 'nombre', 'apellido_paterno', 'apellido_materno', 'contrasenia', 'telefono', 'tipo')
 
 """
 Clase modelo Comprador que modela nuestra tabla Comprador de nuestra BD con los atributos correo,
 nombre, apellido_paterno, apellido_materno, contrasenia y telefono. Posiblemente hará falta y
 será de utilidad agregar alguna relación compras para cuando se haya implementado el modelo Compra.
-"""
+
 class Comprador(db.Model):
     __tablename__ = 'comprador'
     correo = db.Column(db.Unicode, primary_key=True, nullable=False, unique=True)
@@ -61,6 +83,7 @@ class Comprador(db.Model):
 class CompradorEsquema(ma.Schema):
     class Meta:
         fields = ('correo', 'nombre', 'apellido_paterno', 'apellido_materno', 'contrasenia', 'telefono')
+"""
 
 """
 Clase modelo Producto que modela nuestra tabla Producto de nuestra BD con los atributos
@@ -70,7 +93,7 @@ el modelo Compra.
 """
 class Producto(db.Model):
     __tablename__ = 'producto'
-    correo_vendedor = db.Column(db.Unicode, db.ForeignKey('vendedor.correo'), primary_key=True, nullable=False)
+    correo_vendedor = db.Column(db.Unicode, db.ForeignKey('usuario.correo'), primary_key=True, nullable=False)
     id_producto = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True, nullable=False)
     nombre = db.Column(db.Unicode, nullable=False)
     precio = db.Column(db.Float, nullable=False)
@@ -102,8 +125,8 @@ comentario, numero_estrellas.
 """
 class Compra(db.Model):
    __tablename__='compra' 
-   correo_comprador = db.Column(db.Unicode, db.ForeignKey('comprador.correo'), primary_key=True, nullable=False)
-   correo_vendedor = db.Column(db.Unicode, db.ForeignKey('vendedor.correo'), primary_key=True, nullable=False)
+   correo_comprador = db.Column(db.Unicode, db.ForeignKey('usuario.correo'), primary_key=True, nullable=False)
+   correo_vendedor = db.Column(db.Unicode, db.ForeignKey('usuario.correo'), primary_key=True, nullable=False)
    id_producto = db.Column(db.Integer, db.ForeignKey('producto.id_producto'), primary_key=True)
    id_compra = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
    forma_pago = db.Column(db.Unicode, nullable=False)

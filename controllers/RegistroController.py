@@ -1,7 +1,7 @@
 from os import error
 from flask import Flask, flash
 from flask import render_template, redirect, url_for, request, abort, jsonify
-from models.Modelos import Comprador, Producto,ProductoEsquema, Vendedor
+from models.Modelos import *
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
@@ -102,36 +102,28 @@ def registrar_usuario():
     mensaje = None
     
     try:
-        registradoVendedor = db.session.query(Vendedor).filter(Vendedor.correo == request.form['correo_usuario']).one()
+        usuarioRegistrado = db.session.query(Usuario).filter(Usuario.correo == request.form['correo_usuario']).one()
         return jsonify('Usuario ya registrado como vendedor')
     except:
-        print('no hay ningun vendedor con ese nombre')
-    
-    try:
-        registradoComprador = db.session.query(Comprador).filter(Comprador.correo == request.form['correo_usuario']).one()
-        return jsonify('Usuario ya registrado como comprador')
-    except:
-        print('no hay ningun comprador con ese nombre')
+        flash('Este usaurio ya se encuentra registrado, por favor introduzca un correo diferente')
+        
     
     if (isComprador == 'comprador') and (isVendedor == 'vendedor') or isComprador == isVendedor:
         return error
     elif isComprador == 'comprador':
         
         mensaje = 'Registrado el comprador :' 
-        nuevo_usuario = Comprador(correo_usuario,nombre_usuario,apellidoP, apellidoM,contrasenia,telefono)
+        nuevo_usuario = Usuario(correo_usuario,nombre_usuario,apellidoP, apellidoM,contrasenia,telefono, True)
         mensaje += str(nombre_usuario) + ' ' + str (apellidoP)
-        
-       
     else:
         mensaje = 'Registrado el vendedor :'
-        nuevo_usuario = Vendedor(correo_usuario,nombre_usuario,apellidoP,apellidoM,contrasenia,telefono)
+        nuevo_usuario = Usuario(correo_usuario,nombre_usuario,apellidoP,apellidoM,contrasenia,telefono, False)
         mensaje += str(nombre_usuario) + ' ' + str (apellidoP)
     
-    try:
-        db.session.add(nuevo_usuario)
-        db.session.commit()
-    except:
-        return jsonify('Parece que algo salio mal')
+    
+    db.session.add(nuevo_usuario)
+    db.session.commit()
+    
 
     mensaje += ' su contrasenia es: '+ str(contrasenia)            
     return jsonify(mensaje)

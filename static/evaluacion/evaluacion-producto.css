@@ -1,0 +1,98 @@
+/* Funciona para móviles. */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.content {
+    padding: 0 1.5em;
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.titulo {
+    text-align: center;
+    font-size: 3em;
+}
+
+
+.agrupador-info {
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    background-color: #E8F6EF;
+    text-align: center;
+}
+
+.estrellas {
+    padding: 1.5em;
+    font-style: italic;
+    font-weight: bolder;
+    background-color: #B8DFD8;
+}
+
+button {
+    padding: 0.7em;
+    border-radius: 15px;
+    border: 2px solid #a4c9c2;
+    outline: 0;
+}
+
+button:hover,
+button:focus {
+    background-color: #a4c9c2;
+    transition: background-color 1s ease-out;
+    outline: 0;
+}
+
+.resenia {
+    display: none;
+}
+
+.opiniones textarea{
+    width: 100%;
+    height: 150px;
+    resize: none;
+    margin-bottom: 15px;
+    background-color: #FFE194;
+    border: 0;
+    outline: 0;
+}
+
+.opiniones {
+    padding: 1.5em;
+    overflow: scroll;
+}
+
+.opiniones h3 {
+    font-style: italic;
+}
+
+.opiniones p {
+    padding-bottom: 1em;
+    border-bottom: 1px solid black;
+}
+
+/* Version escritorio */
+@media (min-width: 700px) {
+    body {
+        padding: 0 .4rem;        
+    }
+
+    .agrupador-info {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+    }
+
+    .agrupador-info > * {
+        padding: 2em;
+    }
+
+    .estrellas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

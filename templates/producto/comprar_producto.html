@@ -6,7 +6,6 @@ Comprar producto
 
 {% block style %}
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" href="{{ url_for('static', filename='producto/compra-producto.css') }}">
 {% endblock %}
 
@@ -18,14 +17,17 @@ Comprar producto
     <div class="agrupador-info">
         <div class="info-compra">
             <form action="" method="POST">
-                <p class="una-fraccion">
+                <p>
                     <label for="forma_pago"> Forma de pago </label>
-                    <input type="text" style="display: none;" value="derekalmanzacancer@gmail.com" name="correo_comprador" id="correo_comprador" required>
+                    <input type="text" style="display: none;" value={{current_user.correo}} name="correo_comprador" id="correo_comprador" required>
                     <input type="text" style="display: none;" value="axelprestegui@ciencias.unam.mx" name="correo_vendedor" id="correo_vendedor" required>
                     <input type="number" style="display: none;" value="2" name="id_producto" id="id_producto" required>
                     <input type="text" name="forma_pago" id="forma_pago" required>
-                    <input type="number" style="display: none;" value="0" name="cantidad" id="cantidad" required>
                     <input type="number" style="display: none;" value="0" name="costo_total" id="costo_total" required>
+                </p>
+                <p>
+                    <label for="cantidad"> Cantidad </label>
+                    <input type="number" name="cantidad" id="cantidad" required>
                 </p>
                 <p>
                     <label for="estado"> Estado </label>

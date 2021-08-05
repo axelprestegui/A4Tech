@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.ProductoController import crear_producto, actualizar_producto, eliminar_producto, ver_articulo, mostrar_todos,productos_vendedor #importamos nuestras funciones necesarios
+from controllers.ProductoController import * #importamos nuestras funciones necesarios
 from controllers.CompraController import comprar_producto # Importamos método de compra
 from controllers.ProductoController import buscar_producto
 from controllers.ProductoController import resultado_busqueda
@@ -21,11 +21,7 @@ producto_bp.route('/comprar_producto', methods=['POST','GET'])(comprar_producto)
 producto_bp.route('/buscar_producto', methods=['POST', 'GET'])(buscar_producto)
 producto_bp.route('/resultado_busqueda' , methods=['POST', 'GET'])(resultado_busqueda)
 
-# bp para mostrar un producto
-producto_bp.route('/ver_articulo', methods = ['POST','GET'])(ver_articulo)
-# bp para mostrar todos los productos en la base
-producto_bp.route('mostrar_todos', methods = ['POST','GET'])(mostrar_todos)
-# bp para registro de usuario
+producto_bp.route('/mostrar_todos', methods = ['POST','GET'])(mostrar_todos)
 producto_bp.route('/registrar_usuario',methods = ['POST','GET'])(registrar_usuario)
-# bp para mostrar los productos de un vendedor
 producto_bp.route('/productos_vendedor', methods = ['POST','GET'])(productos_vendedor)
+producto_bp.route('/ver_articulo', methods = ['POST','GET'])(ver_articulo)
