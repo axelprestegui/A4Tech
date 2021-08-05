@@ -17,7 +17,7 @@ CREATE TABLE Usuario (
     Nombre varchar(55) NOT NULL,
     Apellido_paterno varchar(70) NOT NULL,
     Apellido_materno varchar(70) NOT NULL,
-    Contrasenia char(50) NOT NULL,
+    Contrasenia char(255) NOT NULL,
     Telefono bigint NOT NULL,
     Tipo boolean NOT NULL,
     CONSTRAINT PK_CorreoUsuario PRIMARY KEY (Correo)

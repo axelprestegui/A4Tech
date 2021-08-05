@@ -2,9 +2,9 @@ from flask import render_template, flash, request, redirect, url_for
 from flask_login import login_user, logout_user, current_user
 from models.Modelos import Usuario
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import check_password_hash
+import sys
 
-db = SQLAlchemy() # nuestro ORM
+db = SQLAlchemy()
 
 def iniciar_sesion():
     if request.method == 'POST':
