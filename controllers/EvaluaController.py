@@ -9,12 +9,13 @@ import shutil
 
 db = SQLAlchemy() # nuestro ORM
 
-imagenes_validas = [".jpg",".gif",".png",".jpeg"] # las formatos de imágenes que permitimos
-
 """
 Método que dará acceso a '.../producto/compra_producto' la cual será una vista encargada de recabar 
 la información necesaria para llevar a cabo la compra del producto.
 """
 def evaluar_producto():
     if request.method != 'POST':
+        return render_template('evaluacion/evaluacion_producto.html')
+    else: 
+        # Se supone que ya guarda el comentario en la BD y ahora lo posteará en la vista xd
         return render_template('evaluacion/evaluacion_producto.html')

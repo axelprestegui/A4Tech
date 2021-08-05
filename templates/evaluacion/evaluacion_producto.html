@@ -22,15 +22,25 @@ Evaluar producto
                 <p>
                     0.0 promedio estrellas
                 </p>
-                <button disabled="disabled">
+                <button id="escribeResenia" disabled="disabled">
                     Escribe tu reseña
                 </button>
             </div>
         </div>
         <div class="opiniones">
+            <form id="resenia" class="resenia" method="POST">
+                <label for="resenia"> Ingresa tu reseña aquí &darr; </label>
+                <br>
+                <textarea name="resenia" id="reseniaArea" cols="20"></textarea>
+                <!-- <input type="text" name="resenia" id="resenia"> -->
+                <button type="submit" style="font-weight: bolder;" id="enviar">
+                    Enviar reseña
+                </button>
+            </form>
             <div>
                 <h3>Nombre de usuario 1.</h3>
                 <p>
+                    {{mensaje}}
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, perspiciatis, amet ea, 
                     dolores ipsum nam quia necessitatibus eum reiciendis consectetur non suscipit explicabo 
                     possimus quam! Iste, aspernatur ut. Quibusdam, officiis!
