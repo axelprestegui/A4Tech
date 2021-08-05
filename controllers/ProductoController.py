@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, abort, jsonify
 from flask_login import login_required
 from flask.helpers import flash
 from sqlalchemy.orm import query
-from models.Modelos import Producto,ProductoEsquema, Usuario
+from models.Modelos import Producto,ProductoEsquema, Usuario, Compra
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
@@ -173,14 +173,20 @@ def resultado_busqueda():
 
 def ver_articulo():
     #Esta parte debe modificarse para poder cargar un producto en especifico
-    id_producto = '4'
+    id_producto = '2'
 
     #Se hace la busqueda del producto deseado
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
+    compras = db.execute(
+        'SELECT *'
+        ' FROM usuario INNER JOIN compra ON usuario.correo = compra.correo_comprador'
+        'WHERE compra.id_producto = ' + id_producto
+    ).fetchall()
+
     if request.method != 'POST':
         
         #enviamos
-        return render_template('producto/ver_articulo.html', producto = producto)
+        return render_template('producto/ver_articulo.html', producto = producto, compras = compras)
     return jsonify('Algo')
 
 def mostrar_todos():

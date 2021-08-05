@@ -1,6 +1,7 @@
 const opiniones = document.getElementsByClassName('opiniones');
 const escribeResenia = document.getElementById('escribeResenia');
 const resenia = document.getElementById('resenia');
+const idProducto = document.getElementById('id_producto');
 
 escribeResenia.removeAttribute('disabled');
 
@@ -14,8 +15,6 @@ const apareceResenia = () => {
     })
 }
 
-const obtenerComentarios = () => {
-    
-}
+console.log(idProducto);
 
 apareceResenia();
