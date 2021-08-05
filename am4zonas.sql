@@ -12,27 +12,15 @@ create database am4zonas;
 /*  Creamos la tabla Comprador cuya llave primaria será Correo.
     Acepta tuplas de la forma: ('axelprestegui@ciencias.unam.mx','Axel','Prestegui','Ramos','cubito53',5576679861)
 */
-CREATE TABLE Comprador (
+CREATE TABLE Usuario (
     Correo varchar(320) NOT NULL,
     Nombre varchar(55) NOT NULL,
     Apellido_paterno varchar(70) NOT NULL,
     Apellido_materno varchar(70) NOT NULL,
-    Contrasenia char(50) NOT NULL,
+    Contrasenia char(255) NOT NULL,
     Telefono bigint NOT NULL,
-    CONSTRAINT PK_CorreoComprador PRIMARY KEY (Correo)
-);
-
-/*  Creamos la tabla Vendedor cuya llave primaria será Correo. 
-    Acepta tuplas de la forma: ('axelprestegui@ciencias.unam.mx','Axel','Prestegui','Ramos','cubito53',5576679861)
-*/
-CREATE TABLE Vendedor (
-    Correo varchar(320) NOT NULL,
-    Nombre varchar(55) NOT NULL,
-    Apellido_paterno varchar(70) NOT NULL,
-    Apellido_materno varchar(70) NOT NULL,
-    Contrasenia char(50) NOT NULL,
-    Telefono bigint NOT NULL,
-    CONSTRAINT PK_CorreoVendedor PRIMARY KEY (Correo)
+    Tipo boolean NOT NULL,
+    CONSTRAINT PK_CorreoUsuario PRIMARY KEY (Correo)
 );
 
 /*  Creamos la tabla Producto cuya llave primaria compuesta será Correo_Vendedor y Id_Producto. 
@@ -57,7 +45,7 @@ CREATE TABLE Producto (
     Descripcion text,
     Estado boolean NOT NULL,
     CONSTRAINT PK_Producto PRIMARY KEY (Id_Producto, Correo_Vendedor),
-    CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Vendedor (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT verificaCantidad CHECK (-1 < Cantidad),
     CONSTRAINT verificaPrecio CHECK (0 = Precio or 0 < Precio)
 );
@@ -90,15 +78,15 @@ CREATE TABLE Compra (
     Comentario text,
     Numero_Estrellas int,
     CONSTRAINT PK_Compra PRIMARY KEY (Correo_Comprador, Correo_Vendedor, Id_Producto, Id_Compra),
-    CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Vendedor (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_CorreoComprador FOREIGN KEY (Correo_Comprador) references Comprador (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_CorreoComprador FOREIGN KEY (Correo_Comprador) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_Id FOREIGN KEY (Id_Producto) references Producto (Id_Producto) ON UPDATE CASCADE
 );
 
 /* Algunas tuplas a insertar en la base*/
-INSERT INTO vendedor VALUES
-('axelprestegui@ciencias.unam.mx','Axel','Prestegui','Ramos','cubito53',1000000000),
-('dererex@ciencias.unam.mx','Derek','AP','AM','hola1234',5545648748);
+INSERT INTO usuario VALUES
+('axelprestegui@ciencias.unam.mx','Axel','Prestegui','Ramos','cubito53',1000000000,true),
+('dererex@ciencias.unam.mx','Derek','AP','AM','hola1234',5545648748,true);
 
 INSERT INTO producto (Correo_Vendedor, Nombre, Precio, Cantidad, Detalles, Descripcion, Estado) VALUES
 ('axelprestegui@ciencias.unam.mx', 'Zapatos adidas número 26 edición limitada', 1500.00, 1, 'Sin detalles', 'Sin descripción', true),

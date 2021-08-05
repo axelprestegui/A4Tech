@@ -1,29 +1,38 @@
-from flask import render_template
-from flask import flash
-from flask import request
-from models.Modelos import Vendedor
-from models.Modelos import Comprador
+from flask import render_template, flash, request, redirect, url_for
+from flask_login import login_user, logout_user, current_user
+from models.Modelos import Usuario
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import check_password_hash
+import sys
 
-db = SQLAlchemy() # nuestro ORM
+db = SQLAlchemy()
 
 def iniciar_sesion():
     if request.method == 'POST':
+        # checamos si ya hay un usuario en sesión
+        if current_user.is_authenticated:
+            # si es vendedor lo redireccionamos a la página correspondiente
+            if current_user.tipo:
+                return render_template('usuario/vendedor_principal.html')
+            else:
+                return render_template('index.html') # aquí va la página del comprador
+        # en otro caso, intentamos iniciar sesión
         correo = request.form.get('correo')
         contrasenia = request.form.get('contrasenia')
-        usuario = Comprador.query.filter_by(correo=correo).first()
+        usuario = Usuario.query.filter_by(correo=correo).first()
 
-        if not usuario or not check_password_hash(usuario.contrasenia, contrasenia):
-            flash("Usuario o contraseña incorrectos")
-            return render_template('usuario/iniciar_sesion.html', error=True)
-
-        return render_template('/') # Esto lo cambiamos por la página principal del comprador
+        # checamos si encontramos un usuario y las contraseñas coinciden
+        if usuario is not None and usuario.check_contrasenia(contrasenia):
+            login_user(usuario)
+            # si es vendedor lo redireccionamos a la página correspondiente
+            if usuario.tipo:
+                return render_template('usuario/vendedor_principal.html')
+            else:
+                return render_template('index.html') # aquí va la página del comprador
+        flash("Correo o contraseña incorrectos")
+        return render_template('usuario/iniciar_sesion.html', error=True)
     else :
         return render_template('usuario/iniciar_sesion.html')
 
 def cerrar_sesion():
-    if request.method == 'POST':
-        pass
-    else :
-        return render_template('usuario/cerrar_sesion.html')
+    logout_user()
+    return render_template('index.html')

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Inicio vendedor
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+
+{% block am4zonas %}
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form navbar-right" action="{{url_for('usuario.cerrar_sesion')}}">
+            &nbsp; 
+            <input type="button" value="Cerrar Sesión" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary" onclick="location.href='/usuario/cerrar_sesion'">
+        </form>
+    </ul>
+</div>
+{% endblock%}
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+  
+    <div class="main-content">
+        <div class="form-content">
+            {% if current_user.is_authenticated %}
+                <h1>¡Bienvenido de regreso, {{ current_user.nombre }}!</h1>
+                <p>Esperamos que disfrutes tu estancia.</p>
+            {% endif%}
+        </div>
+    </div>
+
+  </form>
+{% endblock %}
