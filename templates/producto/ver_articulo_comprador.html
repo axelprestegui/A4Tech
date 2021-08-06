@@ -173,11 +173,12 @@ span a:hover{
               <div>
                   {% if compras %}
                     {% for compra in compras %}
-
+                    {% if compra.Compra.comentario != None%}
                       <h3>{{compra.Usuario.nombre}}.</h3>
                       <p>
                           {{compra.Compra.comentario}}
                       </p>
+                    {% endif %}
                     {% endfor %}
                   {% endif %}
               </div>

@@ -47,7 +47,9 @@ Actualiza tu producto
             <input type="file" name="imagenes" id="imagenes" accept="image/*" class="upload-box" multiple>
             
             <input class="boton" type="submit" value="Actualizar producto">
-            <input class="boton" type="button" value="Atras" onclick="location.href='../usuario/vendedor_principal'">
+            <p align="center">
+                <a class="boton" value="Cancelar" href="{{ url_for('producto.productos_vendedor') }}"> Cancelar </a>
+            </p>>
         </form>
     </div>
 </form>

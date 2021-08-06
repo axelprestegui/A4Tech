@@ -158,10 +158,12 @@
                   <div>
                       {% if compras %}
                         {% for compra in compras %}
-                          <h3>{{compra.Usuario.nombre}}.</h3>
-                          <p>
+                           {% if compra.Compra.comentario != None%}
+                             <h3>{{compra.Usuario.nombre}}.</h3>
+                              <p>
                               {{compra.Compra.comentario}}
-                          </p>
+                             </p>
+                           {% endif %}
                         {% endfor %}
                       {% endif %}
                   </div>
