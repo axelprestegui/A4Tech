@@ -1,67 +1,86 @@
-
-
 /* ===================== FILE INPUT ===================== */
-
-.container{
-  position: relative;
-  
-}
-
 .upload-box{
-   font-size: 14px;
-   background: white;
-   border-radius: 50px;
-   box-shadow: 5px 5px 10px black;
-   width: 350px;
-   outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 14px;
+	background: white;
+	border-radius: 24px;
+	box-shadow: 3px 3px 10px black;
+	width: 350px;
+	outline: none;
 }
 
 ::-webkit-file-upload-button{
-  color: white;
-  background: #C8B565;
-  padding: 10px;
-  border: none;
-  border-radius: 50px;
-  box-shadow: 1px 0 1px 1px #A99E70;
-  outline: none;
+  	color: white;
+  	background: #FFE194;
+  	padding: 10px;
+  	border: none;
+  	border-radius: 50px;
+  	color: #0006;
+  	box-shadow: 1px 0 1px 1px #A99E70;
+  	outline: none;
 }
 
 ::-webkit-file-upload-button:hover{
-  background: #438a5e;
+  	background: #e4c986;
 }
 
 .main-content{
-  background-color: #EBE6D0;
-  max-width: 1000px;
-  display: flex;
-  flex-direction: column;
-  padding: 40px;
-  margin: 0 auto;
-  margin-bottom: 40px;
-  border-radius: 5px;
-  z-index: 2;
-  position: inherit;
-  box-shadow: #6b4559;
+  	background-color: #E8F6EF;
+  	max-width: 1000px;
+  	display: flex;
+  	flex-direction: column;
+  	padding: 40px;
+  	margin: 0 auto;
+  	margin-bottom: 40px;
+  	border-radius: 5px;
+  	z-index: 2;
+  	position: inherit;
+  	box-shadow: -15px 15px 10px #4C4C6D;
 }
 
-#nombre, #precio, #cantidad, #detalles, #descripcion, #correo_vendedor, #id_producto, #estado{
-  display: block;
-  width: 100%;
-  height: 35px;
-  padding: 5px 10px;
-  color: #000000;
-  background: #ffffff;
-  border: 1px solid #eeeeee;
-  border-radius: 5px;
-  font-size: 20px;
-  margin-bottom: 20px;
+.campos {
+  	display: block;
+  	width: 100%;
+  	height: 35px;
+  	padding: 0.3em 0.6em;
+  	color: #000000;
+  	background: #FFE194;
+  	border: 1px solid #eeeeee;
+  	border-radius: 10px;
+  	font-size: 20px;
+  	margin-bottom: 20px;
 }
 
-input[type=submit] {
-  padding:5px 15px; 
-  background:#ccc; 
-  border:0 none;
-  cursor:pointer;
-  -webkit-border-radius: 5px;
-  border-radius: 5px; 
+.campos::placeholder {
+  	font-style: italic;
+  	color: #0006;
 }
+
+#estado {
+	transform: scale(2);
+  	padding: 5px 10px;
+  	width: 50px;
+  	margin-bottom: 25px;
+}
+
+.boton {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 150px;
+  	padding: 10px; 
+  	background: #4C4C6D; 
+	color: white;
+  	border:0 none;
+  	cursor:pointer;
+  	margin-top: 35px;
+  	border-radius: 5px; 
+}
+
+.boton:hover {
+	background-color: #5d5d86;
+    transition: background-color 1s ease-out;
+    outline: 0;
+}
+
