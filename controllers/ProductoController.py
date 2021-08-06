@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, abort, jsonify
 from flask_login import login_required
 from flask.helpers import flash
 from sqlalchemy.orm import query
-from models.Modelos import Producto,ProductoEsquema, Usuario
+from models.Modelos import Producto,ProductoEsquema, Usuario, Compra
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
@@ -172,16 +172,32 @@ def resultado_busqueda():
     return render_template('producto/resultado_busqueda.html')
 
 def ver_articulo():
-    #Esta parte debe modificarse para poder cargar un producto en especifico
-    id_producto = '4'
-
+    # obtenemos información del producto
+    id_producto = request.form['id_producto']
+    # y del comprador que está observando el producto
+    correo_comprador = request.form['correo_comprador']
+    if request.method == 'POST':
+        # si se mandó una reseña del producto, la intentamos guardar
+        guarda_resenia(request.form['resenia'], correo_comprador, id_producto)
     #Se hace la busqueda del producto deseado
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
-    if request.method != 'POST':
-        
-        #enviamos
-        return render_template('producto/ver_articulo.html', producto = producto)
-    return jsonify('Algo')
+    # y de los compras para obtener las reseñas
+    compras = db.session.query(Compra, Usuario).join(Usuario, Compra.correo_comprador == Usuario.correo)\
+                                                .filter(Compra.id_producto == id_producto).all()
+    return render_template('producto/ver_articulo.html', producto = producto, compras = compras)
+
+# Función auxiliar para guardar reseñas
+def guarda_resenia(comentario, correo_comprador, id_producto):
+    # buscamos todas las posibles compras que haya hecho el vendedor del producto
+    compras = db.session.query(Compra).filter_by(correo_comprador=correo_comprador,id_producto=id_producto).all()
+    for compra in compras:
+        # las iteramos para buscar alguna que no contenga comentario
+        if not compra.comentario:
+            # en tal caso, agregamos la reseña y terminamos
+            compra.comentario = comentario
+            db.session.commit()
+            return
+    flash('Por favor, compre el producto')
 
 def mostrar_todos():
     producto = db.session.query(Producto).order_by(Producto.nombre).limit(10)
