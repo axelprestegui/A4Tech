@@ -1,3 +1,4 @@
+from logging import log
 from flask import render_template, redirect, url_for, request, abort, jsonify
 from flask_login import login_required
 from flask.helpers import flash
@@ -155,21 +156,30 @@ def eliminar_producto():
     
     return jsonify({'msg': 'todo ok'})
 
+def get_producto(nombre):
+    producto = db.session.query(Producto).filter(Producto.nombre.like('%'+nombre+'%')).all()
+    return producto
+
 @login_required
 def buscar_producto():
     if request.method != 'POST':
-        return render_template('producto/buscar_producto.html')
+        return render_template('usuario/inicio_usuario.html')
 
-    busqueda = db.session.query(Producto).filter(Producto.nombre.like('%'+request.form['search']+'%')).all()
+    producto = get_producto(request.form['search'])
 
-    if busqueda == []:
-        return render_template('producto/buscar_producto.html')
+    if producto == []:
+        flash("No se encontró ningún producto con esas características")
+        return render_template('usuario/inicio_usuario.html')
     else:
-        return render_template('producto/resultado_busqueda.html') # aquí llamamos a la función que nos devuelve la lista de productos
+        return render_template('usuario/resultado_busqueda.html')
 
 @login_required
 def resultado_busqueda():
-    return render_template('producto/resultado_busqueda.html')
+    return render_template('producto/resultado_busqueda.html', resultados=get_producto(request.form['search']))
+
+@login_required
+def ver_articulo_buscado():
+    return render_template('producto/ver_articulo_buscado.html', producto=get_producto(request.form['search']))
 
 def ver_articulo():
     # obtenemos información del producto

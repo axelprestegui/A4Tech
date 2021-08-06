@@ -771,7 +771,7 @@ pre code {
   padding-left: 15px;
 }
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
-  float: left;
+  float: right;
 }
 .col-xs-12 {
   width: 100%;
@@ -1098,7 +1098,7 @@ pre code {
     width: 83.33333333%;
   }
   .col-md-9 {
-    width: 75%;
+    width: 100%;
   }
   .col-md-8 {
     width: 66.66666667%;
@@ -1113,7 +1113,7 @@ pre code {
     width: 41.66666667%;
   }
   .col-md-4 {
-    width: 33.33333333%;
+    width: 25%;
   }
   .col-md-3 {
     width: 25%;
@@ -5862,6 +5862,7 @@ INDEX PAGE
 
 .product-box h3>a,.product-box h3>a:hover,.product-box h3>a:focus {
   color:#000;
+  background-color: #31326F;
   text-decoration:none;
 }
 
