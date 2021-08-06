@@ -10,8 +10,5 @@ usuario_bp = Blueprint('usuario', __name__, url_prefix='/usuario')
 usuario_bp.route('/iniciar_sesion', methods=['POST', 'GET'])(iniciar_sesion)
 usuario_bp.route('/cerrar_sesion', methods=['POST', 'GET'])(cerrar_sesion)
 usuario_bp.route('/registrar_usuario',methods = ['POST','GET'])(registrar_usuario)
-<<<<<<< HEAD
 usuario_bp.route('/vendedor_principal')(vendedor_principal)
-=======
 usuario_bp.route('/inicio_usuario' , methods=['POST','GET'])(inicio_usuario)
->>>>>>> 5998af1cdf200c7af8ec133fa412dde72c1eee4c
