@@ -36,7 +36,7 @@ FOOTER SECTION
    font-size:14px;
 }
 
-body {
+/* body {
   background-size: cover;
-  background-image: url('images/wallpaper.png');
-}
+  background-image: url('../images/wallpaper.png');
+} */

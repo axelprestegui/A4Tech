@@ -1,0 +1,70 @@
+/* Apto para celular */
+.content {
+    padding: 0 1.5em;
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.agrupador-info {
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    text-align: center;
+    background-color: #E8F6EF;
+}
+
+.agrupador-info > * {
+    padding: 1.3em;
+}
+
+.saludo-usuario {
+    font-style: italic;
+    color: rgb(66,66,66);
+}
+
+.saludo-usuario p{
+    font-size: 1.3em;
+}
+
+.tarjetas {
+    padding: 1.5em;
+    width: 20rem; 
+    border-radius: 10px;
+    background-color: #4C4C6D;
+    color: white;
+}
+
+.tarjetas:hover {
+    background-color: #5d5d86;
+    transition: background-color 0.5s ease-out;
+    outline: 0;
+    box-shadow: inset 3px 3px 5px black;
+}
+
+.tarjetas img {
+    width: 150px; 
+    height: 150px; 
+    border-radius: 15px;
+}
+
+/* Versión escritorio */
+/* Version escritorio */
+@media (min-width: 700px) {
+    body {
+        padding: 0 .4rem;        
+    }
+
+    .saludo-usuario {
+        display: flex;
+        align-items: center;
+    }
+
+    .agrupador-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .agrupador-info > * {
+        padding: 2em;
+    }
+}

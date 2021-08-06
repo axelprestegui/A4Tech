@@ -4,6 +4,10 @@
 Comprar producto
 {% endblock %}
 
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
 {% block style %}
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='producto/compra-producto.css') }}">
@@ -68,9 +72,7 @@ Comprar producto
                     Costo total: $0.00
                 </p>
                 <p class="una-fraccion">
-                    <button>
-                        Atras
-                    </button>
+                    <button onclick="location.href='../'"> Atras </button>
                 </p>
                 <p class="una-fraccion">
                     <button type="submit">

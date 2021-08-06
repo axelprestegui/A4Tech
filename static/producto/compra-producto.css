@@ -65,8 +65,8 @@ body {
     text-transform: uppercase;
 }
 
-.info-compra form button:hover,
-.info-compra form button:focus {
+.info-compra button:hover,
+.info-compra button:focus {
     background-color: #5d5d86;
     transition: background-color 1s ease-out;
     outline: 0;
