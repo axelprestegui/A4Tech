@@ -171,6 +171,7 @@ def buscar_producto():
 def resultado_busqueda():
     return render_template('producto/resultado_busqueda.html')
 
+@login_required
 def ver_articulo():
     # obtenemos información del producto
     id_producto = request.form['id_producto']

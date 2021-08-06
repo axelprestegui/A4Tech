@@ -97,33 +97,48 @@ def registrar_usuario():
     correo_usuario = request.form['correo_usuario']
     contrasenia = crear_contrasenia()
     telefono = request.form['telefono']
-    isComprador = request.form.get("comprador")
-    isVendedor = request.form.get("vendedor")
-    mensaje = None
+    tipo = True
+    if request.form.get('type-user'):
+        tipo = True
+    else:
+        tipo = False
+    mensaje = ''
     
     try:
         usuarioRegistrado = db.session.query(Usuario).filter(Usuario.correo == request.form['correo_usuario']).one()
-        return jsonify('Usuario ya registrado como vendedor')
-    except:
         flash('Este usaurio ya se encuentra registrado, por favor introduzca un correo diferente')
+        return render_template('usuario/registrar_usuario.html')
+    except Exception as e:
         
+        nuevo_usuario = Usuario(correo_usuario,nombre_usuario,apellidoP,apellidoM,contrasenia,telefono,tipo)
     
-    if (isComprador == 'comprador') and (isVendedor == 'vendedor') or isComprador == isVendedor:
-        return error
-    elif isComprador == 'comprador':
-        
-        mensaje = 'Registrado el comprador :' 
-        nuevo_usuario = Usuario(correo_usuario,nombre_usuario,apellidoP, apellidoM,contrasenia,telefono, True)
-        mensaje += str(nombre_usuario) + ' ' + str (apellidoP)
-    else:
-        mensaje = 'Registrado el vendedor :'
-        nuevo_usuario = Usuario(correo_usuario,nombre_usuario,apellidoP,apellidoM,contrasenia,telefono, False)
-        mensaje += str(nombre_usuario) + ' ' + str (apellidoP)
+        db.session.add(nuevo_usuario)
+        db.session.commit()
     
-    
-    db.session.add(nuevo_usuario)
-    db.session.commit()
-    
+        # envíamos el correo de que se ha realizado la compra exitosamente
+        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+            server.login("4atech.am4zonas@gmail.com", password)
+            try:
+                server.login(correo,password)
 
-    mensaje += ' su contrasenia es: '+ str(contrasenia)            
-    return jsonify(mensaje)
+                nuevo_mensaje = """\
+                <html>
+                    <body>
+                        <p>¡Hola, {}!<br>
+                        Nos complace que haya decidido formar parte de esta comunidad.<br>
+                        Ha sido registrado exitosamente.<br>
+                        Puede entrar a su cuenta usando su correo con la contraseña: {}<br>
+                        Atentamente, el equipo de 4AT-ech.
+                        </p>
+                    </body>
+                </html>
+                """.format(nuevo_usuario.nombre,contrasenia)
+                message['From'] = correo
+                message['To'] = nuevo_usuario.correo
+                message['Subject'] = 'Compra realizada en Am4zonas'
+                message.attach(MIMEText(nuevo_mensaje, 'html'))
+                server.sendmail(correo,nuevo_usuario.correo,message.as_string())
+            except Exception as e:
+                flash('No hemos podido enviar su correo con su contraseña. Sin embargo, su contraseña es: ' + contrasenia)
+                # return render_template() podríamos mandarlo a la página principal o a la página del producto
+        return redirect(url_for('index'))

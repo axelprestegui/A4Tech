@@ -26,13 +26,14 @@ class Usuario(db.Model, UserMixin):
     productos = db.relationship('Producto', backref='usuario')
     #ventas = db.relationship('Compra', backref='vendedor') para cuando se implemente compra
 
-    def __init__(self, correo, nombre, apellido_paterno, apellido_materno, contrasenia, telefono):
+    def __init__(self, correo, nombre, apellido_paterno, apellido_materno, contrasenia, telefono, tipo):
         self.correo = correo
         self.nombre = nombre
         self.apellido_paterno = apellido_paterno
-        self.apellido_paterno = apellido_materno
-        self.contrasenia = generate_password_hash(contrasenia)
+        self.apellido_materno = apellido_materno
+        self.contrasenia = contrasenia
         self.telefono = telefono
+        self.tipo = tipo
 
     def check_contrasenia(self, constrasenia):
         return self.contrasenia.replace(' ','') == constrasenia.replace(' ','')
