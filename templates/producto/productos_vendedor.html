@@ -119,7 +119,7 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td class="renglones">  Descripcion: {{prod.descripcion }} </td>
+                            <td class="renglones">  Detalles: {{prod.detalles }} </td>
                           </tr>
                         </tbody>
                     </table>
@@ -130,16 +130,25 @@
                     <table class="tg">
                         <thead>
                           <tr>
-                            <tr class="renglones"> <h2 class="center" > precio: {{prod.precio}}</h1>   </tr>
+                            <tr class="renglones"> <h2 class="center" > Precio: ${{prod.precio}}</h1>   </tr>
                           </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="renglones"><button class="center" id="eliminar"> <a href="#">Modificar</a> </button></td>
+                              <form class="navbar-form navbar-right" action="{{url_for('producto.eliminar_producto')}}" method="POST">
+                                &nbsp; 
+                                <label for="nombre">ID: {{prod.id_producto}}</label>
+                                <input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} onclick="location.href='/producto/eliminar_producto'">
+                                <input type="submit" value="Eliminar" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary">
+                              </form>
                             </tr>
 
                           <tr>
-                              <td class="renglones"><button class="center" id="eliminar"> <a href="#">Eliminar</a> </button></td>
+                            <form class="navbar-form navbar-right" action="{{url_for('producto.actualizar_producto')}}" method="GET">
+                            &nbsp; 
+                            <input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} onclick="location.href='/producto/actualizar_producto'">
+                            <input type="submit" value="Actualzar" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary">
+                          </form>
                           </tr>
 
                         </tbody>

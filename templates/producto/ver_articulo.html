@@ -170,13 +170,15 @@ span a:hover{
                   </button>
               </form>
               <div>
-                {% for compra in compras %}
+                  {% if compras %}
+                    {% for compra in compras %}
 
-                  <h3>{{compra.Usuario.nombre}}.</h3>
-                  <p>
-                      {{compra.Compra.comentario}}
-                  </p>
-                {% endfor %}
+                      <h3>{{compra.Usuario.nombre}}.</h3>
+                      <p>
+                          {{compra.Compra.comentario}}
+                      </p>
+                    {% endfor %}
+                  {% endif %}
               </div>
               <!-- <div>
                   <h3>Nombre de usuario 2.</h3>
