@@ -36,3 +36,7 @@ def iniciar_sesion():
 def cerrar_sesion():
     logout_user()
     return render_template('index.html')
+
+# Función para que te mande a la página de vendedor principal.
+def vendedor_principal():
+    return render_template('usuario/vendedor_principal.html')
