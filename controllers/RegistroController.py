@@ -98,7 +98,7 @@ def registrar_usuario():
     contrasenia = crear_contrasenia()
     telefono = request.form['telefono']
     tipo = True
-    if request.form.get('type-user'):
+    if request.form.get('type-user') == 'vendedor':
         tipo = True
     else:
         tipo = False
