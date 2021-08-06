@@ -22,10 +22,10 @@ Método que dará acceso a '.../producto/compra_producto' la cual será una vist
 la información necesaria para llevar a cabo la compra del producto.
 """
 @login_required
-def comprar_producto():
+def comprar_producto(producto):
     # Si no recibimos un post, mostramos el formulario.
     if request.method != 'POST':
-        return render_template('producto/comprar_producto.html')
+        return render_template('producto/comprar_producto.html',producto=producto)
     else:
         correo_comprador = request.form['correo_comprador']
         correo_vendedor = request.form['correo_vendedor']

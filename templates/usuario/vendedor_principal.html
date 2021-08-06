@@ -35,20 +35,24 @@ Inicio vendedor
         </div>
         <div class="botones-menu">
             <p>
+                <form action="{{url_for('producto.crear_producto')}}">
                 <button class="tarjetas" onclick="location.href='../producto/crear_producto'">
                     <img src="../static/images/producto_nuevo.jpg" alt="producto_nuevo">
                     <div class="card-body">
                       <h5 class="card-title">Publicar nuevo artículo</h5>
                     </div>
                 </button>
+            </form>
             </p>
             <p>
+                <form action="{{url_for('producto.productos_vendedor')}}"></form>
                 <button  class="tarjetas" onclick="location.href='../producto/productos_vendedor'">
                     <img src="../static/images/mis_productos_publicados.png" alt="mis_productos_publicados">
                     <div class="card-body">
                       <h5 class="card-title">Mis artículos publicados</h5>
                     </div>
                 </button>
+                </form>
             </p>
         </div>
     </div>

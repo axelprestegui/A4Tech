@@ -114,7 +114,11 @@
                     <table class="tg">
                         <thead>
                           <tr>
-                            <td class="renglones" > {{prod.nombre}} </td>
+                            <form class="renglones" action="{{url_for('producto.ver_articulo_vendedor')}}" method="POST">
+                              &nbsp; 
+                              <input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} onclick="render_template(producto.ver_articulo_vendedor,producto=prod)">
+                              <input type="submit" value="{{prod.nombre}}" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary">
+                            </form>
                           </tr>
                         </thead>
                         <tbody>
@@ -161,10 +165,9 @@
 
     {% endfor %}
 
+    <a class="btn btn-primary" href="{{ url_for('usuario.vendedor_principal') }}">Regresar al inicio</a>
     <br>
     <br>
     <br>
-    
-    <a class="button" href="{{ url_for('usuario.vendedor_principal') }}">Regresar al inicio</a>
     
     {% endblock%}

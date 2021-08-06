@@ -1,6 +1,6 @@
 from logging import log
 from flask import render_template, redirect, url_for, request, abort, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from flask.helpers import flash
 from sqlalchemy.orm import query
 from models.Modelos import Producto,ProductoEsquema, Usuario, Compra
@@ -183,20 +183,32 @@ def ver_articulo_buscado():
     return render_template('producto/ver_articulo_buscado.html', producto=get_producto(request.form['search']))
 
 @login_required
-def ver_articulo():
+def ver_articulo_comprador():
     # obtenemos información del producto
     id_producto = request.form['id_producto']
     # y del comprador que está observando el producto
-    correo_comprador = request.form['correo_comprador']
-    if request.method == 'POST':
+    try:
+        correo_comprador = request.form['correo_comprador']
         # si se mandó una reseña del producto, la intentamos guardar
         guarda_resenia(request.form['resenia'], correo_comprador, id_producto)
+    except:
+        pass
     #Se hace la busqueda del producto deseado
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
     # y de los compras para obtener las reseñas
     compras = db.session.query(Compra, Usuario).join(Usuario, Compra.correo_comprador == Usuario.correo)\
                                                 .filter(Compra.id_producto == id_producto).all()
-    return render_template('producto/ver_articulo.html', producto = producto, compras = compras)
+    return render_template('producto/ver_articulo_comprador.html', producto = producto, compras = compras)
+
+def ver_articulo_vendedor():
+    # obtenemos información del producto
+    id_producto = request.form['id_producto']
+    #Se hace la busqueda del producto deseado
+    producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
+    # y de los compras para obtener las reseñas
+    compras = db.session.query(Compra, Usuario).join(Usuario, Compra.correo_comprador == Usuario.correo)\
+                                                .filter(Compra.id_producto == id_producto).all()
+    return render_template('producto/ver_articulo_vendedor.html', producto = producto, compras = compras)
 
 # Función auxiliar para guardar reseñas
 def guarda_resenia(comentario, correo_comprador, id_producto):
@@ -218,8 +230,9 @@ def mostrar_todos():
         #enviamos
         return render_template('producto/mostrar_todos.html', producto = producto) 
 
+@login_required
 def productos_vendedor():
-    id_vendedor = 'axelprestegui@ciencias.unam.mx'
+    id_vendedor = current_user.correo
     productos = db.session.query(Producto).filter(Producto.correo_vendedor == Usuario.correo, Usuario.correo == id_vendedor , Usuario.tipo == True)
     return render_template('producto/productos_vendedor.html', producto = productos)
     
