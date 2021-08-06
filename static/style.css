@@ -7,6 +7,8 @@ FOOTER SECTION
   width: 100%;
   background-color:#31326f;
   height: 50px;
+  position: fixed;
+  bottom: 0;
 }
 .small-box {
   font-size:10px;
@@ -39,7 +41,7 @@ FOOTER SECTION
    font-size:14px;
 }
 
-/* body {
+body {
   background-size: cover;
-  background-image: url('../images/wallpaper.png');
-} */
+  background-image: url('images/wallpaper.png');
+}

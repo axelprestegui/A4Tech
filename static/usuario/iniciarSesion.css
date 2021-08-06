@@ -13,6 +13,7 @@ body {
 }
 
 .login-box {
+    align-items: center;
     padding: 2em;
     height: auto;
     background-color: #B8DFD8;

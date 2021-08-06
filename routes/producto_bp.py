@@ -21,3 +21,4 @@ producto_bp.route('/resultado_busqueda' , methods=['POST', 'GET'])(resultado_bus
 producto_bp.route('/mostrar_todos', methods = ['POST','GET'])(mostrar_todos)
 producto_bp.route('/productos_vendedor', methods = ['POST','GET'])(productos_vendedor)
 producto_bp.route('/ver_articulo', methods = ['POST','GET'])(ver_articulo)
+producto_bp.route('/ver_articulo_buscado', methods = ['POST','GET'])(ver_articulo_buscado)
