@@ -50,7 +50,7 @@ def crear_producto():
         guarda_imagenes(imagenes, correo_vendedor, producto_nuevo.id_producto)
     
     # cuando la vista de mostrar producto esté terminada, aquí debería ir render_template('ruta/mostrar_producto.html')
-    return jsonify({'msg':'producto registrado!'})
+    return redirect(url_for('.productos_vendedor'))
 
 
 """
@@ -92,6 +92,8 @@ def actualizar_producto():
     # si no recibimos una solicitud post, mostramos el formulario
     if request.method != 'POST':
         return render_template('producto/actualizar_producto.html')
+    
+    
     # en otro caso, obtenemos la información enviada
     campos = ['correo_vendedor',
                 'id_producto',
@@ -131,7 +133,7 @@ def actualizar_producto():
 
     # hacemos commit para guardar los cambios
     db.session.commit()
-    return jsonify({'msg': 'todo ok'}) # aquí debería ir algo del estilo render_template('ruta/mostrar_producto.html')
+    return redirect(url_for('usuario.vendedor_principal')) # aquí debería ir algo del estilo render_template('ruta/mostrar_producto.html')
 
 """
 Método que se encarga de eliminar un producto de la bd.
@@ -140,7 +142,6 @@ Método que se encarga de eliminar un producto de la bd.
 def eliminar_producto():
     if request.method != 'POST':
         return render_template('producto/eliminar_producto.html')
-    
     id_producto = request.form['id_producto']
     # obtenemos el producto
     producto = db.session.query(Producto).filter_by(id_producto=id_producto).one()
@@ -153,7 +154,7 @@ def eliminar_producto():
     db.session.query(Producto).filter_by(id_producto=id_producto).delete()
     db.session.commit()
     
-    return jsonify({'msg': 'todo ok'})
+    return redirect(url_for('.productos_vendedor'))
 
 @login_required
 def buscar_producto():
