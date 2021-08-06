@@ -135,7 +135,7 @@ def registrar_usuario():
                 """.format(nuevo_usuario.nombre,contrasenia)
                 message['From'] = correo
                 message['To'] = nuevo_usuario.correo
-                message['Subject'] = 'Compra realizada en Am4zonas'
+                message['Subject'] = 'Registro exitoso en Am4zonas'
                 message.attach(MIMEText(nuevo_mensaje, 'html'))
                 server.sendmail(correo,nuevo_usuario.correo,message.as_string())
             except Exception as e:
