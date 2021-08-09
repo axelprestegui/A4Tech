@@ -13,7 +13,7 @@ Actualiza tu producto
 {% endblock%}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" action="{{url_for('producto.actualizar_producto')}}" method="POST">
     <h1 style="text-align: center; font-style: italic;"> Actualiza Producto. </h1>
   
     <div class="main-content">
@@ -21,8 +21,7 @@ Actualiza tu producto
                 
             <input name="correo_vendedor" style="display: none;" id="correo_vendedor" value={{current_user.correo}}>
 
-            <label for="id_producto">Id</label>
-            <input class="campos" name="id_producto" id="id_producto" required placeholder="Obligatorio">
+            <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}}>
                 
             <label for="nombre">Nuevo nombre del producto</label>
             <input class="campos" type="text" name="nombre" id="nombre" >

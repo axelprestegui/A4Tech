@@ -6,6 +6,7 @@ from sqlalchemy.orm import query
 from models.Modelos import Producto,ProductoEsquema, Usuario, Compra
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
+from functools import reduce
 from werkzeug.utils import secure_filename
 import os.path, sys, shutil
 
@@ -86,6 +87,10 @@ def elimina_imagenes(correo_vendedor, id_producto):
         # eliminamos el directorio donde están guardadas las fotos
         shutil.rmtree(os.path.join(dir_vendedor_img, str(id_producto)))
 
+def get_actualizar_formulario():
+    producto = db.session.query(Producto).filter(Producto.id_producto == request.form['id_producto']).one()
+    return render_template('producto/actualizar_producto.html', producto=producto)
+
 """
 Método que se encarga de actualizar un producto de la bd.
 """
@@ -134,7 +139,7 @@ def actualizar_producto():
 
     # hacemos commit para guardar los cambios
     db.session.commit()
-    return redirect(url_for('usuario.vendedor_principal')) # aquí debería ir algo del estilo render_template('ruta/mostrar_producto.html')
+    return redirect(url_for('producto.productos_vendedor')) # aquí debería ir algo del estilo render_template('ruta/mostrar_producto.html')
 
 """
 Método que se encarga de eliminar un producto de la bd.
@@ -195,20 +200,29 @@ def ver_articulo_comprador():
         pass
     #Se hace la busqueda del producto deseado
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
-    # y de los compras para obtener las reseñas
-    compras = db.session.query(Compra, Usuario).join(Usuario, Compra.correo_comprador == Usuario.correo)\
-                                                .filter(Compra.id_producto == id_producto).all()
-    return render_template('producto/ver_articulo_comprador.html', producto = producto, compras = compras)
+    # y de los compras para obtener las reseñas y calificación
+    (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
+    return render_template('producto/ver_articulo_comprador.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas)
 
 def ver_articulo_vendedor():
     # obtenemos información del producto
     id_producto = request.form['id_producto']
     #Se hace la busqueda del producto deseado
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
-    # y de los compras para obtener las reseñas
+    # y de los compras para obtener las reseñas y calificación
+    (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
+    return render_template('producto/ver_articulo_vendedor.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas)
+
+def get_compras_con_reseña(id_producto):
     compras = db.session.query(Compra, Usuario).join(Usuario, Compra.correo_comprador == Usuario.correo)\
                                                 .filter(Compra.id_producto == id_producto).all()
-    return render_template('producto/ver_articulo_vendedor.html', producto = producto, compras = compras)
+    compras_con_opinion = list(filter(lambda compra: compra.Compra.comentario != None, compras))
+    promedio_estrellas = 0
+    if len(compras_con_opinion) != 0:
+        promedio_estrellas = reduce(lambda acc, compra:
+                                compra.Compra.numero_estrellas + acc if compra.Compra.numero_estrellas != None
+                                else acc, compras, 0)/len(compras_con_opinion)
+    return (compras_con_opinion,promedio_estrellas)
 
 # Función auxiliar para guardar reseñas
 def guarda_resenia(comentario, correo_comprador, id_producto):

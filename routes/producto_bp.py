@@ -1,6 +1,6 @@
 from flask import Blueprint
 from controllers.ProductoController import * #importamos nuestras funciones necesarios
-from controllers.CompraController import comprar_producto # Importamos método de compra
+from controllers.CompraController import comprar_producto,get_comprar_formulario # Importamos método de compra
 
 # creamos una nueva blueprint producto_bp, en este caso llamada producto y le asignamos el prefijo /producto
 producto_bp = Blueprint('producto', __name__, url_prefix='/producto')
@@ -11,10 +11,12 @@ producto_bp.route('/crear_producto', methods=['POST','GET'])(crear_producto)
 # análogo al caso anterior, se agrega la ruta "/actualiza", cuando se entre a la dirección
 # ".../producto/actualiza" se llamará al método actualiza de ProductoController
 producto_bp.route('/actualizar_producto', methods=['POST', 'GET'])(actualizar_producto)
+producto_bp.route('/actualizar_formulario', methods=['POST','GET'])(get_actualizar_formulario)
 producto_bp.route('/eliminar_producto', methods=['POST', 'GET'])(eliminar_producto)
 
 # bp que agrega la ruta de compra_producto
 producto_bp.route('/comprar_producto', methods=['POST','GET'])(comprar_producto)
+producto_bp.route('/get_comprar_formulario', methods=['POST'])(get_comprar_formulario)
 producto_bp.route('/buscar_producto', methods=['POST', 'GET'])(buscar_producto)
 producto_bp.route('/resultado_busqueda' , methods=['POST', 'GET'])(resultado_busqueda)
 

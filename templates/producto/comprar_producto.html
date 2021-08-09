@@ -20,14 +20,14 @@ Comprar producto
 
     <div class="agrupador-info">
         <div class="info-compra">
-            <form action="" method="POST">
+            <form action="{{url_for('producto.comprar_producto')}}" method="POST">
                 <p>
                     <label for="forma_pago"> Forma de pago </label>
-                    <input type="text" style="display: none;" value={{current_user.correo}} name="correo_comprador" id="correo_comprador" required>
-                    <input type="text" style="display: none;" value="axelprestegui@ciencias.unam.mx" name="correo_vendedor" id="correo_vendedor" required>
-                    <input type="number" style="display: none;" value="2" name="id_producto" id="id_producto" required>
-                    <input type="text" name="forma_pago" id="forma_pago" required>
                     <input type="number" style="display: none;" value="0" name="costo_total" id="costo_total" required>
+                    <input type="text" style="display: none;" value={{current_user.correo}} name="correo_comprador" id="correo_comprador" required>
+                    <input type="text" style="display: none;" value={{producto.correo_vendedor}} name="correo_vendedor" id="correo_vendedor" required>
+                    <input type="number" style="display: none;" value={{producto.id_producto}} name="id_producto" id="id_producto" required>
+                    <input type="text" name="forma_pago" id="forma_pago" required>
                 </p>
                 <p>
                     <label for="cantidad"> Cantidad </label>
@@ -66,20 +66,15 @@ Comprar producto
                     <input type="number" name="codigo_postal" id="codigo_postal" required>
                 </p>
                 <p class="una-fraccion">
-                    Costo de envío: $0.00
-                </p>
-                <p class="una-fraccion">
-                    Costo total: $0.00
-                </p>
-                <p class="una-fraccion">
-                    <button onclick="location.href='../'"> Atras </button>
-                </p>
-                <p class="una-fraccion">
-                    <button type="submit">
-                        Siguiente
-                    </button>
+                    <button type="submit" class="boton" value="Siguiente" href="{{ url_for('usuario.inicio_usuario') }}"> Siguiente </button>
+                    
                 </p>
             </form>
+            <p class="una-fraccion">
+                <button class="boton" value="Cancelar" href="{{ url_for('usuario.inicio_usuario') }}"> 
+                <a class="boton" value="Cancelar" href="{{ url_for('usuario.inicio_usuario') }}"> Cancelar </a>
+                </button>
+            </p>
         </div>
         <div class="img-compra">
             <img src="../../static/images/doggy.png" style="width: 150px; height: 150px;">

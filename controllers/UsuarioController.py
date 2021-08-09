@@ -14,8 +14,10 @@ def iniciar_sesion():
             # si es vendedor lo redireccionamos a la página correspondiente
             if current_user.tipo:
                 return render_template('usuario/vendedor_principal.html')
+            # si es comprador, lo mandamos a la página principal de productos
             else:
-                return render_template('usuario/inicio_usuario.html')
+                productos = db.session.query(Producto).all()
+                return render_template('usuario/inicio_usuario.html', productos=productos)
         # en otro caso, intentamos iniciar sesión
         correo = request.form.get('correo')
         contrasenia = request.form.get('contrasenia')

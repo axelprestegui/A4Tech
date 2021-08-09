@@ -80,7 +80,7 @@ CREATE TABLE Compra (
     CONSTRAINT PK_Compra PRIMARY KEY (Correo_Comprador, Correo_Vendedor, Id_Producto, Id_Compra),
     CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CorreoComprador FOREIGN KEY (Correo_Comprador) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_Id FOREIGN KEY (Id_Producto) references Producto (Id_Producto) ON UPDATE CASCADE
+    CONSTRAINT FK_Id FOREIGN KEY (Id_Producto) references Producto (Id_Producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /* Algunas tuplas a insertar en la base*/
@@ -97,7 +97,7 @@ INSERT INTO producto (Correo_Vendedor, Nombre, Precio, Cantidad, Detalles, Descr
 
 INSERT INTO compra (Correo_Comprador,Correo_Vendedor,Id_Producto,Forma_Pago,Cantidad,Costo_Total,Estado,Ciudad,Alcaldia,Colonia,Calle,Numero_Ext,Numero_Int,Codigo_Postal,Comentario) VALUES
 ('tania@gmail.com','axelprestegui@ciencias.unam.mx',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asdas','calle 10',1010,401,04420,'Excelente producto! 100% recomendado'),
-('derekalmanzacancer@gmail.com','presteguiaxel@gmail.com',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asds','calle 10',1010,401,04420,'Me gustaron mucho, muy buena edición');
+('derekalmanzacancer@gmail.com','axelprestegui@gmail.com',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asds','calle 10',1010,401,04420,'Me gustaron mucho, muy buena edición');
 
 INSERT INTO compra (Correo_Comprador,Correo_Vendedor,Id_Producto,Forma_Pago,Cantidad,Costo_Total,Estado,Ciudad,Alcaldia,Colonia,Calle,Numero_Ext,Numero_Int,Codigo_Postal) VALUES
 ('presteguiaxel@gmail.com','axelprestegui@ciencias.unam.mx',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asdas','calle 10',1010,401,04420);

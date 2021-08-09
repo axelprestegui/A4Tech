@@ -126,10 +126,16 @@ span a:hover{
                                 <thead>
                                   <tr>
                                     <th class="tg-0lax">{{producto.precio}} $</th>
-                                    <th class="tg-0lax"><span><a href="comprar.html"></a></span></th>
                                   </tr>
                                 </thead>
                             </table>
+                            
+
+                            <form class="button" action="{{url_for('producto.get_comprar_formulario')}}" method="POST">
+                            &nbsp; 
+                                <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} '">
+                                <input type="submit" value="Comprar" style="background-color: #9ddfd3;color: #000000;" class="tg-0lax">
+                            </form>
                             <a class="button" href="{{ url_for('usuario.inicio_usuario') }}">Regresar</a>
                         </td>
                       </tr>
