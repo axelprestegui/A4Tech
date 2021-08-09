@@ -97,7 +97,7 @@ INSERT INTO producto (Correo_Vendedor, Nombre, Precio, Cantidad, Detalles, Descr
 
 INSERT INTO compra (Correo_Comprador,Correo_Vendedor,Id_Producto,Forma_Pago,Cantidad,Costo_Total,Estado,Ciudad,Alcaldia,Colonia,Calle,Numero_Ext,Numero_Int,Codigo_Postal,Comentario) VALUES
 ('tania@gmail.com','axelprestegui@ciencias.unam.mx',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asdas','calle 10',1010,401,04420,'Excelente producto! 100% recomendado'),
-('derekalmanzacancer@gmail.com','axelprestegui@gmail.com',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asds','calle 10',1010,401,04420,'Me gustaron mucho, muy buena edición');
+('derekalmanzacancer@gmail.com','presteguiaxel@gmail.com',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asds','calle 10',1010,401,04420,'Me gustaron mucho, muy buena edición');
 
 INSERT INTO compra (Correo_Comprador,Correo_Vendedor,Id_Producto,Forma_Pago,Cantidad,Costo_Total,Estado,Ciudad,Alcaldia,Colonia,Calle,Numero_Ext,Numero_Int,Codigo_Postal) VALUES
 ('presteguiaxel@gmail.com','axelprestegui@ciencias.unam.mx',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asdas','calle 10',1010,401,04420);
