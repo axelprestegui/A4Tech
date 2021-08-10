@@ -20,53 +20,72 @@ caption{
     padding-top: 1% !important;
 }
 span{
-  position: relative;
-  display: inline-flex;
-  width: 180px;
-  height: 55px;
-  margin: 0 15px;
-  perspective: 1000px;
+  	position: relative;
+  	display: inline-flex;
+  	width: 180px;
+  	height: 55px;
+  	margin: 0 15px;
+  	perspective: 1000px;
 }
 span a{
-  font-size: 19px;
-  letter-spacing: 1px;
-  transform-style: preserve-3d;
-  transform: translateZ(-25px);
-  transition: transform .25s;
-  font-family: 'Montserrat', sans-serif;
+  	font-size: 19px;
+  	letter-spacing: 1px;
+  	transform-style: preserve-3d;
+  	transform: translateZ(-25px);
+  	transition: transform .25s;
+  	font-family: 'Montserrat', sans-serif;
   
 }
 span a:before,
 span a:after{
-  position: absolute;
-  content: "Comprar Ahora";
-  height: 55px;
-  width: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 5px solid black;
-  box-sizing: border-box;
-  border-radius: 5px;
+  	position: absolute;
+  	content: "Comprar Ahora";
+  	height: 55px;
+  	width: 180px;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	border: 5px solid black;
+  	box-sizing: border-box;
+  	border-radius: 5px;
 }
 span a:before{
-  color: #fff;
-  background: #000;
-  transform: rotateY(0deg) translateZ(25px);
+  	color: #fff;
+  	background: #000;
+  	transform: rotateY(0deg) translateZ(25px);
 }
 span a:after{
-  color: #000;
-  transform: rotateX(90deg) translateZ(25px);
+  	color: #000;
+  	transform: rotateX(90deg) translateZ(25px);
 }
 span a:hover{
-  transform: translateZ(-25px) rotateX(-90deg);
+  	transform: translateZ(-25px) rotateX(-90deg);
 }
 
 .center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 95%;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+  	width: 95%;
+}
+
+.boton {
+	display: block;
+	width: 150px;
+    padding: 10px; 
+    background: #4C4C6D; 
+	color: white;
+  	border:0 none;
+  	cursor:pointer;
+  	margin-bottom: 30px;
+  	border-radius: 5px; 
+}
+
+.boton:hover {
+	background-color: #686891;
+    transition: background-color 1s ease-out;
+	box-shadow: inset 3px 3px 5px black;
+    outline: 0;
 }
 
           
@@ -79,7 +98,6 @@ span a:hover{
 {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='evaluacion/evaluacion-producto.css') }}">
 {% endblock%}
 
@@ -138,9 +156,9 @@ span a:hover{
                             <form class="button" action="{{url_for('producto.get_comprar_formulario')}}" method="POST">
                             &nbsp; 
                                 <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} '">
-                                <input type="submit" value="Comprar" style="background-color: #9ddfd3;color: #000000;" class="tg-0lax">
+                                <input type="submit" value="Comprar" class="boton">
                             </form>
-                            <a class="button" href="{{ url_for('usuario.inicio_usuario') }}">Regresar</a>
+                            <button class="boton" href="{{ url_for('usuario.inicio_usuario') }}">Regresar</button>
                         </td>
                       </tr>
                     </tbody>  
