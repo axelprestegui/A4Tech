@@ -171,8 +171,8 @@ def eliminar_producto():
 
 def get_producto(nombre):
     #Forma alternativa de get_producto 
-    #producto = db.engine.execute("SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto, nombre,precio , cantidad, detalles, descripcion, estado, ruta  FROM producto Left JOIN imagen  ON producto.id_producto = imagen.id_producto  WHERE nombre LIKE '%"+nombre+"%'")
-    producto = db.session.query(Producto).filter(Producto.nombre.like('%'+nombre+'%')).all()
+    producto = db.engine.execute("SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto, nombre,precio , cantidad, detalles, descripcion, estado, ruta  FROM producto Left JOIN imagen  ON producto.id_producto = imagen.id_producto  WHERE nombre LIKE '%%"+nombre+"%%'")
+    #producto = db.session.query(Producto).filter(Producto.nombre.like('%'+nombre+'%')).all()
     return producto
 
 @login_required

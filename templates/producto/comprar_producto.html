@@ -69,9 +69,13 @@ Comprar producto
                     <button type="submit" class="boton" value="Siguiente" href="{{ url_for('usuario.inicio_usuario') }}"> Siguiente </button>
                     
                 </p>
-                <p class="una-fraccion">
-                    <button class="boton" onclick="location.href='../usuario/inicio_usuario'">Atras</button>
-                </p>
+            </form>
+            
+            <form action="{{url_for('producto.ver_articulo_comprador')}}" method="POST">
+            <p class="una-fraccion"> 
+                <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} onclick="render_template(producto.ver_articulo_comprador,producto=producto)">
+                        <button type="submit" class="btn btn-primary">Atrás</button>
+            </p>
             </form>
         </div>
         <div class="img-compra">
