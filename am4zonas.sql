@@ -83,6 +83,14 @@ CREATE TABLE Compra (
     CONSTRAINT FK_Id FOREIGN KEY (Id_Producto) references Producto (Id_Producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE Imagen (
+    Correo_Vendedor varchar(320) NOT NULL,
+    Id_producto int NOT NULL,
+    Ruta varchar(320),
+    CONSTRAINT PK_Imagen PRIMARY KEY (Correo_Vendedor, Ruta),
+    CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 /* Algunas tuplas a insertar en la base*/
 INSERT INTO usuario VALUES
 ('axelprestegui@ciencias.unam.mx','Axel','Prestegui','Ramos','cubito53',1000000000,true),

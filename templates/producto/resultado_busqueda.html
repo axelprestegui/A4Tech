@@ -24,10 +24,10 @@
     </ul>
 </div>
 
-{% endblock%}
+{% endblock %}
 
 {% block content%}
-<div class="container">
+ <div class="container">
     <div class="row">
         <br><br>
         <div class="col-md-9">
@@ -43,10 +43,10 @@
                             {% if producto.descripcion %} <p>{{ producto.descripcion }}</p>{% endif %}
                             {% if producto.cantidad %}<p>Cantidad : <strong>{{ producto.cantidad }}</strong></p>{% endif %}
                         </div>
-                        <form class="navbar-form navbar-center" action="{{url_for('producto.ver_articulo_comprador')}}" method="POST">
+                        <form method="post" class="navbar-form navbar-center" action="{{url_for('producto.ver_articulo_comprador')}}">
                             &nbsp; 
                             <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} onclick="render_template(producto.ver_articulo_comprador,producto=prod)">
-                            <input type="submit" value="Ver artículo" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary">Ver artículo</button>
                         </form>
                     </div>
                 </div>

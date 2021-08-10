@@ -97,7 +97,11 @@ span a:hover{
 <!-- Seccion para mostrar las imagenes del producto-->
 
             <td id="imagenes" >
+              {% if imagen != None%}
+                <img class="center" src={{imagen.ruta}}>
+              {% else %}
                 <img class="center" src="https://m.media-amazon.com/images/I/712Jt2-RBwL._AC_SX425_.jpg">
+              {% endif %}
             </td>
             
 <!-- Seccion para mostrar detalles del producto-->

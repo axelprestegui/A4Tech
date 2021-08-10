@@ -91,4 +91,4 @@ def comprar_producto():
         except Exception as e:
             flash('No hemos podido enviar su correo de confirmación. Sin embargo, la compra ha sido completada con éxito.')
             # return render_template() podríamos mandarlo a la página principal o a la página del producto
-    return jsonify({'msg':'Compra realizada!'})
+    return redirect(url_for('usuario.inicio_usuario'))

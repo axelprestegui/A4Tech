@@ -178,3 +178,22 @@ Clase contenedora de datos de la direccion para no pasar tantos argumentos en cl
 #         self.numero_ext = numero_ext
 #         self.numero_int = numero_int
 #         self.codigo_postal = codigo_postal
+"""
+Clase modelo usada para definir la tabla de las imagenes
+"""
+class Imagen(db.Model):
+    __tablename__ = 'imagen'
+    correo_vendedor = db.Column(db.Unicode, db.ForeignKey('usuario.correo'), primary_key=True, nullable=False)
+    id_producto = db.Column(db.Integer, db.ForeignKey('producto.id_producto'))
+    ruta = db.Column(db.Unicode, db.ForeignKey('usuario.correo'),primary_key=True)
+
+    #compra_venta = db.relationschip('Compra', backref='producto') para cuando se implemente Compra
+
+    def __init__(self, correo_vendedor, id_producto, ruta):
+        self.correo_vendedor = correo_vendedor
+        self.id_producto = id_producto
+        self.ruta = ruta
+
+class ProductoEsquema(ma.Schema):
+    class Meta:
+        fields = ('correo_vendedor', 'ruta')

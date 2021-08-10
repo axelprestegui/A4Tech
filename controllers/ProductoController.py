@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, request, abort, jsonify
 from flask_login import login_required, current_user
 from flask.helpers import flash
 from sqlalchemy.orm import query
-from models.Modelos import Producto,ProductoEsquema, Usuario, Compra
+from models.Modelos import *
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from functools import reduce
@@ -75,6 +75,13 @@ def guarda_imagenes(imagenes, correo_vendedor, id_producto):
         if '.' + imagen.content_type.split('/')[1] in imagenes_validas:
             imagen_name = secure_filename(imagen.filename)
             imagen.save(os.path.join(dir_vendedor_img, str(id_producto), imagen_name.strip()))
+
+            nueva_imagen = Imagen(str(correo_vendedor),str(id_producto), '../../static/images/'+str(correo_vendedor)+'/'+str(id_producto)+'/'+ imagen.filename )
+            try:
+                db.session.add(nueva_imagen)
+                db.session.commit()
+            except:
+                jsonify('Algo salio mal')
 
 """
 Función auxiliar que elimina todas las imágenes asociadas a un producto.
@@ -200,9 +207,10 @@ def ver_articulo_comprador():
         pass
     #Se hace la busqueda del producto deseado
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
+    imagen = db.session.query(Imagen).filter(Imagen.id_producto == id_producto).first()
     # y de los compras para obtener las reseñas y calificación
     (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
-    return render_template('producto/ver_articulo_comprador.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas)
+    return render_template('producto/ver_articulo_comprador.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas, imagen = imagen)
 
 def ver_articulo_vendedor():
     # obtenemos información del producto
@@ -211,7 +219,8 @@ def ver_articulo_vendedor():
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
     # y de los compras para obtener las reseñas y calificación
     (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
-    return render_template('producto/ver_articulo_vendedor.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas)
+    imagen = db.session.query(Imagen).filter(Imagen.id_producto == id_producto).first()
+    return render_template('producto/ver_articulo_vendedor.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas, url_img = imagen)
 
 def get_compras_con_reseña(id_producto):
     compras = db.session.query(Compra, Usuario).join(Usuario, Compra.correo_comprador == Usuario.correo)\
@@ -219,9 +228,9 @@ def get_compras_con_reseña(id_producto):
     compras_con_opinion = list(filter(lambda compra: compra.Compra.comentario != None, compras))
     promedio_estrellas = 0
     if len(compras_con_opinion) != 0:
-        promedio_estrellas = reduce(lambda acc, compra:
-                                compra.Compra.numero_estrellas + acc if compra.Compra.numero_estrellas != None
-                                else acc, compras, 0)/len(compras_con_opinion)
+        promedio_estrellas = reduce(lambda acc, compra: compra.Compra.numero_estrellas + acc
+                                                        if compra.Compra.numero_estrellas != None
+                                                        else acc, compras, 0)/len(compras_con_opinion)
     return (compras_con_opinion,promedio_estrellas)
 
 # Función auxiliar para guardar reseñas
@@ -247,6 +256,10 @@ def mostrar_todos():
 @login_required
 def productos_vendedor():
     id_vendedor = current_user.correo
+    # si se usa  natural join, aquellos productos sin imagen no apareceran,
+    # creo que además esto tendrá problemas cuando un producto tenga más de una imagnes
+    # productos = db.engine.execute("SELECT * FROM producto NATURAL JOIN imagen WHERE correo_vendedor = '"+str(id_vendedor)+"'")
+    # dejo por lo mientras esta que sí nos deja ver productos aunque no tengan imagen
     productos = db.session.query(Producto).filter(Producto.correo_vendedor == Usuario.correo, Usuario.correo == id_vendedor , Usuario.tipo == True)
     return render_template('producto/productos_vendedor.html', producto = productos)
     
