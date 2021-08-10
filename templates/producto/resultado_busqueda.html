@@ -1,5 +1,9 @@
 {% extends 'base.html'%}
 
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
 {% block am4zonas %}
 <form enctype="multipart/form-data"></form>
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -19,7 +23,10 @@
     </ul>
 </div>
 
- <div class="container">
+{% endblock%}
+
+{% block content%}
+<div class="container">
     <div class="row">
         <br><br>
         <div class="col-md-9">
@@ -35,9 +42,10 @@
                             {% if producto.descripcion %} <p>{{ producto.descripcion }}</p>{% endif %}
                             {% if producto.cantidad %}<p>Cantidad : <strong>{{ producto.cantidad }}</strong></p>{% endif %}
                         </div>
-                        <form method="post" class="navbar-form navbar-center" action="{{url_for('producto.ver_articulo_buscado')}}">
+                        <form class="navbar-form navbar-center" action="{{url_for('producto.ver_articulo_comprador')}}" method="POST">
                             &nbsp; 
-                            <button type="submit" class="btn btn-primary">Ver artículo</button>
+                            <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} onclick="render_template(producto.ver_articulo_comprador,producto=prod)">
+                            <input type="submit" value="Ver artículo" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary">
                         </form>
                     </div>
                 </div>
@@ -56,4 +64,4 @@
 <!-- /.container -->
 </div>
 <!-- /.col -->
-{% endblock%}
+{% endblock %}
