@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, request, abort, jsonify, flash
 from flask_login import login_required
-from models.Modelos import Producto,ProductoEsquema, Compra, CompraEsquema, Usuario
+from models.Modelos import Producto,ProductoEsquema, Compra, CompraEsquema, Usuario, Imagen
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from werkzeug.utils import secure_filename
@@ -20,7 +20,8 @@ message = MIMEMultipart("alternative") # el correo a enviar
 
 def get_comprar_formulario():
     producto = db.session.query(Producto).filter(Producto.id_producto == request.form['id_producto']).one()
-    return render_template('producto/comprar_producto.html', producto=producto)
+    imagen = db.session.query(Imagen).filter(Imagen.id_producto == request.form['id_producto']).first()
+    return render_template('producto/comprar_producto.html', producto=producto, imagen=imagen)
 
 """
 Método que dará acceso a '.../producto/compra_producto' la cual será una vista encargada de recabar 
@@ -48,8 +49,8 @@ def comprar_producto():
     comprador = db.session.query(Usuario).filter_by(correo=correo_comprador).one()
     # obtenemos el producto comprado
     producto = db.session.query(Producto).filter_by(id_producto=id_producto).one()
-    # checamos que haya stock suficiente
 
+    # checamos que haya stock suficiente
     if cantidad > producto.cantidad:
         flash('Lo sentimos, no existen tantos productos en stock. Cantidad máxima para comprar de momento: {}'.format(producto.cantidad))
         return render_template('producto/comprar_producto.html')

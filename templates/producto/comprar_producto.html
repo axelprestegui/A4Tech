@@ -79,7 +79,16 @@ Comprar producto
             </form>
         </div>
         <div class="img-compra">
-            <img src="../../static/images/doggy.png" style="width: 150px; height: 150px;">
+            <div>
+                {% if producto.ruta != None%}
+                    <img style="border-radius: 10px; width: 200px;" src={{imagen.ruta}}>
+                {% else %}
+                    <img style="border-radius: 10px; width: 200px;" src="http://www.pequenomundo.cl/wp-content/themes/childcare/images/default.png">
+                {% endif %}
+                <h4>
+                    Usted está comprando: <i>{{producto.nombre}}</i>
+                </h4>
+            </div>
         </div>
     </div>
 </div>
