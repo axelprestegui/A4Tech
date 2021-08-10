@@ -6,12 +6,16 @@
 <a class="navbar-brand" href="#"><img src="../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
 {% endblock%}
 
+{% block style %}
+<link rel="stylesheet" href="../static/style-index.css">
+{% endblock %}
+
 {% block am4zonas %}
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav navbar-right">
-        <form class="navbar-form navbar-right">
+        <form class="navbar-form navbar-right" action="{{url_for('usuario.registrar_usuario')}}">
             &nbsp; 
-            <input type="submit" value="Registrarse" style="background-color: #31326F;color: white;" class="btn btn-primary">
+            <input type="submit" value="Registrarse" style="background-color: #31326F;color: white;" class="btn btn-primary" onclick="location.href='/usuario/registrar_usuario'">
         </form>
         <form class="navbar-form navbar-right" action="{{url_for('usuario.iniciar_sesion')}}">
             &nbsp; 
@@ -28,18 +32,9 @@
 {% endblock%}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-9">
-            <div class="well well-lg offer-box text-center">
-                {% if current_user.is_authenticated %}
-                <h1>¡Bienvenido de regreso, {{ current_user.nombre }}!</h1>
-                <p>Esperamos que disfrutes tu estancia.</p>
-                {% else %}
-                <h1>¡Bienvenido a Am4zonas!</h1>
-                <p>Por favor, inicie sesión para una gran experiencia.</p>
-                {% endif %}
-            </div>
-            <br />
-        </div>
+<div class="content agrupador-info-sin-sesion">
+    <h1>¡Bienvenido a Am4zonas!</h1>
+    <p>Por favor, inicie sesión para una gran experiencia.</p>
+
+</div>
 {% endblock %}

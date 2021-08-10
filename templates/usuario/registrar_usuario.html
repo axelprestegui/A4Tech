@@ -9,7 +9,7 @@
 {% endblock%}
 
 {% block doggy %}
-<a class="navbar-brand" href="#"><img src="../../img/dog.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
 {% endblock%}
 
 {% with messages = get_flashed_messages() %}
@@ -56,7 +56,7 @@ form {
       <br>
       <label for="apellidoM">Apellido Materno</label>
       <br>
-      <input class="campo" type="text" name="apellidoM" id="apellidoM">
+      <input class="campo" type="text" name="apellidoM" id="apellidoM" required placeholder="Obligatorio" required>
       <br>
       <label for="correo_usuario">Correo Electronico</label>
       <br>
@@ -64,17 +64,15 @@ form {
       <br>
       <label for="telefono">Telefono</label>
       <br>
-      <input class="campo" type="tel" name="telefono" id="telefono" required placeholder="Obligatorio" required>
+      <input class="campo" type="number" step="1" name="telefono" id="telefono" required placeholder="Obligatorio" required>
       <br>
      
-      <div class="ui checkbox">
-        <input type="checkbox" name="comprador" value="comprador">
-        <label>Comprador</label>
-      </div>
+      <label class="form-control-label">Tipo de Usuario</label><br>
 
-      <div class="ui checkbox">
-        <input type="checkbox" name="vendedor" value="vendedor">
-        <label>Vendedor</label>
+      <select name="type-user" id="type-user">
+        <option value="comprador" selected>Comprador</option>
+        <option value="vendedor">Vendedor</option>
+      </select> 
       </div>
 
 

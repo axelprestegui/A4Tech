@@ -1,0 +1,217 @@
+<style type="text/css">    
+@import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
+table{
+    width: 90% !important;
+    font-size: 20px !important;
+    margin: 0 auto !important;
+    border-collapse: collapse !important;    
+}
+#imagenes{
+        width: 40% !important;
+}
+#tabla{
+    padding: 50px !important;
+}
+caption{
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+.esructura{
+    padding-top: 1% !important;
+}
+span{
+  position: relative;
+  display: inline-flex;
+  width: 180px;
+  height: 55px;
+  margin: 0 15px;
+  perspective: 1000px;
+}
+span a{
+  font-size: 19px;
+  letter-spacing: 1px;
+  transform-style: preserve-3d;
+  transform: translateZ(-25px);
+  transition: transform .25s;
+  font-family: 'Montserrat', sans-serif;
+  
+}
+span a:before,
+span a:after{
+  position: absolute;
+  content: "Comprar Ahora";
+  height: 55px;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid black;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+span a:before{
+  color: #fff;
+  background: #000;
+  transform: rotateY(0deg) translateZ(25px);
+}
+span a:after{
+  color: #000;
+  transform: rotateX(90deg) translateZ(25px);
+}
+span a:hover{
+  transform: translateZ(-25px) rotateX(-90deg);
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+
+          
+</style>
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{producto.nombre}}{% endblock %}</h1>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='evaluacion/evaluacion-producto.css') }}">
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+
+
+{% block content %}
+<section id="tabla">
+    <table>
+       <h1> <caption>{{producto.nombre}}</caption> </h1>
+      <tr>
+<!-- Seccion para mostrar las imagenes del producto-->
+
+            <td id="imagenes" >
+                <img class="center" src={{imagen.ruta}}>
+            </td>
+            
+<!-- Seccion para mostrar detalles del producto-->
+            <td>
+                <table class="tg">
+                    
+                    <tbody>
+                      <tr>
+<!--Cargamos los elementos en el siguiente orden: descripcion, detalles y precio-->
+                        <td class="esructura">
+                            <h2>Descripcion</h2>  {{producto.descripcion}} 
+                            <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="esructura">
+                            <h2>Detalles</h2>
+                             {{producto.detalles}}
+                            <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="esructura">
+                            <table class="tg">
+                                <h2>Precio</h2>
+                                <thead>
+                                  <tr>
+                                    <th class="tg-0lax">{{producto.precio}} $</th>
+                                  </tr>
+                                </thead>
+                            </table>
+                            
+
+                            <form class="button" action="{{url_for('producto.get_comprar_formulario')}}" method="POST">
+                            &nbsp; 
+                                <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} '">
+                                <input type="submit" value="Comprar" style="background-color: #9ddfd3;color: #000000;" class="tg-0lax">
+                            </form>
+                            <a class="button" href="{{ url_for('usuario.inicio_usuario') }}">Regresar</a>
+                        </td>
+                      </tr>
+                    </tbody>  
+                </table>
+            </td>
+    </table>
+    <br>
+    <br>
+    <br>
+    <div class="content">
+
+      <h1 class="titulo">Evaluar producto </h1>
+  
+      <div class="agrupador-info">
+          <div class="estrellas">
+              <div>
+                  <p>
+                      12345 opiniones.
+                  </p>
+                  <p>
+                      0.0 promedio estrellas
+                  </p>
+                  <button id="escribeResenia" disabled="disabled">
+                      Escribe tu reseña
+                  </button>
+              </div>
+          </div>
+          <div class="opiniones">
+              <form id="resenia" class="resenia" method="POST">
+                  <input name="correo_comprador" style="display: none;" id="correo_vendedor" value={{current_user.correo}}>
+                  <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}}>
+                  <label for="resenia"> Ingresa tu reseña aquí &darr; </label>
+                  <br>
+                  <textarea name="resenia" id="reseniaArea" cols="20"></textarea>
+                  <!-- <input type="text" name="resenia" id="resenia"> -->
+                  <button type="submit" style="font-weight: bolder;" id="enviar">
+                      Enviar reseña
+                  </button>
+              </form>
+              <div>
+                  {% if compras %}
+                    {% for compra in compras %}
+                    {% if compra.Compra.comentario != None%}
+                      <h3>{{compra.Usuario.nombre}}.</h3>
+                      <p>
+                          {{compra.Compra.comentario}}
+                      </p>
+                    {% endif %}
+                    {% endfor %}
+                  {% endif %}
+              </div>
+              <!-- <div>
+                  <h3>Nombre de usuario 2.</h3>
+                  <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores nobis mollitia 
+                      debitis molestiae autem eligendi esse adipisci. Labore pariatur dicta, sunt molestiae 
+                      quasi rem culpa reprehenderit neque illum repellendus quae.
+                  </p>
+              </div>
+              <div>
+                  <h3>Nombre de usuario 3.</h3>
+                  <p>
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab dignissimos numquam 
+                      voluptates. Suscipit voluptates eaque quo animi doloribus quibusdam facere doloremque 
+                      ab illo neque odit quas, repellat ullam fugiat tenetur?
+                  </p>
+              </div> -->
+          </div>
+      </div>
+  </div>
+  
+  <script src="../../static/js/evaluacionProducto.js"></script>
+    <a class="button" href="#">Regresar al inicio</a>
+    
+</section>
+
+<script src="../../static/js/evaluacionProducto.js"></script>
+{% endblock%}

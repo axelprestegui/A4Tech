@@ -4,6 +4,10 @@
 Comprar producto
 {% endblock %}
 
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
 {% block style %}
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='producto/compra-producto.css') }}">
@@ -16,14 +20,14 @@ Comprar producto
 
     <div class="agrupador-info">
         <div class="info-compra">
-            <form action="" method="POST">
+            <form action="{{url_for('producto.comprar_producto')}}" method="POST">
                 <p>
                     <label for="forma_pago"> Forma de pago </label>
-                    <input type="text" style="display: none;" value={{current_user.correo}} name="correo_comprador" id="correo_comprador" required>
-                    <input type="text" style="display: none;" value="axelprestegui@ciencias.unam.mx" name="correo_vendedor" id="correo_vendedor" required>
-                    <input type="number" style="display: none;" value="2" name="id_producto" id="id_producto" required>
-                    <input type="text" name="forma_pago" id="forma_pago" required>
                     <input type="number" style="display: none;" value="0" name="costo_total" id="costo_total" required>
+                    <input type="text" style="display: none;" value={{current_user.correo}} name="correo_comprador" id="correo_comprador" required>
+                    <input type="text" style="display: none;" value={{producto.correo_vendedor}} name="correo_vendedor" id="correo_vendedor" required>
+                    <input type="number" style="display: none;" value={{producto.id_producto}} name="id_producto" id="id_producto" required>
+                    <input type="text" name="forma_pago" id="forma_pago" required>
                 </p>
                 <p>
                     <label for="cantidad"> Cantidad </label>
@@ -62,26 +66,16 @@ Comprar producto
                     <input type="number" name="codigo_postal" id="codigo_postal" required>
                 </p>
                 <p class="una-fraccion">
-                    Costo de envío: $0.00
+                    <button type="submit" class="boton" value="Siguiente" href="{{ url_for('usuario.inicio_usuario') }}"> Siguiente </button>
+                    
                 </p>
                 <p class="una-fraccion">
-                    Costo total: $0.00
-                </p>
-                <p class="una-fraccion">
-                    <button>
-                        Atras
-                    </button>
-                </p>
-                <p class="una-fraccion">
-                    <button type="submit">
-                        Siguiente
-                    </button>
+                    <button class="boton" onclick="location.href='../usuario/inicio_usuario'">Atras</button>
                 </p>
             </form>
         </div>
         <div class="img-compra">
             <img src="../../static/images/doggy.png" style="width: 150px; height: 150px;">
-            <p id="fecha-entrega"> Fecha de entrega dd/mm/aa </p>
         </div>
     </div>
 </div>

@@ -1,161 +1,73 @@
-<style type="text/css">    
-    @import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
-    table{
-        width: 90% !important;
-        font-size: 20px !important;
-        margin: 0 auto !important;
-        border-collapse: collapse !important;    
-    }
-    #imagenes{
-            width: 30% !important;
-    }
-    #descripcion{
-            width: 100% !important;
-    }
-    #precios{
-        width: 20% !important;
-    }
-    #tabla{
-        padding: 50px !important;
-    }
-    caption{
-        font-size: 50px;
-        padding-bottom: 20px;
-    }
-    .estructura{
-        padding-top: 10% !important;
-    }
-    .renglones{
-        padding-top: 5% !important;
-    }
-    span{
-      position: relative;
-      display: inline-flex;
-      width: 180px;
-      height: 55px;
-      margin: 0 15px;
-      perspective: 1000px;
-    }
-    span a{
-      font-size: 19px;
-      letter-spacing: 1px;
-      transform-style: preserve-3d;
-      transform: translateZ(-25px);
-      transition: transform .25s;
-      font-family: 'Montserrat', sans-serif;
-      
-    }
-    span a:before,
-    span a:after{
-      position: absolute;
-      content: "Modificar";
-      height: 55px;
-      width: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 5px solid black;
-      box-sizing: border-box;
-      border-radius: 5px;
-    }
+{% extends 'base.html' %}
     
-    span a:before{
-      color: black;
-      background: #9DDFD3;
-      transform: rotateY(0deg) translateZ(25px);
-    }
-    span a:after{
-        color: white;
-        background: #31326F;
-      transform: rotateX(90deg) translateZ(25px);
-    }
-    span a:hover{
-      transform: translateZ(-25px) rotateX(-90deg);
-    }
+{% block header %}
+    <h1>{% block title %}Mis articulos{% endblock %}</h1>
+{% endblock %}
     
-    .center {
-      
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
-    }
-    
-             
-    </style>
-    
-    {% extends 'base.html' %}
-    
-    {% block header %}
-      <h1>{% block title %}Mis articulos{% endblock %}</h1>
-    {% endblock %}
-    
-    {% block style %}
+{% block style %}
     <link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
-    {% endblock%}
+	<link rel="stylesheet" href="../../static/producto/productos-vendedor.css">
+{% endblock%}
     
-    {% block doggy %}
-    <a class="navbar-brand" href="#"><img src="../../img/dog.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
-    {% endblock%}
+{% block doggy %}
+    <a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;" onclick="location.href='../usuario/vendedor_principal'"> <strong>Am4zonas</strong></a>
+{% endblock%}
     
+{% block content %}
+
+<button class="atras" onclick=location.href="{{ url_for('usuario.vendedor_principal') }}">Atras</button>
+
+{% for prod in producto%}
+
+<div class="content">
+    <div class="agrupador-info">
+
+        <div class="imagen">
+            <img class="center" src={{prod.ruta}}>
+        </div>
+
+        <div class="nombre-detalles">
+
+			<div>
+				<form action="{{url_for('producto.ver_articulo_vendedor')}}" method="POST">
+					<input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} onclick="render_template(producto.ver_articulo_vendedor,producto=prod)">
+					<input type="submit" id="prodNombreInput" class="nombre-producto" value="{{prod.nombre}}">
+				</form>
+
+				<p style="color: white;">  Detalles: {{prod.detalles }} </p>
+				<p style="color: white;"> {{prod.descripcion}} </p>
+			</div>
+
+        </div>
+
+		<div class="precio-id">
+
+			<div>
+				<h2 class="" > Precio: ${{prod.precio}}</h2>
+				<label>ID: {{prod.id_producto}}</label>
+			</div>
+
+		</div>
+
+		<div class="elimina-actualiza">
+			
+			<div>
+				<form action="{{url_for('producto.eliminar_producto')}}" method="POST">
+					<input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} onclick="location.href='/producto/eliminar_producto'">
+					<input type="submit" value="Eliminar" >
+				</form>
+	
+				<form action="{{url_for('producto.get_actualizar_formulario')}}" method="POST">
+					<input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} '">
+					<input type="submit" value="Actualizar">
+				</form>
+			</div>
+
+		</div>
+
+    </div>
+</div>
+
+{% endfor %}
     
-    
-    {% block content %}
-
-    {% for prod in producto%}
-
-    <section>
-        <table id="tabla">
-            <thead>
-              <tr>
-                <td class="estructura" id="imagenes">
-                    <img class="center" src="https://m.media-amazon.com/images/I/712Jt2-RBwL._AC_SX425_.jpg">
-                </td>
-                <td class="estructura" id="descripcion">
-                    <table class="tg">
-                        <thead>
-                          <tr>
-                            <td class="renglones" > {{prod.nombre}} </td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="renglones">  Descripcion: {{prod.descripcion }} </td>
-                          </tr>
-                        </tbody>
-                    </table>
-                    
-                </td>
-                <td class="estructura" id="precios">
-                    
-                    <table class="tg">
-                        <thead>
-                          <tr>
-                            <tr class="renglones"> <h2 class="center" > precio: {{prod.precio}}</h1>   </tr>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="renglones"><button class="center" id="eliminar"> <a href="#">Modificar</a> </button></td>
-                            </tr>
-
-                          <tr>
-                              <td class="renglones"><button class="center" id="eliminar"> <a href="#">Eliminar</a> </button></td>
-                          </tr>
-
-                        </tbody>
-                    </table>
-                </td>
-              </tr>
-            </thead>
-            </table>
-    </section>
-
-    {% endfor %}
-
-    <br>
-    <br>
-    <br>
-    
-    <a class="button" href="#">Regresar al inicio</a>
-    
-    {% endblock%}
+{% endblock%}

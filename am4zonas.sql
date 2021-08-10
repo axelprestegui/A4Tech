@@ -80,14 +80,32 @@ CREATE TABLE Compra (
     CONSTRAINT PK_Compra PRIMARY KEY (Correo_Comprador, Correo_Vendedor, Id_Producto, Id_Compra),
     CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_CorreoComprador FOREIGN KEY (Correo_Comprador) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_Id FOREIGN KEY (Id_Producto) references Producto (Id_Producto) ON UPDATE CASCADE
+    CONSTRAINT FK_Id FOREIGN KEY (Id_Producto) references Producto (Id_Producto) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Imagen (
+    Correo_Vendedor varchar(320) NOT NULL,
+    Id_producto int NOT NULL,
+    Ruta varchar(320),
+    CONSTRAINT PK_Imagen PRIMARY KEY (Correo_Vendedor, Ruta),
+    CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /* Algunas tuplas a insertar en la base*/
 INSERT INTO usuario VALUES
 ('axelprestegui@ciencias.unam.mx','Axel','Prestegui','Ramos','cubito53',1000000000,true),
-('dererex@ciencias.unam.mx','Derek','AP','AM','hola1234',5545648748,true);
+('derekalmanzacancer@gmail.com','Derek','AP','AM','hola1234',5545648748,true),
+('presteguiaxel@gmail.com','Axel','Prestegui','Ramos','qwerty',1000000000,false),
+('dererex@ciencias.unam.mx','Derek','AP','AM','hola1234',5545648748,true),
+('tania@gmail.com','Tania','AP','AM','qwerty',1000000000,false);
 
 INSERT INTO producto (Correo_Vendedor, Nombre, Precio, Cantidad, Detalles, Descripcion, Estado) VALUES
-('axelprestegui@ciencias.unam.mx', 'Zapatos adidas número 26 edición limitada', 1500.00, 1, 'Sin detalles', 'Sin descripción', true),
+('axelprestegui@ciencias.unam.mx', 'Zapatos adidas número 26 edición limitada', 1500.00, 10, 'Sin detalles', 'Sin descripción', true),
 ('dererex@ciencias.unam.mx', 'Lápices de Colores Marca Steadler 24 piezas', 500.00, 50, 'Excelentes lápices de colores de buena calidad','Sin descripción',true);
+
+INSERT INTO compra (Correo_Comprador,Correo_Vendedor,Id_Producto,Forma_Pago,Cantidad,Costo_Total,Estado,Ciudad,Alcaldia,Colonia,Calle,Numero_Ext,Numero_Int,Codigo_Postal,Comentario) VALUES
+('tania@gmail.com','axelprestegui@ciencias.unam.mx',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asdas','calle 10',1010,401,04420,'Excelente producto! 100% recomendado'),
+('derekalmanzacancer@gmail.com','presteguiaxel@gmail.com',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asds','calle 10',1010,401,04420,'Me gustaron mucho, muy buena edición');
+
+INSERT INTO compra (Correo_Comprador,Correo_Vendedor,Id_Producto,Forma_Pago,Cantidad,Costo_Total,Estado,Ciudad,Alcaldia,Colonia,Calle,Numero_Ext,Numero_Int,Codigo_Postal) VALUES
+('presteguiaxel@gmail.com','axelprestegui@ciencias.unam.mx',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asdas','calle 10',1010,401,04420);
