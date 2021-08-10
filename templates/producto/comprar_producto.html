@@ -69,16 +69,13 @@ Comprar producto
                     <button type="submit" class="boton" value="Siguiente" href="{{ url_for('usuario.inicio_usuario') }}"> Siguiente </button>
                     
                 </p>
+                <p class="una-fraccion">
+                    <button class="boton" onclick=location.href="{{ url_for('usuario.inicio_usuario') }}">Atras</button>
+                </p>
             </form>
-            <p class="una-fraccion">
-                <button class="boton" value="Cancelar" href="{{ url_for('usuario.inicio_usuario') }}"> 
-                <a class="boton" value="Cancelar" href="{{ url_for('usuario.inicio_usuario') }}"> Cancelar </a>
-                </button>
-            </p>
         </div>
         <div class="img-compra">
             <img src="../../static/images/doggy.png" style="width: 150px; height: 150px;">
-            <p id="fecha-entrega"> Fecha de entrega dd/mm/aa </p>
         </div>
     </div>
 </div>
