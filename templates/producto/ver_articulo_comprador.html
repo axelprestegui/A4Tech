@@ -154,10 +154,10 @@ span a:hover{
           <div class="estrellas">
               <div>
                   <p>
-                      12345 opiniones.
+                    Opiniones: {{compras | count}}
                   </p>
                   <p>
-                      0.0 promedio estrellas
+                    Promedio: {{promedio_estrellas}}
                   </p>
                   <button id="escribeResenia" disabled="disabled">
                       Escribe tu reseña
@@ -177,16 +177,14 @@ span a:hover{
                   </button>
               </form>
               <div>
-                  {% if compras %}
-                    {% for compra in compras %}
-                    {% if compra.Compra.comentario != None%}
-                      <h3>{{compra.Usuario.nombre}}.</h3>
+                {% if compras %}
+                {% for compra in compras %}
+                     <h3>{{compra.Usuario.nombre}}.</h3>
                       <p>
-                          {{compra.Compra.comentario}}
-                      </p>
-                    {% endif %}
-                    {% endfor %}
-                  {% endif %}
+                      {{compra.Compra.comentario}}
+                     </p>
+                {% endfor %}
+              {% endif %}
               </div>
               <!-- <div>
                   <h3>Nombre de usuario 2.</h3>
