@@ -41,7 +41,11 @@ Inicio Usuario
                     <div class="thumbnail">
                         <!--img src="assets/img/dummyimg.png" alt="" /> -->
                         <div class="caption">
-                            {% if producto.nombre %} <img width="150px" src={{producto.ruta}}> {% endif %}
+                            {% if producto.ruta != None%}
+                            <img width="150px" src={{producto.ruta}}>
+                            {% else %}
+                                <img width="150px" src="http://www.pequenomundo.cl/wp-content/themes/childcare/images/default.png">
+                            {% endif %}
                             {% if producto.nombre %}<h3>{{ producto.nombre }}</h3>{% endif %}
                             {% if producto.precio %}<p>Precio : <strong>$ {{ producto.precio }}</strong></p>{% endif %}
                             {% if producto.descripcion %} <p>{{ producto.descripcion }}</p>{% endif %}

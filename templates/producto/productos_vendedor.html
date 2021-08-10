@@ -23,7 +23,11 @@
     <div class="agrupador-info">
 
         <div class="imagen">
-            <img class="center" src={{prod.ruta}}>
+			{% if prod.ruta != None%}
+			<img class="center" src={{prod.ruta}}>
+		  {% else %}
+			<img class="center" src="http://www.pequenomundo.cl/wp-content/themes/childcare/images/default.png">
+		  {% endif %}
         </div>
 
         <div class="nombre-detalles">

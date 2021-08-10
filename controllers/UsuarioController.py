@@ -30,10 +30,9 @@ def iniciar_sesion():
             if usuario.tipo:
                 return render_template('usuario/vendedor_principal.html')
             else:
-                # problemas con productos sin imágenes, tampoco estoy muy seguro de qué sucede cuando un producto tiene varias imágesnes
-                # productos = db.engine.execute("SELECT * FROM producto NATURAL JOIN imagen")
-                # dejo por lo mientras este
-                productos = db.session.query(Producto).all()
+                
+                productos = db.engine.execute("SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto, nombre ,precio, cantidad, detalles, descripcion, estado, ruta FROM producto Left JOIN imagen ON producto.id_producto = imagen.id_producto")
+                #productos = db.session.query(Producto).all()
                 return render_template('usuario/inicio_usuario.html', productos=productos)
         flash("Correo o contraseña incorrectos")
         return render_template('usuario/iniciar_sesion.html', error=True)
@@ -50,9 +49,7 @@ def vendedor_principal():
     return render_template('usuario/vendedor_principal.html')
 @login_required
 def inicio_usuario():
-    # problemas con productos sin imágenes, tampoco estoy muy seguro de qué sucede cuando un producto tiene varias imágesnes
-    # productos = db.engine.execute("SELECT * FROM producto NATURAL JOIN imagen")
-    # dejo por lo mientras este
-    productos = db.session.query(Producto).all()
+    #productos = db.session.query(Producto).all()
+    productos = db.engine.execute("SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto, nombre ,precio, cantidad, detalles, descripcion, estado, ruta FROM producto Left JOIN imagen ON producto.id_producto = imagen.id_producto")
     return render_template('usuario/inicio_usuario.html', productos=productos)
     

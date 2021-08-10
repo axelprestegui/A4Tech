@@ -170,6 +170,8 @@ def eliminar_producto():
     return redirect(url_for('.productos_vendedor'))
 
 def get_producto(nombre):
+    #Forma alternativa de get_producto 
+    #producto = db.engine.execute("SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto, nombre,precio , cantidad, detalles, descripcion, estado, ruta  FROM producto Left JOIN imagen  ON producto.id_producto = imagen.id_producto  WHERE nombre LIKE '%"+nombre+"%'")
     producto = db.session.query(Producto).filter(Producto.nombre.like('%'+nombre+'%')).all()
     return producto
 
@@ -258,8 +260,8 @@ def productos_vendedor():
     id_vendedor = current_user.correo
     # si se usa  natural join, aquellos productos sin imagen no apareceran,
     # creo que además esto tendrá problemas cuando un producto tenga más de una imagnes
-    # productos = db.engine.execute("SELECT * FROM producto NATURAL JOIN imagen WHERE correo_vendedor = '"+str(id_vendedor)+"'")
+    productos = db.engine.execute("SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto, nombre,precio , cantidad, detalles, descripcion, estado, ruta FROM producto Left JOIN imagen ON producto.id_producto = imagen.id_producto WHERE producto.correo_vendedor = '"+str(id_vendedor)+"'")
     # dejo por lo mientras esta que sí nos deja ver productos aunque no tengan imagen
-    productos = db.session.query(Producto).filter(Producto.correo_vendedor == Usuario.correo, Usuario.correo == id_vendedor , Usuario.tipo == True)
+    #productos = db.session.query(Producto).filter(Producto.correo_vendedor == Usuario.correo, Usuario.correo == id_vendedor , Usuario.tipo == True)
     return render_template('producto/productos_vendedor.html', producto = productos)
     
