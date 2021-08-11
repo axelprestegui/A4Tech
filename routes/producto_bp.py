@@ -1,6 +1,7 @@
 from flask import Blueprint
-from controllers.ProductoController import * #importamos nuestras funciones necesarios
-from controllers.CompraController import comprar_producto,get_comprar_formulario # Importamos método de compra
+from controllers.ProductoController import *
+from controllers.CompraController import *
+from controllers.VisualizacionProductoController import *
 
 # creamos una nueva blueprint producto_bp, en este caso llamada producto y le asignamos el prefijo /producto
 producto_bp = Blueprint('producto', __name__, url_prefix='/producto')
