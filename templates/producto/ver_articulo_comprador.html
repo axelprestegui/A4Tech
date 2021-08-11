@@ -127,20 +127,42 @@ span a:hover{
                 <table class="tg">
                     
                     <tbody>
-                      <tr>
-<!--Cargamos los elementos en el siguiente orden: descripcion, detalles y precio-->
-                        <td class="esructura">
-                            <h2>Descripcion</h2>  {{producto.descripcion}} 
-                            <br>
-                        </td>
-                      </tr>
-                      <tr>
+<!--Cargamos los elementos en el siguiente orden: detalles, descripción, estado, unidades disponibles y precio-->
+                       <tr>
                         <td class="esructura">
                             <h2>Detalles</h2>
                              {{producto.detalles}}
                             <br>
                         </td>
                       </tr>
+                      <tr>
+                        <td class="esructura">
+                            <h2>Descripcion</h2>
+                            {% if producto.descripcion %}
+                              {{producto.descripcion}} 
+                            {% else %}
+                              Sin descripción.
+                            {% endif %}
+                            <br>
+                        </td>
+                      </tr>
+                      <td class="esructura">
+                        <h2>Estado del producto</h2>
+                            {% if producto.estado %}
+                              Nuevo
+                            {% else %}
+                              Usado
+                            {% endif %}
+                          <br>
+                        </td>
+                      </tr>
+                      <td class="esructura">
+                        <h2>Unidades disponibles para compra</h2>
+                            {{producto.cantidad}}
+                          <br>
+                        </td>
+                      </tr>
+                     
                       <tr>
                         <td class="esructura">
                             <table class="tg">
@@ -152,12 +174,15 @@ span a:hover{
                                 </thead>
                             </table>
                             
-
-                            <form class="button" action="{{url_for('producto.get_comprar_formulario')}}" method="POST">
-                            &nbsp; 
-                                <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} '">
-                                <input type="submit" value="Comprar" class="boton">
-                            </form>
+                            {% if producto.cantidad != 0 %}
+                              <form class="button" action="{{url_for('producto.get_comprar_formulario')}}" method="POST">
+                              &nbsp; 
+                                  <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} '">
+                                  <input type="submit" value="Comprar" class="boton">
+                              </form>
+                            {% else %}
+                              ¡Lo sentimos! Este producto está agotado, regresa más tarde.
+                            {% endif %}
                             <button class="boton" onclick=location.href="{{ url_for('usuario.inicio_usuario') }}">Regresar</button>
                         </td>
                       </tr>
@@ -192,7 +217,17 @@ span a:hover{
                   <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}}>
                   <label for="resenia"> Ingresa tu reseña aquí &darr; </label>
                   <br>
-                  <textarea name="resenia" id="reseniaArea" cols="20"></textarea>
+                  <textarea name="resenia" id="reseniaArea" cols="20" required></textarea>
+                  <p>
+                  <select name="numero_estrellas" id="numero_estrellas" required>
+                    <option type="number" value="5">5 estrellas</option>
+                    <option type="number" value="4">4 estrellas</option>
+                    <option type="number" value="3">3 estrellas</option>
+                    <option type="number" value="2">2 estrellas</option>
+                    <option type="number" value="1">1 estrella</option>
+                    <option type="number" value="0" selected>Sin calificación</option>
+                  </select> 
+                </p>
                   <!-- <input type="text" name="resenia" id="resenia"> -->
                   <button type="submit" style="font-weight: bolder;" id="enviar">
                       Enviar reseña
@@ -203,8 +238,13 @@ span a:hover{
                 {% for compra in compras %}
                      <h3>{{compra.Usuario.nombre}}.</h3>
                       <p>
-                      {{compra.Compra.comentario}}
-                     </p>
+                      {{compra.Compra.comentario}}<br>
+                      {% if compra.Compra.numero_estrellas %}
+                        Calificación: {{compra.Compra.numero_estrellas}} estrellas
+                      {% else %}
+                        Calificación: Sin calificación.
+                      {% endif %}
+                      </p>
                 {% endfor %}
               {% endif %}
               </div>
@@ -229,7 +269,7 @@ span a:hover{
   </div>
   
   <script src="../../static/js/evaluacionProducto.js"></script>
-    <a class="button" href="#">Regresar al inicio</a>
+    
     
 </section>
 

@@ -88,7 +88,8 @@ CREATE TABLE Imagen (
     Id_producto int NOT NULL,
     Ruta varchar(320),
     CONSTRAINT PK_Imagen PRIMARY KEY (Correo_Vendedor, Ruta),
-    CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FK_CorreoVendedor FOREIGN KEY (Correo_Vendedor) references Usuario (Correo) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_Id_producto FOREIGN KEY (Id_producto) references Producto (Id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /* Algunas tuplas a insertar en la base*/

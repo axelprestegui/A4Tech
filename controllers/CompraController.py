@@ -52,8 +52,7 @@ def comprar_producto():
 
     # checamos que haya stock suficiente
     if cantidad > producto.cantidad:
-        flash('Lo sentimos, no existen tantos productos en stock. Cantidad máxima para comprar de momento: {}'.format(producto.cantidad))
-        return render_template('producto/comprar_producto.html')
+        cantidad = producto.cantidad
     # actualizamos el stock actual del producto
     producto.cantidad = producto.cantidad - cantidad
     db.session.commit()
@@ -90,6 +89,5 @@ def comprar_producto():
             message.attach(MIMEText(nuevo_mensaje, 'html'))
             server.sendmail(correo,comprador.correo,message.as_string())
         except Exception as e:
-            flash('No hemos podido enviar su correo de confirmación. Sin embargo, la compra ha sido completada con éxito.')
-            # return render_template() podríamos mandarlo a la página principal o a la página del producto
+            pass
     return redirect(url_for('usuario.inicio_usuario'))

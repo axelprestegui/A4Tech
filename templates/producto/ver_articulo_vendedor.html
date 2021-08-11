@@ -126,18 +126,40 @@
                     <table class="tg">
                         
                         <tbody>
+<!--Cargamos los elementos en el siguiente orden: detalles, descripción, estado, unidades disponibles y precio-->
                           <tr>
-    <!--Cargamos los elementos en el siguiente orden: descripcion, detalles y precio-->
                             <td class="esructura">
-                                <h2>Detalles</h2>  {{producto.detalles}} 
+                                <h2>Detalles</h2>
+                                {{producto.detalles}} 
                                 <br>
                             </td>
                           </tr>
                           <tr>
                             <td class="esructura">
                                 <h2>Descripción</h2>
-                                 {{producto.descripcion}}
+                                {% if producto.descripcion %}
+                                    {{producto.descripcion}} 
+                                {% else %}
+                                    Sin descripción.
+                                {% endif %}
                                 <br>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="esructura">
+                                <h2>Estado del producto</h2>
+                                {% if producto.estado %}
+                                    Nuevo
+                                {% else %}
+                                    Usado
+                                {% endif %}
+                                <br>
+                            </td>
+                          </tr>
+                          <td class="esructura">
+                            <h2>Unidades disponibles para compra</h2>
+                                {{producto.cantidad}}
+                              <br>
                             </td>
                           </tr>
                           <tr>

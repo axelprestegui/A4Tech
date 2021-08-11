@@ -16,7 +16,11 @@ def iniciar_sesion():
                 return render_template('usuario/vendedor_principal.html')
             # si es comprador, lo mandamos a la página principal de productos
             else:
-                productos = db.session.query(Producto).all()
+                productos = db.engine.execute("""SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto,
+                                                        nombre ,precio, cantidad, detalles, descripcion, estado, ruta
+                                                        FROM producto
+                                                        Left JOIN imagen
+                                                        ON producto.id_producto = imagen.id_producto""")
                 return render_template('usuario/inicio_usuario.html', productos=productos)
         # en otro caso, intentamos iniciar sesión
         correo = request.form.get('correo')
@@ -30,8 +34,11 @@ def iniciar_sesion():
             if usuario.tipo:
                 return render_template('usuario/vendedor_principal.html')
             else:
-                
-                productos = db.engine.execute("SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto, nombre ,precio, cantidad, detalles, descripcion, estado, ruta FROM producto Left JOIN imagen ON producto.id_producto = imagen.id_producto")
+                productos = db.engine.execute("""SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto,
+                                                        nombre ,precio, cantidad, detalles, descripcion, estado, ruta
+                                                        FROM producto
+                                                        Left JOIN imagen
+                                                        ON producto.id_producto = imagen.id_producto""")
                 #productos = db.session.query(Producto).all()
                 return render_template('usuario/inicio_usuario.html', productos=productos)
         flash("Correo o contraseña incorrectos")
@@ -50,6 +57,10 @@ def vendedor_principal():
 @login_required
 def inicio_usuario():
     #productos = db.session.query(Producto).all()
-    productos = db.engine.execute("SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto, nombre ,precio, cantidad, detalles, descripcion, estado, ruta FROM producto Left JOIN imagen ON producto.id_producto = imagen.id_producto")
+    productos = db.engine.execute("""SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto,
+                                                        nombre ,precio, cantidad, detalles, descripcion, estado, ruta
+                                                        FROM producto
+                                                        Left JOIN imagen
+                                                        ON producto.id_producto = imagen.id_producto""")
     return render_template('usuario/inicio_usuario.html', productos=productos)
     
