@@ -27,64 +27,6 @@ db = SQLAlchemy() # nuestro ORM
 """
 Funcion encargada del registro de los usuarios para el sistema
 """
-
-def crear_contrasenia():
-    # maximum length of password needed
-    # this can be changed to suit your password length
-    MAX_LEN = 12
-    
-    # declare arrays of the character that we need in out password
-    # Represented as chars to enable easy string concatenation
-    DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  
-    LOCASE_CHARACTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
-                        'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q',
-                        'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-                        'z']
-    
-    UPCASE_CHARACTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
-                        'I', 'J', 'K', 'M', 'N', 'O', 'p', 'Q',
-                        'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
-                        'Z']
-    
-    SYMBOLS = ['@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>', 
-            '*', '(', ')', '<']
-    
-    # combines all the character arrays above to form one array
-    COMBINED_LIST = DIGITS + UPCASE_CHARACTERS + LOCASE_CHARACTERS + SYMBOLS
-    
-    # randomly select at least one character from each character set above
-    rand_digit = random.choice(DIGITS)
-    rand_upper = random.choice(UPCASE_CHARACTERS)
-    rand_lower = random.choice(LOCASE_CHARACTERS)
-    rand_symbol = random.choice(SYMBOLS)
-    
-    # combine the character randomly selected above
-    # at this stage, the password contains only 4 characters but 
-    # we want a 12-character password
-    temp_pass = rand_digit + rand_upper + rand_lower + rand_symbol
-    
-    
-    # now that we are sure we have at least one character from each
-    # set of characters, we fill the rest of
-    # the password length by selecting randomly from the combined 
-    # list of character above.
-    for x in range(MAX_LEN - 4):
-        temp_pass = temp_pass + random.choice(COMBINED_LIST)
-    
-        # convert temporary password into array and shuffle to 
-        # prevent it from having a consistent pattern
-        # where the beginning of the password is predictable
-        temp_pass_list = array.array('u', temp_pass)
-        random.shuffle(temp_pass_list)
-    
-    # traverse the temporary password array and append the chars
-    # to form the password
-    contrasenia = ""
-    for x in temp_pass_list:
-            contrasenia = contrasenia + x
-
-    return contrasenia
-
 def registrar_usuario():
     # si no recibimos una solicitud post, mostramos el formulario
     if request.method != 'POST':
@@ -97,25 +39,30 @@ def registrar_usuario():
     correo_usuario = request.form['correo_usuario']
     contrasenia = crear_contrasenia()
     telefono = request.form['telefono']
-    tipo = True
-    if request.form.get('type-user') == 'vendedor':
-        tipo = True
-    else:
-        tipo = False
+
+     # El tipo corresponde a si un usuario  es comprador o vendedor, 
+     # por defecto el valor es False lo cual indica que se trata de un usuario comprador
+    tipo = False
+    # Si se selecciona la opcion de vendedor entonces el valor cambiara a True
+    if request.form.get('type-user') == 'vendedor': tipo = True
     mensaje = ''
-    
+
+    # Una vez obtenemos los datos de nuestro formulario haremos la
+    #  inserscion de la informacion en nuestra tabla de Usuario
     try:
+        #Si el usuario ya se encuentra registrado la consulta se completara y volvera a cargar la pagina
         usuarioRegistrado = db.session.query(Usuario).filter(Usuario.correo == request.form['correo_usuario']).one()
         flash('Este usaurio ya se encuentra registrado, por favor introduzca un correo diferente')
         return render_template('usuario/registrar_usuario.html')
     except Exception as e:
-        
+        # En caso de que no ocurra entonces podemos hacer la insercion de datos
         nuevo_usuario = Usuario(correo_usuario,nombre_usuario,apellidoP,apellidoM,contrasenia,telefono,tipo)
     
         db.session.add(nuevo_usuario)
         db.session.commit()
     
-        # envíamos el correo de que se ha realizado la compra exitosamente
+        # Envíamos el correo de que se ha realizado la compra exitosamente, 
+        # en este correo incluiremos la contraseña del usuario 
         with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
             server.login("4atech.am4zonas@gmail.com", password)
             try:
@@ -140,5 +87,62 @@ def registrar_usuario():
                 server.sendmail(correo,nuevo_usuario.correo,message.as_string())
             except Exception as e:
                 flash('No hemos podido enviar su correo con su contraseña. Sin embargo, su contraseña es: ' + contrasenia)
-                # return render_template() podríamos mandarlo a la página principal o a la página del producto
+                # Una vez enviado el correo, lo que haremos sera regresar al inicio
+                # para que el usuario se pueda logear su contraseña
         return redirect(url_for('index'))
+
+#----------------------------------Funciones auxiliares-----------------------------------------------------
+
+#Funcion auxiliar que ayuda en la creacion de una contraseña segura
+def crear_contrasenia():
+    # Longitud maxima de la contraseña, puede cambiarse el tamaño en cualquier momento
+    MAX_LEN = 12
+    
+    # Creamos los arreglos de caracteres que queremos usar
+    DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  
+    LOCASE_CHARACTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
+                        'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q',
+                        'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+                        'z']
+    
+    UPCASE_CHARACTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
+                        'I', 'J', 'K', 'M', 'N', 'O', 'p', 'Q',
+                        'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+                        'Z']
+    
+    SYMBOLS = ['@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>', 
+            '*', '(', ')', '<']
+    
+    # Juntamos todos los caracteres de arriba en un solo arreglo
+    COMBINED_LIST = DIGITS + UPCASE_CHARACTERS + LOCASE_CHARACTERS + SYMBOLS
+    
+    # Seleccinamos por lo menos un caracter de los arreglos de arriba
+    rand_digit = random.choice(DIGITS)
+    rand_upper = random.choice(UPCASE_CHARACTERS)
+    rand_lower = random.choice(LOCASE_CHARACTERS)
+    rand_symbol = random.choice(SYMBOLS)
+    
+    # combinamos los caracteres que generamos
+    # sin embargo solo contamos con 4, pero queremos 
+    # que nuestra contraseña tenga 12 caracteres
+    temp_pass = rand_digit + rand_upper + rand_lower + rand_symbol
+    
+    
+    # Ahora que tenemos un arreglo con cuatro caracteres 
+    # lo que haremos sera tomar los ultimos max_len -4 faltantes
+    # En este caso serian 8
+    for x in range(MAX_LEN - 4):
+        temp_pass = temp_pass + random.choice(COMBINED_LIST)
+    
+        # Convertimos de manera temporal nuestra contraseña en un arreglo
+        # y mezclamos con el fin de evitar asi algun patron
+        temp_pass_list = array.array('u', temp_pass)
+        random.shuffle(temp_pass_list)
+    
+    # Una vez tenemos este arreglo solo queda concatenar 
+    # la lista y devolver nuestra contraseña
+    contrasenia = ""
+    for x in temp_pass_list:
+            contrasenia = contrasenia + x
+
+    return contrasenia

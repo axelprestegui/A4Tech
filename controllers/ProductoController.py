@@ -179,6 +179,7 @@ def ver_articulo_comprador():
         pass
     #Se hace la busqueda del producto deseado
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
+    #Una vez cargado el producto, cargamos sus imagenes
     imagen = db.session.query(Imagen).filter(Imagen.id_producto == id_producto).first()
     # y de los compras para obtener las reseñas y calificación
     (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
@@ -191,6 +192,7 @@ def ver_articulo_vendedor():
     producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
     # y de los compras para obtener las reseñas y calificación
     (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
+    #Una vez cargado el producto cargamos la imagen de este
     imagen = db.session.query(Imagen).filter(Imagen.id_producto == id_producto).first()
     return render_template('producto/ver_articulo_vendedor.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas, url_img = imagen)
 
@@ -220,25 +222,23 @@ def guarda_resenia(comentario, numero_estrellas, correo_comprador, id_producto):
             return
     flash('Por favor, compre el producto')
 
-def mostrar_todos():
-    producto = db.session.query(Producto).order_by(Producto.nombre).limit(10)
-    if request.method != 'POST':
-        
-        #enviamos
-        return render_template('producto/mostrar_todos.html', producto = producto) 
-
+#Funcion que nos ayuda a cargar todos los productos que pertenezcan a un vendedor
 @login_required
 def productos_vendedor():
+    #Obtenemos el ID del vendedor que haya iniciado sesion
     id_vendedor = current_user.correo
-    # si se usa  natural join, aquellos productos sin imagen no apareceran,
-    # creo que además esto tendrá problemas cuando un producto tenga más de una imagnes
+    """
+    Realizamos la busqueda en la base de datos, para ello tomaemos la tabla Producto e Imagen
+    y haremos una union por la izquierda, esto con el proposito de que si un producto no posee
+    una imagen aun asi pueda desplegarlo
+    """
     productos = db.engine.execute("""SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto,
                                             nombre,precio , cantidad, detalles, descripcion, estado, ruta
                                             FROM producto
                                             Left JOIN imagen 
                                             ON producto.id_producto = imagen.id_producto WHERE producto.correo_vendedor = '"""+str(id_vendedor)+"'")
-    # dejo por lo mientras esta que sí nos deja ver productos aunque no tengan imagen
-    #productos = db.session.query(Producto).filter(Producto.correo_vendedor == Usuario.correo, Usuario.correo == id_vendedor , Usuario.tipo == True)
+    
+    #Cargamos la pagina con los datos del vendedor
     return render_template('producto/productos_vendedor.html', producto = productos)
     
 
@@ -262,7 +262,11 @@ def guarda_imagenes(imagenes, correo_vendedor, id_producto):
         if '.' + imagen.content_type.split('/')[1] in imagenes_validas:
             imagen_name = secure_filename(imagen.filename)
             imagen.save(os.path.join(dir_vendedor_img, str(id_producto), imagen_name.strip()))
-
+            
+            """
+        Una vez guardamos las imagenes indicamos en la tabla de Imagen la ruta, el id del producto y el correo del vendedor
+        En este caso todas las imagenes se guardaran en ../../static/images/<correo>/<id_producto>
+            """ 
             nueva_imagen = Imagen(str(correo_vendedor),str(id_producto), '../../static/images/'+str(correo_vendedor)+'/'+str(id_producto)+'/'+ imagen.filename )
             try:
                 db.session.query(Imagen).filter_by(id_producto=id_producto).delete()

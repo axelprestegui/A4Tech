@@ -20,7 +20,7 @@ producto_bp.route('/get_comprar_formulario', methods=['POST'])(get_comprar_formu
 producto_bp.route('/buscar_producto', methods=['POST', 'GET'])(buscar_producto)
 producto_bp.route('/resultado_busqueda' , methods=['POST', 'GET'])(resultado_busqueda)
 
-producto_bp.route('/mostrar_todos', methods = ['POST','GET'])(mostrar_todos)
+#bp que agrega la ruta para visualizacion de productos
 producto_bp.route('/productos_vendedor', methods = ['POST','GET'])(productos_vendedor)
 producto_bp.route('/ver_articulo_comprador', methods = ['POST','GET'])(ver_articulo_comprador)
 producto_bp.route('/ver_articulo_vendedor', methods=['POST','GET'])(ver_articulo_vendedor)

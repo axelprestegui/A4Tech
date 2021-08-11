@@ -1,3 +1,5 @@
+<!--Cargamos el encabezado y otros botones-->
+
 {% extends 'base.html' %}
     
 {% block header %}
@@ -16,12 +18,12 @@
 {% block content %}
 
 <button class="atras" onclick=location.href="{{ url_for('usuario.vendedor_principal') }}">Atras</button>
-
+<!--Seccion que carga la informacion de los articulos-->
 {% for prod in producto%}
 
 <div class="content">
     <div class="agrupador-info">
-
+<!-- Seccion para mostrar las imagenes del producto-->
         <div class="imagen">
 			{% if prod.ruta != None%}
 			<img class="center" src={{prod.ruta}}>
@@ -29,7 +31,7 @@
 			<img class="center" src="http://www.pequenomundo.cl/wp-content/themes/childcare/images/default.png">
 		  {% endif %}
         </div>
-
+<!--Cargamos los elementos en el siguiente orden: nombre, detalles cantidad-->
         <div class="nombre-detalles">
 
 			<div>
@@ -38,12 +40,12 @@
 					<input type="submit" id="prodNombreInput" class="nombre-producto" value="{{prod.nombre}}">
 				</form>
 
-				<p style="color: white;">  Detalles: {{prod.detalles }} </p>
+				<p style="color: white;">  Detalles: {{prod.detalles}} </p>
 				<p style="color: white;"> Cantidad: {{prod.cantidad}} </p>
 			</div>
 
         </div>
-
+<!--Cargamos los elementos en el siguiente orden: precio, id-->
 		<div class="precio-id">
 
 			<div>
@@ -52,7 +54,7 @@
 			</div>
 
 		</div>
-
+<!--Seccion para eliminar un articulo-->
 		<div class="elimina-actualiza">
 			
 			<div>
