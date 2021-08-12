@@ -207,7 +207,12 @@
                         {% for compra in compras %}
                              <h3>{{compra.Usuario.nombre}}.</h3>
                               <p>
-                              {{compra.Compra.comentario}}
+                                {{compra.Compra.comentario}}<br>
+                                {% if compra.Compra.numero_estrellas %}
+                                  Calificación: {{compra.Compra.numero_estrellas}} estrellas
+                                {% else %}
+                                  Calificación: Sin calificación.
+                                {% endif %}
                              </p>
                         {% endfor %}
                       {% endif %}

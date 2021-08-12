@@ -44,16 +44,19 @@ def iniciar_sesion():
         flash("Correo o contraseña incorrectos")
         return render_template('usuario/iniciar_sesion.html', error=True)
     else :
-        return render_template('usuario/iniciar_sesion.html')
+        return render_template('usuario/iniciar_sesion.html', error=False)
 
 @login_required
 def cerrar_sesion():
     logout_user()
     return render_template('index.html')
 
-# Función para que te mande a la página de vendedor principal.
+# Método que redirecciona a la página de vendedor principal.
+@login_required
 def vendedor_principal():
     return render_template('usuario/vendedor_principal.html')
+
+# Método que redirecciona a la página de comprador principa
 @login_required
 def inicio_usuario():
     #productos = db.session.query(Producto).all()

@@ -16,7 +16,9 @@ Iniciar Sesión
 <div class="container">
 	<div class="login-box">
 		<div class="login-title">Iniciar Sesión</div>
-
+		{% if error %}
+			<p style="color:#D03727";>¡Ups! Correo o contraseña incorrectos.</p>
+		{% endif %}
 		<form method="post">
 			<div>
 				<label class="etiquetas">Correo Electrónico</label>

@@ -55,10 +55,6 @@ def crear_producto():
     # cuando la vista de mostrar producto esté terminada, aquí debería ir render_template('ruta/mostrar_producto.html')
     return redirect(url_for('.productos_vendedor'))
 
-def get_actualizar_formulario():
-    producto = db.session.query(Producto).filter(Producto.id_producto == request.form['id_producto']).one()
-    return render_template('producto/actualizar_producto.html', producto=producto)
-
 @login_required
 def actualizar_producto():
     """
@@ -135,116 +131,9 @@ def eliminar_producto():
     
     return redirect(url_for('.productos_vendedor'))
 
-def get_producto(nombre):
-    #Forma alternativa de get_producto 
-    producto = db.engine.execute("""SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto,
-                                            nombre,precio , cantidad, detalles, descripcion, estado, ruta
-                                            FROM producto
-                                            Left JOIN imagen
-                                            ON producto.id_producto = imagen.id_producto  WHERE nombre LIKE '%%"""+nombre+"%%'")
-    #producto = db.session.query(Producto).filter(Producto.nombre.like('%'+nombre+'%')).all()
-    return producto
+###---------------------------------- MÉTODOS AUXILIARES ----------------------------------###
 
-@login_required
-def buscar_producto():
-    if request.method != 'POST':
-        return render_template('usuario/inicio_usuario.html')
-
-    producto = get_producto(request.form['search'])
-
-    if producto == []:
-        flash("No se encontró ningún producto con esas características")
-        return render_template('usuario/inicio_usuario.html')
-    else:
-        return render_template('usuario/resultado_busqueda.html')
-
-@login_required
-def resultado_busqueda():
-    return render_template('producto/resultado_busqueda.html', resultados=get_producto(request.form['search']))
-
-@login_required
-def ver_articulo_buscado():
-    return render_template('producto/ver_articulo_buscado.html', producto=get_producto(request.form['search']))
-
-@login_required
-def ver_articulo_comprador():
-    # obtenemos información del producto
-    id_producto = request.form['id_producto']
-    # y del comprador que está observando el producto
-    try:
-        correo_comprador = request.form['correo_comprador']
-        # si se mandó una reseña del producto, la intentamos guardar
-        guarda_resenia(request.form['resenia'], request.form['numero_estrellas'], correo_comprador, id_producto)
-    except Exception as e:
-        pass
-    #Se hace la busqueda del producto deseado
-    producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
-    #Una vez cargado el producto, cargamos sus imagenes
-    imagen = db.session.query(Imagen).filter(Imagen.id_producto == id_producto).first()
-    # y de los compras para obtener las reseñas y calificación
-    (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
-    return render_template('producto/ver_articulo_comprador.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas, imagen = imagen)
-
-def ver_articulo_vendedor():
-    # obtenemos información del producto
-    id_producto = request.form['id_producto']
-    #Se hace la busqueda del producto deseado
-    producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
-    # y de los compras para obtener las reseñas y calificación
-    (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
-    #Una vez cargado el producto cargamos la imagen de este
-    imagen = db.session.query(Imagen).filter(Imagen.id_producto == id_producto).first()
-    return render_template('producto/ver_articulo_vendedor.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas, url_img = imagen)
-
-def get_compras_con_reseña(id_producto):
-    compras = db.session.query(Compra, Usuario).join(Usuario, Compra.correo_comprador == Usuario.correo)\
-                                                .filter(Compra.id_producto == id_producto).all()
-    compras_con_opinion = list(filter(lambda compra: compra.Compra.comentario != None, compras))
-    compras_con_calificacion = list(filter(lambda compra: compra.Compra.numero_estrellas != None and compra.Compra.numero_estrellas != 0, compras))
-    promedio_estrellas = 0
-    if len(compras_con_calificacion) != 0:
-        promedio_estrellas = reduce(lambda acc, compra: compra.Compra.numero_estrellas + acc
-                                                        if compra.Compra.numero_estrellas != None 
-                                                        else acc, compras_con_calificacion, 0)/len(compras_con_calificacion)
-    return (compras_con_opinion,promedio_estrellas)
-
-# Función auxiliar para guardar reseñas
-def guarda_resenia(comentario, numero_estrellas, correo_comprador, id_producto):
-    # buscamos todas las posibles compras que haya hecho el vendedor del producto
-    compras = db.session.query(Compra).filter_by(correo_comprador=correo_comprador,id_producto=id_producto).all()
-    for compra in compras:
-        # las iteramos para buscar alguna que no contenga comentario
-        if not compra.comentario:
-            # en tal caso, agregamos la reseña y terminamos
-            compra.comentario = comentario
-            compra.numero_estrellas = numero_estrellas
-            db.session.commit()
-            return
-    flash('Por favor, compre el producto')
-
-#Funcion que nos ayuda a cargar todos los productos que pertenezcan a un vendedor
-@login_required
-def productos_vendedor():
-    #Obtenemos el ID del vendedor que haya iniciado sesion
-    id_vendedor = current_user.correo
-    """
-    Realizamos la busqueda en la base de datos, para ello tomaemos la tabla Producto e Imagen
-    y haremos una union por la izquierda, esto con el proposito de que si un producto no posee
-    una imagen aun asi pueda desplegarlo
-    """
-    productos = db.engine.execute("""SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto,
-                                            nombre,precio , cantidad, detalles, descripcion, estado, ruta
-                                            FROM producto
-                                            Left JOIN imagen 
-                                            ON producto.id_producto = imagen.id_producto WHERE producto.correo_vendedor = '"""+str(id_vendedor)+"'")
-    
-    #Cargamos la pagina con los datos del vendedor
-    return render_template('producto/productos_vendedor.html', producto = productos)
-    
-
-### MÉTODOS AUXILIARES ###
-
-# Función auxiliar para guardar las imágenes de los productos. Se recibe las imágenes, el correo
+# Método auxiliar para guardar las imágenes de los productos. Se recibe las imágenes, el correo
 # del vendedor para saber la dirección donde guardar las imágenes, y el id del producto
 # para poder obtenerlas cuando sea necesario.
 def guarda_imagenes(imagenes, correo_vendedor, id_producto):
@@ -275,8 +164,7 @@ def guarda_imagenes(imagenes, correo_vendedor, id_producto):
             except:
                 pass
 
-
-# Función auxiliar que elimina todas las imágenes asociadas a un producto.
+# Método auxiliar que elimina todas las imágenes asociadas a un producto.
 def elimina_imagenes(imagenes, correo_vendedor, id_producto):
     # checamos que sí debemos eliminar imagenes
     for imagen in imagenes:
@@ -289,3 +177,8 @@ def elimina_imagenes(imagenes, correo_vendedor, id_producto):
     if os.path.isdir(os.path.join(dir_vendedor_img, str(id_producto))):
         # eliminamos el directorio donde están guardadas las fotos
         shutil.rmtree(os.path.join(dir_vendedor_img, str(id_producto)))
+
+# Método auxiliar para obtener el formulario de actualización de un producto específico.
+def get_actualizar_formulario():
+    producto = db.session.query(Producto).filter(Producto.id_producto == request.form['id_producto']).one()
+    return render_template('producto/actualizar_producto.html', producto=producto)

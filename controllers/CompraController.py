@@ -17,18 +17,21 @@ password = 'am4zonas123' # la contraseña de nuestro correo
 context = ssl.create_default_context() # creamos un ssl
 message = MIMEMultipart("alternative") # el correo a enviar
 
-
+@login_required
 def get_comprar_formulario():
+    """
+    Método para devolver el formulario de compra de un producto en específico.
+    """
     producto = db.session.query(Producto).filter(Producto.id_producto == request.form['id_producto']).one()
     imagen = db.session.query(Imagen).filter(Imagen.id_producto == request.form['id_producto']).first()
     return render_template('producto/comprar_producto.html', producto=producto, imagen=imagen)
 
-"""
-Método que dará acceso a '.../producto/compra_producto' la cual será una vista encargada de recabar 
-la información necesaria para llevar a cabo la compra del producto.
-"""
 @login_required
 def comprar_producto():
+    """
+    Método que dará acceso a '.../producto/compra_producto' la cual será una vista encargada de recabar 
+    la información necesaria para llevar a cabo la compra del producto.
+    """
     correo_comprador = request.form['correo_comprador']
     correo_vendedor = request.form['correo_vendedor']
     id_producto = request.form['id_producto']
