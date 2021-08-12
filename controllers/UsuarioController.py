@@ -44,7 +44,7 @@ def iniciar_sesion():
         flash("Correo o contraseña incorrectos")
         return render_template('usuario/iniciar_sesion.html', error=True)
     else :
-        return render_template('usuario/iniciar_sesion.html')
+        return render_template('usuario/iniciar_sesion.html', error=False)
 
 @login_required
 def cerrar_sesion():
