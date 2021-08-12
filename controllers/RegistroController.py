@@ -60,8 +60,8 @@ def registrar_usuario():
     if(not check_mail(correo_usuario)):
         flash('Correo electrónico con un formato invalido.')
         return render_template('usuario/registrar_usuario.html')
-    # Revisamos que el numero sea valido
-    if(not (1000000000 <= telefono and telefono <10000000000)):
+    # Revisamos que el numero tenga una longitud valida
+    if(len(telefono)  != 10):
         flash('El número telefónico debe tener una longitud de 10 números.')
         return render_template('usuario/registrar_usuario.html')
 
