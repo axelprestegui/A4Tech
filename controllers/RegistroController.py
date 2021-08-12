@@ -14,6 +14,7 @@ from email.mime.multipart import MIMEMultipart
 
 import random
 import array
+import re
 
 # para enviar correos
 port = 465  # For SSL
@@ -23,6 +24,18 @@ context = ssl.create_default_context() # creamos un ssl
 message = MIMEMultipart("alternative") # el correo a enviar
 
 db = SQLAlchemy() # nuestro ORM
+
+#Datos para hacer revisiones
+#Letras Minusculas
+LOCASE_CHARACTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k','l', 'm', 'n', 'o', 'p', 'q','r', 's', 't', 'u', 'v', 'w', 'x', 'y','z']
+#Letras Mayusculas
+UPCASE_CHARACTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L','M', 'N', 'O', 'p', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+#Digitos
+DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  
+#symbolos        
+SYMBOLS = ['@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>',  '*', '(', ')', '<']
+#Expresion regular para correo
+regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 """
 Funcion encargada del registro de los usuarios para el sistema
@@ -39,6 +52,19 @@ def registrar_usuario():
     correo_usuario = request.form['correo_usuario']
     contrasenia = crear_contrasenia()
     telefono = request.form['telefono']
+    # Hacemos una revision de que tanto nombre y apellidos contengan unicamente letras
+    if(not check_no_symbols(nombre_usuario) or not check_no_symbols(apellidoM) or not check_no_symbols(apellidoP)):
+        flash('El nombre y/o apellidos no pueden llevar números o símbolos.')
+        return render_template('usuario/registrar_usuario.html')
+    # Revisamos que el correo tenga un formato valido
+    if(not check_mail(correo_usuario)):
+        flash('Correo electrónico con un formato invalido.')
+        return render_template('usuario/registrar_usuario.html')
+    # Revisamos que el numero sea valido
+    if(not (1000000000 <= telefono and telefono <10000000000)):
+        flash('El número telefónico debe tener una longitud de 10 números.')
+        return render_template('usuario/registrar_usuario.html')
+
 
      # El tipo corresponde a si un usuario  es comprador o vendedor, 
      # por defecto el valor es False lo cual indica que se trata de un usuario comprador
@@ -99,19 +125,6 @@ def crear_contrasenia():
     MAX_LEN = 12
     
     # Creamos los arreglos de caracteres que queremos usar
-    DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  
-    LOCASE_CHARACTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
-                        'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q',
-                        'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-                        'z']
-    
-    UPCASE_CHARACTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
-                        'I', 'J', 'K', 'M', 'N', 'O', 'p', 'Q',
-                        'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
-                        'Z']
-    
-    SYMBOLS = ['@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>', 
-            '*', '(', ')', '<']
     
     # Juntamos todos los caracteres de arriba en un solo arreglo
     COMBINED_LIST = DIGITS + UPCASE_CHARACTERS + LOCASE_CHARACTERS + SYMBOLS
@@ -146,3 +159,27 @@ def crear_contrasenia():
             contrasenia = contrasenia + x
 
     return contrasenia
+
+#Funcion para revisar que una cadena tenga unicamente letras y no simbolos
+def check_no_symbols(campo):
+    
+    campo = split(campo)
+    for char in campo:
+            if char not in LOCASE_CHARACTERS and char not in UPCASE_CHARACTERS:
+            	print(char)
+            	return False
+    return True
+
+#Funcion auxiliar para convertir un string en un arreglo de chars
+def split(word):
+    return [char for char in word]
+
+
+
+#funcion auxiliar para revisar que un correo electronico este bien escrito
+def check_mail(email):
+    
+    #Revisamos que la cadena cumpla con la expresion regular
+    if(re.fullmatch(regex, email)):
+        return True
+    return False
