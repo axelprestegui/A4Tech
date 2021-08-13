@@ -1,6 +1,6 @@
-from flask import render_template, flash, request, redirect, url_for
+from flask import render_template, flash, request
 from flask_login import login_user, logout_user, current_user
-from models.Modelos import Producto, Usuario
+from models.Modelos import Usuario
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_required
 import sys
