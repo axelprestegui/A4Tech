@@ -7,6 +7,12 @@ import sys
 
 db = SQLAlchemy()
 
+'''
+Función que se ejecuta al entrar a la página de inicio de sesión 
+"/usuario/iniciar_sesion". Se encarga de buscar al usuario en la base de datos 
+(dependiéndo de si es comprador o vendedor), comprobar que la contraseña sea
+correcta y lo inicializa en la sesión.
+'''
 def iniciar_sesion():
     if request.method == 'POST':
         # checamos si ya hay un usuario en sesión
@@ -39,13 +45,17 @@ def iniciar_sesion():
                                                         FROM producto
                                                         Left JOIN imagen
                                                         ON producto.id_producto = imagen.id_producto""")
-                #productos = db.session.query(Producto).all()
                 return render_template('usuario/inicio_usuario.html', productos=productos)
         flash("Correo o contraseña incorrectos")
         return render_template('usuario/iniciar_sesion.html', error=True)
     else :
         return render_template('usuario/iniciar_sesion.html', error=False)
 
+'''
+Función que se ejecuta al entrar a la página de cerrar sesión
+"/usuario/cerrar_sesion". Se encarga de cerrar la sesión del usuario y 
+redireccionar a la página principal.
+'''
 @login_required
 def cerrar_sesion():
     logout_user()
@@ -59,7 +69,6 @@ def vendedor_principal():
 # Método que redirecciona a la página de comprador principa
 @login_required
 def inicio_usuario():
-    #productos = db.session.query(Producto).all()
     productos = db.engine.execute("""SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto,
                                                         nombre ,precio, cantidad, detalles, descripcion, estado, ruta
                                                         FROM producto
