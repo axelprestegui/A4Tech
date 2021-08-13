@@ -1,17 +1,18 @@
-from logging import log
-from flask import render_template, redirect, url_for, request, abort, jsonify
+from flask import render_template, request
 from flask_login import login_required, current_user
 from flask.helpers import flash
 from sqlalchemy.orm import query
 from models.Modelos import *
 from flask_sqlalchemy import SQLAlchemy
-from pathlib import Path
 from functools import reduce
-from werkzeug.utils import secure_filename
 import os.path, sys, shutil
 
 db = SQLAlchemy() # nuestro ORM
 
+'''
+Función que se ejecuta al momento de presionar el botón de búsqueda. Se encarga
+de buscar los productos que coincidan con el nombre ingresado por el usuario.
+'''
 @login_required
 def buscar_producto():
     if request.method != 'POST':
@@ -25,14 +26,21 @@ def buscar_producto():
     else:
         return render_template('usuario/resultado_busqueda.html')
 
+# Redirecciona a la página con los resultados de la búsqueda.
 @login_required
 def resultado_busqueda():
     return render_template('producto/resultado_busqueda.html', resultados=get_producto(request.form['search']))
 
+'''
+Redirecciona a la página para ver el producto seleccionado de la lista de los 
+resultados obtenidos. 
+'''
 @login_required
 def ver_articulo_buscado():
     return render_template('producto/ver_articulo_buscado.html', producto=get_producto(request.form['search']))
 
+
+# Muestra un artículo si es que el usuario es un comprador.
 @login_required
 def ver_articulo_comprador():
     # obtenemos información del producto
@@ -52,6 +60,8 @@ def ver_articulo_comprador():
     (compras,promedio_estrellas) = get_compras_con_reseña(id_producto)
     return render_template('producto/ver_articulo_comprador.html', producto = producto, compras = compras, promedio_estrellas=promedio_estrellas, imagen = imagen)
 
+# Muestra un artículo si es que el usuario es un vendedor.
+@login_required
 def ver_articulo_vendedor():
     # obtenemos información del producto
     id_producto = request.form['id_producto']
@@ -112,13 +122,15 @@ def guarda_resenia(comentario, numero_estrellas, correo_comprador, id_producto):
             return
     flash('Por favor, compre el producto')
 
-# Método auxiliar
+'''
+Método auxiliar que nos devuelve una lista de todos los productos que 
+coincidan con el nombre dado por el usuario.
+'''
 def get_producto(nombre):
-    #Forma alternativa de get_producto 
     producto = db.engine.execute("""SELECT producto.correo_vendedor as correo_vendedor, producto.id_producto as id_producto,
                                             nombre,precio , cantidad, detalles, descripcion, estado, ruta
                                             FROM producto
                                             Left JOIN imagen
                                             ON producto.id_producto = imagen.id_producto  WHERE nombre LIKE '%%"""+nombre+"%%'")
-    #producto = db.session.query(Producto).filter(Producto.nombre.like('%'+nombre+'%')).all()
     return producto
+    
