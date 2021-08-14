@@ -51,9 +51,11 @@ def crear_producto():
     # si recibimos imágenes, las guardamos
     if imagenes != []:
         guarda_imagenes(imagenes, correo_vendedor, producto_nuevo.id_producto)
-    
-    # cuando la vista de mostrar producto esté terminada, aquí debería ir render_template('ruta/mostrar_producto.html')
-    return redirect(url_for('.productos_vendedor'))
+    id_producto = producto_nuevo.id_producto
+    producto = db.session.query(Producto).filter(Producto.id_producto == id_producto).one()
+    #Una vez cargado el producto cargamos la imagen de este
+    imagen = db.session.query(Imagen).filter(Imagen.id_producto == id_producto).first()
+    return render_template('producto/ver_articulo_vendedor.html', producto = producto, compras = [], promedio_estrellas=0.0, url_img = imagen)
 
 @login_required
 def actualizar_producto():
@@ -149,14 +151,14 @@ def guarda_imagenes(imagenes, correo_vendedor, id_producto):
     for imagen in imagenes:
         # si la imagen es del tipo permitido, la agregamos
         if '.' + imagen.content_type.split('/')[1] in imagenes_validas:
-            imagen_name = secure_filename(imagen.filename)
-            imagen.save(os.path.join(dir_vendedor_img, str(id_producto), imagen_name.strip()))
+            imagen_name = secure_filename(imagen.filename.replace(' ',''))
+            imagen.save(os.path.join(dir_vendedor_img, str(id_producto), imagen_name))
             
             """
         Una vez guardamos las imagenes indicamos en la tabla de Imagen la ruta, el id del producto y el correo del vendedor
         En este caso todas las imagenes se guardaran en ../../static/images/<correo>/<id_producto>
             """ 
-            nueva_imagen = Imagen(str(correo_vendedor),str(id_producto), '../../static/images/'+str(correo_vendedor)+'/'+str(id_producto)+'/'+ imagen.filename )
+            nueva_imagen = Imagen(str(correo_vendedor),str(id_producto), '../../static/images/'+str(correo_vendedor)+'/'+str(id_producto)+'/'+ imagen_name )
             try:
                 db.session.query(Imagen).filter_by(id_producto=id_producto).delete()
                 db.session.add(nueva_imagen)
