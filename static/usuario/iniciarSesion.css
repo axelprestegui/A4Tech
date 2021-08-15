@@ -1,7 +1,7 @@
 body {
-    background:white;
-    
-}
+    background-size: cover;
+    background-image: url('../images/wallpaper.png');
+  }
 
 .container {
     display: flex;

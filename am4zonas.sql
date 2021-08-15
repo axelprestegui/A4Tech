@@ -93,6 +93,7 @@ CREATE TABLE Imagen (
 );
 
 /* Algunas tuplas a insertar en la base*/
+/**
 INSERT INTO usuario VALUES
 ('axelprestegui@ciencias.unam.mx','Axel','Prestegui','Ramos','cubito53',1000000000,true),
 ('derekalmanzacancer@gmail.com','Derek','AP','AM','hola1234',5545648748,true),
@@ -110,3 +111,4 @@ INSERT INTO compra (Correo_Comprador,Correo_Vendedor,Id_Producto,Forma_Pago,Cant
 
 INSERT INTO compra (Correo_Comprador,Correo_Vendedor,Id_Producto,Forma_Pago,Cantidad,Costo_Total,Estado,Ciudad,Alcaldia,Colonia,Calle,Numero_Ext,Numero_Int,Codigo_Postal) VALUES
 ('presteguiaxel@gmail.com','axelprestegui@ciencias.unam.mx',1,'efectivo',2,3000.0,'CDMX','CDMX','Coyoacan','asdas','calle 10',1010,401,04420);
+**/

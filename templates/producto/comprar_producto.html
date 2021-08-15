@@ -27,35 +27,35 @@ Comprar producto
                     <input type="text" style="display: none;" value={{current_user.correo}} name="correo_comprador" id="correo_comprador" required>
                     <input type="text" style="display: none;" value={{producto.correo_vendedor}} name="correo_vendedor" id="correo_vendedor" required>
                     <input type="number" style="display: none;" value={{producto.id_producto}} name="id_producto" id="id_producto" required>
-                    <input type="text" name="forma_pago" id="forma_pago" required>
+                    <input type="text" name="forma_pago" id="forma_pago" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="cantidad"> Cantidad </label>
-                    <input type="number" name="cantidad" id="cantidad" required>
+                    <input type="number" name="cantidad" id="cantidad" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="estado"> Estado </label>
-                    <input type="text" name="estado" id="estado" required>
+                    <input type="text" name="estado" id="estado" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="ciudad"> Ciudad </label>
-                    <input type="text" name="ciudad" id="ciudad" required>
+                    <input type="text" name="ciudad" id="ciudad" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="alcaldia"> Alcaldía </label>
-                    <input type="text" name="alcaldia" id="alcaldia" required>
+                    <input type="text" name="alcaldia" id="alcaldia" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="colonia"> Colonia </label>
-                    <input type="text" name="colonia" id="colonia" required>
+                    <input type="text" name="colonia" id="colonia" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="calle"> Calle </label>
-                    <input type="text" name="calle" id="calle" required>
+                    <input type="text" name="calle" id="calle" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="numero_ext"> Número exterior </label>
-                    <input type="number" name="numero_ext" id="numero_ext" required>
+                    <input type="number" name="numero_ext" id="numero_ext" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="numero_int"> Número interior </label>
@@ -63,7 +63,7 @@ Comprar producto
                 </p>
                 <p>
                     <label for="codigo_postal"> Código postal </label>
-                    <input type="number" name="codigo_postal" id="codigo_postal" required>
+                    <input type="number" name="codigo_postal" id="codigo_postal" required placeholder="Obligatorio">
                 </p>
                 <p class="una-fraccion">
                     <button type="submit" class="boton" value="Siguiente" href="{{ url_for('usuario.inicio_usuario') }}"> Siguiente </button>
