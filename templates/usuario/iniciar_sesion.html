@@ -1,0 +1,43 @@
+{% extends 'base.html'%}
+
+{% block title %}
+Iniciar Sesión
+{% endblock%}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='usuario/iniciarSesion.css') }}">
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% block content %}
+<div class="container">
+	<div class="login-box">
+		<div class="login-title">Iniciar Sesión</div>
+		{% if error %}
+			<p style="color:#D03727";>¡Ups! Correo o contraseña incorrectos.</p>
+		{% endif %}
+		<form method="post">
+			<div>
+				<label class="etiquetas">Correo Electrónico</label>
+				<input type="text" class="form-control" name="correo" id="correo" required>
+			</div>
+			<div>
+				<label class="etiquetas">Contraseña</label>
+				<input type="password" class="form-control" name="contrasenia" id="contrasenia" required>
+			</div>	
+							
+			<div class="login-text">
+				<!-- Error Message -->
+			</div>
+			<div class="login-button">
+				<button class="boton" type="submit" class="btn btn-outline-primary login-button" value="Log In">Iniciar Sesión</button>
+				<button class="boton" onclick=location.href="{{ url_for('index') }}">Regresar</button>
+			</div>
+		</form>
+	</div>
+</div>
+	
+{% endblock %}

@@ -1,0 +1,15 @@
+.content {
+    padding: 0 1.5em;
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.agrupador-info-sin-sesion {
+    padding: 3em;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    text-align: center;
+    background-color: #E8F6EF;
+}
+

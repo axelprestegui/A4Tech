@@ -1,0 +1,86 @@
+body {
+    background-size: cover;
+    background-image: url('../images/wallpaper.png');
+  }
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 0 1.5em;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-box {
+    align-items: center;
+    padding: 2em;
+    height: auto;
+    background-color: #B8DFD8;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 10px 5px #0008;
+}
+
+.login-title {
+    text-align: center;
+    font-size: 30px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: black;
+}
+
+.etiquetas {
+    font-style: italic;
+}
+
+input[type=text],
+input[type=password] {
+    background-color: #FFE194;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    outline: 0;
+    color: black;
+}
+
+.btn-outline-primary {
+	padding: 0.7em 0.7em;
+    background-color: #4C4C6D;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background-color: #5d5d86;
+    transition: background-color 0.5s ease-out;
+    outline: 0;
+}
+
+.login-button {
+    text-align: right;
+}
+
+.login-text {
+    text-align: left;
+    padding-left: 0px;
+    color:white;
+}
+
+.boton {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 150px;
+  	padding: 10px; 
+  	background: #4C4C6D; 
+	color: white;
+  	border:0 none;
+  	cursor:pointer;
+  	margin-top: 35px;
+  	border-radius: 5px; 
+}

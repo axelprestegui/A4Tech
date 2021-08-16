@@ -1,0 +1,78 @@
+<!--Cargamos el encabezado y otros botones-->
+
+{% extends 'base.html' %}
+    
+{% block header %}
+    <h1>{% block title %}Mis articulos{% endblock %}</h1>
+{% endblock %}
+    
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
+	<link rel="stylesheet" href="../../static/producto/productos-vendedor.css">
+{% endblock%}
+    
+{% block doggy %}
+    <a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;" onclick="location.href='../usuario/vendedor_principal'"> <strong>Am4zonas</strong></a>
+{% endblock%}
+    
+{% block content %}
+
+<button class="atras" onclick=location.href="{{ url_for('usuario.vendedor_principal') }}">Atras</button>
+<!--Seccion que carga la informacion de los articulos-->
+{% for prod in producto%}
+
+<div class="content">
+    <div class="agrupador-info">
+<!-- Seccion para mostrar las imagenes del producto-->
+        <div class="imagen">
+			{% if prod.ruta != None%}
+			<img class="center" src={{prod.ruta}}>
+		  {% else %}
+			<img class="center" src="http://www.pequenomundo.cl/wp-content/themes/childcare/images/default.png">
+		  {% endif %}
+        </div>
+<!--Cargamos los elementos en el siguiente orden: nombre, detalles cantidad-->
+        <div class="nombre-detalles">
+
+			<div>
+				<form action="{{url_for('producto.ver_articulo_vendedor')}}" method="POST">
+					<input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} onclick="render_template(producto.ver_articulo_vendedor,producto=prod)">
+					<input type="submit" id="prodNombreInput" class="nombre-producto" value="{{prod.nombre}}">
+				</form>
+
+				<p style="color: white;">  Detalles: {{prod.detalles}} </p>
+				<p style="color: white;"> Cantidad: {{prod.cantidad}} </p>
+			</div>
+
+        </div>
+<!--Cargamos los elementos en el siguiente orden: precio-->
+		<div class="precio-id">
+
+			<div>
+				<h2 class="" > Precio: ${{prod.precio}}</h2>
+			</div>
+
+		</div>
+<!--Seccion para eliminar un articulo-->
+		<div class="elimina-actualiza">
+			
+			<div>
+				<form action="{{url_for('producto.eliminar_producto')}}" method="POST">
+					<input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} onclick="location.href='/producto/eliminar_producto'">
+					<input type="submit" value="Eliminar" >
+				</form>
+	
+				<form action="{{url_for('producto.get_actualizar_formulario')}}" method="POST">
+					<input name="id_producto" style="display: none;" id="id_producto" value={{prod.id_producto}} '">
+					<input type="submit" value="Actualizar">
+				</form>
+			</div>
+
+		</div>
+
+    </div>
+</div>
+
+{% endfor %}
+    
+{% endblock%}

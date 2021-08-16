@@ -1,3 +1,18 @@
+### Flask ###
+instance/*
+!instance/.gitignore
+.webassets-cache
+.env
+
+### Flask.Python Stack ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +142,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignora carpeta de imágenes de productos
+static/images/

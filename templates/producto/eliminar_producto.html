@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Eliminar publicación
+{% endblock%}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% block content %}
+  <form method="post">
+    <div class="main-content">
+        <div class="form-content">
+            <form id="survey-form">
+                <div>
+                    <input type="submit" value="Eliminar producto">
+                </div>
+            </form>
+        </div>
+    </div>
+
+  </form>
+{% endblock %}

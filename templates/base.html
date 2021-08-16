@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}{% endblock%}</title>
+    <!-- Fuente bonita para ver si jala xd -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+
+    <link rel="stylesheet" href= "{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block style %}{% endblock%}
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                {% block doggy %}{% endblock%}
+            </div>
+           {% block am4zonas %}{% endblock%}
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    {% block content %}{% endblock %}
+        <!--Footer -->
+        <footer class="col-md-12 footer-box"></footer>
+    {% block footer%} {% endblock%}
+</body>
+</html>

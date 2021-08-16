@@ -1,0 +1,73 @@
+{% extends 'base.html'%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% block am4zonas %}
+<form enctype="multipart/form-data"></form>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form navbar-right" action="{{url_for('usuario.cerrar_sesion')}}">
+            &nbsp; 
+            <input type="submit" value="Cerrar sesión" style="background-color: #31326F;color: white;" class="btn btn-primary">
+        </form>
+
+        <form method="post" class="navbar-form navbar-right" action="{{url_for('producto.resultado_busqueda')}}">
+            <div class="form-group">
+                <input type="text" name="search" id="search" class="form-control" required>
+            </div>
+            &nbsp; 
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button type="submit" class="btn btn-primary" onclick=location.href="{{ url_for('usuario.inicio_usuario') }}">Inicio</button>
+        </form>
+    </ul>
+</div>
+
+{% endblock %}
+
+{% block content%}
+ <div class="container">
+    <div class="row">
+        <br><br>
+        <div class="col-md-9">
+            <!-- /.div -->
+            <div class="row">
+                {% for producto in resultados %}
+                <div class="col-md-4 text-center col-sm-6 col-xs-6">
+                    <div class="thumbnail">
+                        <!--img src="assets/img/dummyimg.png" alt="" /> -->
+                        <div class="caption">
+                            {% if producto.ruta != None%}
+                                <img width="150px" src={{producto.ruta}}>
+                            {% else %}
+                                <img width="150px" src="http://www.pequenomundo.cl/wp-content/themes/childcare/images/default.png">
+                            {% endif %}
+                            {% if producto.nombre %}<h3><a href="#">{{ producto.nombre }}</a></h3>{% endif %}
+                            {% if producto.precio %}<p>Precio : <strong>$ {{ producto.precio }}</strong></p>{% endif %}
+                            {% if producto.descripcion %} <p>{{ producto.descripcion }}</p>{% endif %}
+                            {% if producto.cantidad %}<p>Cantidad : <strong>{{ producto.cantidad }}</strong></p>{% endif %}
+                        </div>
+                        <form method="post" class="navbar-form navbar-center" action="{{url_for('producto.ver_articulo_comprador')}}">
+                            &nbsp; 
+                            <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} onclick="render_template(producto.ver_articulo_comprador,producto=prod)">
+                            <button type="submit" class="btn btn-primary">Ver artículo</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+</div>
+<!-- /.col -->
+{% endblock %}

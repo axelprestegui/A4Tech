@@ -1,0 +1,92 @@
+<!--Cargamos un archivo de estilo para esta pagina-->
+
+<style type="text/css">
+  body{
+    background-color: #E8F6EF;
+  } 
+  .campo {
+    width: 600px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 4px;
+}
+form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 30px;
+    font-size: 18px;
+}
+</style>
+<!--Cargamos el encabezado y otros botones-->
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Registro Usuarios{% endblock %}</h1>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='producto/productodata.css') }}">
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{% block content %}
+
+<!--Seccion encargada del formulario-->
+
+  <article id= formulario>
+    {% if error %}
+			<center>
+      <p style="color:#D03727";>¡Ups! {{error}}</p>
+    </center>
+		{% endif %}
+  
+    <form method="post">
+
+      <label for="nombre_usuario">Nombre</label>
+      <br>
+      <input class="campo" type="text" name="nombre_usuario" id="nombre_usuario" required placeholder="Obligatorio" required>
+      <br>
+      <label for="apellidoP">Apellido Paterno</label>
+      <br>
+      <input class="campo" type="text" name="apellidoP" id="apellidoP" required placeholder="Obligatorio" required>
+      <br>
+      <label for="apellidoM">Apellido Materno</label>
+      <br>
+      <input class="campo" type="text" name="apellidoM" id="apellidoM" required placeholder="Obligatorio" required>
+      <br>
+      <label for="correo_usuario">Correo Electronico</label>
+      <br>
+      <input class="campo" type="email" name="correo_usuario" id="correo_usuario" required placeholder="Obligatorio" required>
+      <br>
+      <label for="telefono">Telefono</label>
+      <br>
+      <input class="campo" type="number" step="1" name="telefono" id="telefono" required placeholder="Obligatorio" required>
+      <br>
+     
+      <label class="form-control-label">Tipo de Usuario</label><br>
+
+      <select name="type-user" id="type-user">
+        <option value="comprador" selected>Comprador</option>
+        <option value="vendedor">Vendedor</option>
+      </select> 
+      </div>
+
+
+      <input class="boton" type="submit" value="Registarse">
+      <button class="boton" onclick=location.href="{{ url_for('index') }}">Regresar</button>
+    </form>
+  </article>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Inicio vendedor
+{% endblock%}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% block style %}
+<link rel="stylesheet" href="../../static/usuario/vendedor-principal.css">
+{% endblock %}
+
+
+{% block am4zonas %}
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form navbar-right" action="{{url_for('usuario.cerrar_sesion')}}">
+            &nbsp; 
+            <input type="button" value="Cerrar Sesión" style="background-color: #9ddfd3;color: #000000;" class="btn btn-primary" onclick="location.href='/usuario/cerrar_sesion'">
+        </form>
+    </ul>
+</div>
+{% endblock%}
+
+{% block content %}
+<div class="content">
+    <div class="agrupador-info">
+        <div class="saludo-usuario">
+            <div>
+                <h1>¡Bienvenido de regreso, {{ current_user.nombre }}!</h1>
+                <p>Esperamos que disfrutes tu estancia.</p>
+            </div>
+        </div>
+        <div class="botones-menu">
+            <p>
+                <button class="tarjetas" onclick="location.href='../producto/crear_producto'">
+                    <img src="../static/images/producto_nuevo.jpg" alt="producto_nuevo">
+                    <div class="card-body">
+                      <h5 class="card-title">Publicar nuevo artículo</h5>
+                    </div>
+                </button>
+            </p>
+            <p>
+                <button  class="tarjetas" onclick="location.href='../producto/productos_vendedor'">
+                    <img src="../static/images/mis_productos_publicados.png" alt="mis_productos_publicados">
+                    <div class="card-body">
+                      <h5 class="card-title">Mis artículos publicados</h5>
+                    </div>
+                </button>
+                </form>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

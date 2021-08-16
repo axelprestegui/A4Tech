@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Comprar producto
+{% endblock %}
+
+{% block doggy %}
+<a class="navbar-brand" href="#"><img src="../../static/images/doggy.png" alt="Am4zonas" width="35" height="35" style = "margin-right: 10px;"> <strong>Am4zonas</strong></a>
+{% endblock%}
+
+{% block style %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='producto/compra-producto.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+
+    <h1 class="titulo">Comprar producto </h1>
+
+    <div class="agrupador-info">
+        <div class="info-compra">
+            <form action="{{url_for('producto.comprar_producto')}}" method="POST">
+                <p>
+                    <label for="forma_pago"> Forma de pago </label>
+                    <input type="number" style="display: none;" value="0" name="costo_total" id="costo_total" required>
+                    <input type="text" style="display: none;" value={{current_user.correo}} name="correo_comprador" id="correo_comprador" required>
+                    <input type="text" style="display: none;" value={{producto.correo_vendedor}} name="correo_vendedor" id="correo_vendedor" required>
+                    <input type="number" style="display: none;" value={{producto.id_producto}} name="id_producto" id="id_producto" required>
+                    <input type="text" name="forma_pago" id="forma_pago" required placeholder="Obligatorio">
+                </p>
+                <p>
+                    <label for="cantidad"> Cantidad </label>
+                    <input  type="number" min="1" max={{producto.cantidad}} name="cantidad" id="cantidad" required placeholder="Obligatorio">
+                </p>
+                <p>
+                    <label for="estado"> Estado </label>
+                    <input type="text" name="estado" id="estado" required placeholder="Obligatorio">
+                </p>
+                <p>
+                    <label for="ciudad"> Ciudad </label>
+                    <input type="text" name="ciudad" id="ciudad" required placeholder="Obligatorio">
+                </p>
+                <p>
+                    <label for="alcaldia"> Alcaldía </label>
+                    <input type="text" name="alcaldia" id="alcaldia" required placeholder="Obligatorio">
+                </p>
+                <p>
+                    <label for="colonia"> Colonia </label>
+                    <input type="text" name="colonia" id="colonia" required placeholder="Obligatorio">
+                </p>
+                <p>
+                    <label for="calle"> Calle </label>
+                    <input type="text" name="calle" id="calle" required placeholder="Obligatorio">
+                </p>
+                <p>
+                    <label for="numero_ext"> Número exterior </label>
+                    <input type="number" name="numero_ext" id="numero_ext" required placeholder="Obligatorio">
+                </p>
+                <p>
+                    <label for="numero_int"> Número interior </label>
+                    <input type="text" name="numero_int" id="numero_int">
+                </p>
+                <p>
+                    <label for="codigo_postal"> Código postal </label>
+                    <input type="number" name="codigo_postal" id="codigo_postal" required placeholder="Obligatorio">
+                </p>
+                <p class="una-fraccion">
+                    <button type="submit" class="boton" value="Siguiente" href="{{ url_for('usuario.inicio_usuario') }}"> Siguiente </button>
+                    
+                </p>
+            </form>
+            
+            <form action="{{url_for('producto.ver_articulo_comprador')}}" method="POST">
+            <p class="una-fraccion"> 
+                <input name="id_producto" style="display: none;" id="id_producto" value={{producto.id_producto}} onclick="render_template(producto.ver_articulo_comprador,producto=producto)">
+                        <button type="submit" class="btn btn-primary">Atrás</button>
+            </p>
+            </form>
+        </div>
+        <div class="img-compra">
+            <div>
+                {% if producto.ruta != None%}
+                    <img style="border-radius: 10px; width: 200px;" src={{imagen.ruta}}>
+                {% else %}
+                    <img style="border-radius: 10px; width: 200px;" src="http://www.pequenomundo.cl/wp-content/themes/childcare/images/default.png">
+                {% endif %}
+                <h4>
+                    Usted está comprando: <i>{{producto.nombre}}</i><br>
+                    En stock: <i>{{producto.cantidad}}</i>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
