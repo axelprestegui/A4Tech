@@ -31,7 +31,7 @@ Comprar producto
                 </p>
                 <p>
                     <label for="cantidad"> Cantidad </label>
-                    <input type="number" name="cantidad" id="cantidad" required placeholder="Obligatorio">
+                    <input  type="number" min="1" max={{producto.cantidad}} name="cantidad" id="cantidad" required placeholder="Obligatorio">
                 </p>
                 <p>
                     <label for="estado"> Estado </label>
@@ -86,7 +86,8 @@ Comprar producto
                     <img style="border-radius: 10px; width: 200px;" src="http://www.pequenomundo.cl/wp-content/themes/childcare/images/default.png">
                 {% endif %}
                 <h4>
-                    Usted está comprando: <i>{{producto.nombre}}</i>
+                    Usted está comprando: <i>{{producto.nombre}}</i><br>
+                    En stock: <i>{{producto.cantidad}}</i>
                 </h4>
             </div>
         </div>

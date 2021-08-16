@@ -47,7 +47,11 @@ form {
 <!--Seccion encargada del formulario-->
 
   <article id= formulario>
-    
+    {% if error %}
+			<center>
+      <p style="color:#D03727";>¡Ups! {{error}}</p>
+    </center>
+		{% endif %}
   
     <form method="post">
 
@@ -81,8 +85,8 @@ form {
       </div>
 
 
-      <input type="submit" value="Registarse">
-
+      <input class="boton" type="submit" value="Registarse">
+      <button class="boton" onclick=location.href="{{ url_for('index') }}">Regresar</button>
     </form>
   </article>
 {% endblock %}
