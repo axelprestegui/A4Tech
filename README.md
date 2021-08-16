@@ -9,26 +9,22 @@ Es necesario tener instalado...
 
 - *Flask*:\
 ```python3 -m pip install pip --upgrade```\
-```pip install flask```\
+```pip install flask```
 - *Flask-Alchemy*:\
-```pip install Flask-SQLAlchemy```\
+```pip install Flask-SQLAlchemy```
 - *Flask-Marshmallow*:\
-```pip install flask-marshmallow```\
+```pip install flask-marshmallow```
 - *Flask-Login*:\
-```pip install flask-login```\
+```pip install flask-login```
 - *psycopg2*:\
-```pip install psycopg2-binary```\
+```pip install psycopg2-binary```
 
 Así como Postgresql, pues será nuestro manejador de base de datos.
-
-Es recomendable tener instalado [Postman]( https://www.postman.com/downloads/ ) para poder interactuar con el back sin tener listo nuestro front.
 
 ## Ejecutar el programa :file_folder:
 
 Ejecutar en terminal:\
 ```python3 app.py```
-
-Nota: Este readme se irá actualizando conforme avancemos en el proyecto.
 
 ## Autores :busts_in_silhouette:
 
