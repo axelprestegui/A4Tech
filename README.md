@@ -29,6 +29,6 @@ Ejecutar en terminal:\
 ## Autores :busts_in_silhouette:
 
 -  Abraham Lagunas: [kingFrederic355]( https://github.com/kingFrederic355 )
--  Axel Prestegui: [axelprestegui]( https://github.com/Dicter26 ) 
+-  Axel Prestegui: [axelprestegui]( https://github.com/axelprestegui ) 
 -  Derek Almanza: [DerekAlmanza ]( https://github.com/DerekAlmanza ) 
 -  Tania Rubí: [taniarubi]( https://github.com/taniarubi )
